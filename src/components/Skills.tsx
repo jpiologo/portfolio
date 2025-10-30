@@ -91,7 +91,6 @@ const Skills = () => {
 						title="Database"
 						icon={Database}
 						skills={[
-							{ name: "SQL Queries", width: "98%" },
 							{ name: "PostgreSQL", width: "95%" },
 							{ name: "MySQL", width: "90%" },
 							{ name: "Docker", width: "70%" },
@@ -113,11 +112,10 @@ const Skills = () => {
 						icon={Code2}
 						skills={[
 							{ name: "Clean Code", width: "100%" },
-							{ name: "Test Driven Development", width: "90%" },
+							{ name: "TDD", width: "90%" },
 							{ name: "Scrum", width: "95%" },
 							{ name: "Deployment", width: "81%" },
 							{ name: "CI/CD", width: "93%" },
-							{ name: "Test Automation", width: "80%" },
 						]}
 					/>
 					<SkillCategory
@@ -126,7 +124,6 @@ const Skills = () => {
 						skills={[
 							{ name: "Git", width: "95%" },
 							{ name: "Git Flows", width: "90%" },
-							{ name: "Code Review", width: "88%" },
 							{ name: "Branching", width: "88%" },
 							{ name: "Collaboration", width: "85%" },
 							{ name: "Semantic Commits", width: "95%" },
