@@ -4,7 +4,7 @@ import { toWords } from "number-to-words";
 
 const About = () => {
 
-	const startYear = 2022;
+	const startYear = 2021;
 	const currentYear = new Date();
 	const years = Math.max(0, currentYear.getFullYear() - startYear);
 	const yearsLabel = `${years}+`;
@@ -33,7 +33,7 @@ const About = () => {
 						<div className="mt-8 grid grid-cols-2 gap-4">
 							<div className="text-center">
 								<div className="text-3xl font-bold text-indigo-600">{yearsLabel}</div>
-								<div className="text-sm text-gray-600">Years Experience</div>
+								<div className="text-sm text-gray-600">Years of Experience</div>
 							</div>
 							<div className="text-center">
 								<div className="text-3xl font-bold text-indigo-600">50+</div>
