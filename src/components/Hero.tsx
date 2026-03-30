@@ -2,10 +2,42 @@ import { ArrowDown } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const CODE_STYLES = [
-	{ font: "font-mono font-bold", color: "text-green-400" },
-	{ font: "font-serif italic", color: "text-amber-300" },
-	{ font: "font-sans font-black", color: "text-pink-500" },
-	{ font: "font-mono font-medium", color: "text-blue-400" },
+	{
+		color: "#60a5fa", // Blue
+		shadow: "0 0 25px rgba(96,165,250,0.5)",
+		fontFamily: "'Fira Code', 'Courier New', monospace",
+		fontWeight: 700,
+		fontStyle: "normal",
+		letterSpacing: "-0.05em",
+		textTransform: "lowercase",
+	},
+	{
+		color: "#a78bfa", // Purple
+		shadow: "0 0 25px rgba(167,139,250,0.5)",
+		fontFamily: "'Playfair Display', Georgia, serif",
+		fontWeight: 500,
+		fontStyle: "italic",
+		letterSpacing: "0.02em",
+		textTransform: "lowercase",
+	},
+	{
+		color: "#34d399", // Emerald
+		shadow: "0 0 25px rgba(52,211,153,0.5)",
+		fontFamily: "system-ui, sans-serif",
+		fontWeight: 900,
+		fontStyle: "normal",
+		letterSpacing: "-0.02em",
+		textTransform: "lowercase",
+	},
+	{
+		color: "#fbbf24", // Amber
+		shadow: "0 0 25px rgba(251,191,36,0.5)",
+		fontFamily: "system-ui, sans-serif",
+		fontWeight: 300,
+		fontStyle: "normal",
+		letterSpacing: "0.15em",
+		textTransform: "uppercase",
+	},
 ];
 
 const Hero = () => {
@@ -31,11 +63,9 @@ const Hero = () => {
 	useEffect(() => {
 		const styleInterval = setInterval(() => {
 			setStyleIndex((prev) => (prev + 1) % CODE_STYLES.length);
-		}, 800);
+		}, 3000);
 		return () => clearInterval(styleInterval);
 	}, []);
-
-	const currentStyle = CODE_STYLES[styleIndex];
 
 	// Helper to retain the gradient on "Developer"
 	const renderTypedText = () => {
@@ -47,7 +77,7 @@ const Hero = () => {
 		return (
 			<>
 				<span className="whitespace-pre-wrap">{firstPart}</span>
-				<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-200">
+				<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-200 py-1">
 					{devPart}
 				</span>
 			</>
@@ -64,16 +94,36 @@ const Hero = () => {
 			<div className="relative max-w-6xl mx-auto px-4 pt-32 pb-20 flex flex-col items-center justify-center min-h-[110vh] gap-8">
 				{/* Text Section */}
 				<div className="flex-1 text-center w-full max-w-4xl flex flex-col items-center justify-center">
-					<h1 className="text-5xl md:text-7xl font-bold mb-6 min-h-[4rem] md:min-h-[5rem] flex items-center justify-center flex-wrap">
+					<h1 className="text-5xl md:text-7xl font-extrabold mb-8 min-h-[5rem] md:min-h-[6.5rem] leading-tight md:leading-tight tracking-tight">
 						{renderTypedText()}
-						<span className="inline-block w-[4px] h-[3rem] md:h-[4.5rem] bg-white ml-2 animate-pulse mb-1 md:mb-2"></span>
+						<span className="inline-block w-[4px] h-[3.5rem] md:h-[5rem] bg-white ml-2 animate-pulse align-middle mb-1 md:mb-2 rounded-full"></span>
 					</h1>
-					<p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto">
-						The one you need to transform your ideas into{" "}
-						<span className={`inline-block min-w-[3.5rem] ${currentStyle.font} ${currentStyle.color} transition-colors duration-300`}>
-							code
+					<p className="text-xl md:text-2xl text-slate-300/90 mb-10 max-w-2xl mx-auto leading-relaxed font-light tracking-wide flex items-center justify-center flex-wrap">
+						<span>The one you need to transform your ideas into</span>
+						<span className="relative inline-flex items-center justify-center min-w-[5.5rem] ml-2">
+							{CODE_STYLES.map((style, index) => (
+								<span
+									key={index}
+									className="absolute inset-0 flex items-center justify-center pointer-events-none"
+									style={{
+										color: style.color,
+										textShadow: style.shadow,
+										fontFamily: style.fontFamily,
+										fontWeight: style.fontWeight,
+										fontStyle: style.fontStyle,
+										letterSpacing: style.letterSpacing,
+										textTransform: style.textTransform as any,
+										opacity: styleIndex === index ? 1 : 0,
+										transition: "opacity 1.2s ease-in-out, text-shadow 1.2s ease-in-out",
+									}}
+								>
+									code
+								</span>
+							))}
+							{/* Invisible placeholder for width to prevent layout shift */}
+							<span className="invisible font-light tracking-[0.15em] uppercase">CODE</span>
 						</span>
-						.
+						<span>.</span>
 					</p>
 					<div className="flex flex-wrap gap-4 justify-center">
 						<a

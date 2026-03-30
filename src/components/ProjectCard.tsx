@@ -1,17 +1,26 @@
-import React, { useState } from "react"; // 1. Importa React e useState
-import { Cog, ExternalLink, Github, X, ChevronDown } from "lucide-react"; // 2. Importa ícones
+import { useState } from "react";
+import {
+	ExternalLink,
+	Github,
+	X,
+	ArrowRight,
+	Rocket,
+	Wrench,
+	Code2,
+	Lightbulb,
+	Layers,
+} from "lucide-react";
 
 interface ProjectCardProps {
-	// 3. Define a interface das props
 	project: {
-		title: string; // 4. Título do projeto
-		description: string; // 5. Descrição curta
-		image: string; // 6. URL da imagem
-		tags: string[]; // 7. Tags do projeto
-		demoLink?: string; // 8. Link opcional para demo
-		githubLink: string; // 9. Link para o GitHub
+		title: string;
+		subtitle: string;
+		description: string;
+		image: string;
+		tags: string[];
+		demoLink?: string;
+		githubLink: string;
 		details: {
-			// 10. Detalhes expandidos
 			challenge: string;
 			solution: string;
 			techStack: string[];
@@ -21,178 +30,206 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
-	// 11. Componente funcional
-	const [isExpanded, setIsExpanded] = useState(false); // 12. Estado para modal "detalhes"
+	const [isExpanded, setIsExpanded] = useState(false);
 
 	return (
 		<>
-			{/* 14. Card principal: flex-col h-full para layout vertical flexível */}
-			<div className="bg-white rounded-xl shadow-lg overflow-hidden group flex flex-col h-full">
-				{/* 15. Container da imagem, escala no hover */}
-				<div className="relative overflow-hidden">
+			{/* Card */}
+			<div
+				className="proj-card group"
+				onClick={() => setIsExpanded(true)}
+				onKeyDown={(e) => e.key === "Enter" && setIsExpanded(true)}
+				role="button"
+				tabIndex={0}
+			>
+				{/* Image */}
+				<div className="proj-card-image-wrap">
 					<img
 						src={project.image}
 						alt={project.title}
-						className="w-full h-48 object-cover transform group-hover:scale-110 transition-transform duration-300"
+						className="proj-card-image"
 					/>
-					{/* 16. Overlay de gradiente com botões no topo da imagem */}
-					<div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-						<div className="absolute bottom-4 left-4 right-4 flex justify-end gap-3">
+					<div className="proj-card-image-overlay">
+						<div className="proj-card-image-actions">
 							{project.demoLink ? (
 								<a
 									target="_blank"
 									href={project.demoLink}
-									className="p-2 bg-white rounded-full hover:bg-gray-100 transition-colors"
+									className="proj-card-icon-btn"
 									rel="noreferrer"
+									onClick={(e) => e.stopPropagation()}
 								>
-									<ExternalLink className="w-5 h-5 text-gray-800" />
+									<ExternalLink className="w-4 h-4" />
 								</a>
 							) : (
-								<div className="p-2 bg-white rounded-full hover:bg-gray-100 transition-colors">
-									<span className="flex items-center gap-1 text-gray-600 font-semibold italic justify-center">
-										Development Stage
-										<Cog className="w-5 h-5 text-gray-800" />
-									</span>
-								</div>
+								<span className="proj-card-status">
+									<Wrench className="w-3.5 h-3.5" />
+									In Development
+								</span>
 							)}
 							<a
 								target="_blank"
 								href={project.githubLink}
-								className="p-2 bg-white rounded-full hover:bg-gray-100 transition-colors flex items-center justify-center"
+								className="proj-card-icon-btn"
 								rel="noreferrer"
+								onClick={(e) => e.stopPropagation()}
 							>
-								<Github className="w-5 h-5 text-gray-800"/>
+								<Github className="w-4 h-4" />
 							</a>
 						</div>
 					</div>
 				</div>
 
-				{/* 17. Corpo do card: flex-col flex-1 para crescer e empurrar o botão */}
-				<div className="p-6 flex flex-col flex-1">
-					<h3 className="text-xl font-semibold mb-2">{project.title}</h3>{" "}
-					{/* 18. Título */}
-					<p className="text-gray-600 mb-4">{project.description}</p>{" "}
-					{/* 19. Descrição */}
-					<div className="flex flex-wrap gap-2 mb-4">
-						{" "}
-						{/* 20. Lista de tags */}
-						{project.tags.map((tag, index) => (
-							<span
-								// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-								key={index}
-								className="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm"
-							>
+				{/* Content */}
+				<div className="proj-card-body">
+					<span className="proj-card-subtitle">{project.subtitle}</span>
+					<h3 className="proj-card-title">{project.title}</h3>
+					<p className="proj-card-desc">{project.description}</p>
+
+					<div className="proj-card-tags">
+						{project.tags.map((tag) => (
+							<span key={tag} className="proj-card-tag">
 								{tag}
 							</span>
 						))}
 					</div>
-					{/* 21. Wrapper do botão: mt-auto empurra para o final do flex container */}
-					<div className="mt-auto">
-						{/* biome-ignore lint/a11y/useButtonType: <explanation> */}
-						<button
-							onClick={() => setIsExpanded(true)}
-							className="flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors"
-						>
-							<ChevronDown className="w-4 h-4" />
-							<span>View Details</span>
-						</button>
+
+					<div className="proj-card-cta">
+						<span>View Case Study</span>
+						<ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
 					</div>
 				</div>
 			</div>
 
-			{/* 22. Modal de detalhes, aparece se isExpanded for true */}
+			{/* Modal */}
 			{isExpanded && (
-				<div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-					<div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-						{/* 23. Cabeçalho fixo com título e botão fechar */}
-						<div className="sticky top-0 bg-white p-6 border-b flex justify-between items-center">
-							<h3 className="text-2xl font-bold">{project.title}</h3>
-							{/* biome-ignore lint/a11y/useButtonType: <explanation> */}
+				<div
+					className="proj-modal-overlay"
+					onClick={() => setIsExpanded(false)}
+					onKeyDown={(e) => e.key === "Escape" && setIsExpanded(false)}
+					role="dialog"
+					aria-modal="true"
+				>
+					<div
+						className="proj-modal"
+						onClick={(e) => e.stopPropagation()}
+						onKeyDown={() => {}}
+						role="document"
+					>
+						{/* Modal Header */}
+						<div className="proj-modal-header">
+							<div>
+								<span className="proj-modal-subtitle">
+									{project.subtitle}
+								</span>
+								<h3 className="proj-modal-title">{project.title}</h3>
+							</div>
 							<button
+								type="button"
 								onClick={() => setIsExpanded(false)}
-								className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+								className="proj-modal-close"
 							>
-								<X className="w-6 h-6" />
+								<X className="w-5 h-5" />
 							</button>
 						</div>
 
-						{/* 24. Conteúdo do modal */}
-						<div className="p-6 space-y-6">
+						{/* Modal Content */}
+						<div className="proj-modal-content">
+							{/* Hero image */}
 							<img
 								src={project.image}
 								alt={project.title}
-								className="w-full h-64 object-cover rounded-lg"
+								className="proj-modal-image"
 							/>
 
-							<div>
-								<h4 className="text-lg font-semibold mb-2 text-blue-600">
-									Challenge
-								</h4>
-								<p className="text-gray-600">{project.details.challenge}</p>
-							</div>
-
-							<div>
-								<h4 className="text-lg font-semibold mb-2 text-blue-600">
-									Solution
-								</h4>
-								<p className="text-gray-600">{project.details.solution}</p>
-							</div>
-
-							<div>
-								<h4 className="text-lg font-semibold mb-2 text-blue-600">
-									Tech Stack
-								</h4>
-								<div className="flex flex-wrap gap-2">
-									{project.details.techStack.map((tech, index) => (
-										<span
-											// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-											key={index}
-											className="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm"
-										>
-											{tech}
-										</span>
-									))}
+							{/* Two-column: Challenge + Solution */}
+							<div className="proj-modal-grid">
+								<div className="proj-modal-section">
+									<div className="proj-modal-section-icon">
+										<Lightbulb className="w-4 h-4 text-blue-500" />
+									</div>
+									<h4 className="proj-modal-section-title">
+										The Challenge
+									</h4>
+									<p className="proj-modal-section-text">
+										{project.details.challenge}
+									</p>
+								</div>
+								<div className="proj-modal-section">
+									<div className="proj-modal-section-icon">
+										<Rocket className="w-4 h-4 text-blue-500" />
+									</div>
+									<h4 className="proj-modal-section-title">
+										The Solution
+									</h4>
+									<p className="proj-modal-section-text">
+										{project.details.solution}
+									</p>
 								</div>
 							</div>
 
-							<div>
-								<h4 className="text-lg font-semibold mb-2 text-blue-600">
-									Key Features
-								</h4>
-								<ul className="list-disc list-inside space-y-2 text-gray-600">
-									{project.details.features.map((feature, index) => (
-										// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-										<li key={index}>{feature}</li>
-									))}
-								</ul>
+							{/* Stack + Features side by side */}
+							<div className="proj-modal-grid">
+								<div className="proj-modal-section">
+									<div className="proj-modal-section-icon">
+										<Layers className="w-4 h-4 text-blue-500" />
+									</div>
+									<h4 className="proj-modal-section-title">
+										Tech Stack
+									</h4>
+									<div className="proj-modal-tags">
+										{project.details.techStack.map((tech) => (
+											<span key={tech} className="proj-modal-tag">
+												{tech}
+											</span>
+										))}
+									</div>
+								</div>
+								<div className="proj-modal-section">
+									<div className="proj-modal-section-icon">
+										<Code2 className="w-4 h-4 text-blue-500" />
+									</div>
+									<h4 className="proj-modal-section-title">
+										Key Deliverables
+									</h4>
+									<ul className="proj-modal-features">
+										{project.details.features.map((f) => (
+											<li key={f}>{f}</li>
+										))}
+									</ul>
+								</div>
 							</div>
 
-							<div className="flex gap-4">
+							{/* Actions */}
+							<div className="proj-modal-actions">
 								{project.demoLink ? (
 									<a
 										target="_blank"
 										href={project.demoLink}
-										className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors text-center"
+										className="proj-modal-btn-primary"
 										rel="noreferrer"
 									>
+										<ExternalLink className="w-4 h-4" />
 										Live Demo
 									</a>
 								) : (
-									// biome-ignore lint/a11y/useButtonType: <explanation>
 									<button
+										type="button"
 										disabled
-										className="flex-1 bg-gray-300 text-white py-2 px-4 rounded-lg cursor-not-allowed"
+										className="proj-modal-btn-disabled"
 									>
-										Development Stage
+										<Wrench className="w-4 h-4" />
+										In Development
 									</button>
 								)}
 								<a
 									target="_blank"
 									href={project.githubLink}
-									className="flex-1 border border-blue-600 text-blue-600 py-2 px-4 rounded-lg hover:bg-blue-50 transition-colors text-center"
+									className="proj-modal-btn-secondary"
 									rel="noreferrer"
 								>
-									View Code
+									<Github className="w-4 h-4" />
+									View Source
 								</a>
 							</div>
 						</div>
@@ -203,4 +240,4 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 	);
 };
 
-export default ProjectCard; // 25. Exporta o componente
+export default ProjectCard;
