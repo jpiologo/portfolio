@@ -11,7 +11,7 @@ const About = () => {
 	const yearsText = toWords(years);
 
 	return (
-		<section id="about" className="py-20 bg-gray-50">
+		<section id="about" className="py-20 bg-slate-50">
 			<div className="max-w-6xl mx-auto px-4">
 				<div className="grid md:grid-cols-2 gap-12 items-center">
 					<div>
@@ -32,11 +32,11 @@ const About = () => {
 
 						<div className="mt-8 grid grid-cols-2 gap-4">
 							<div className="text-center">
-								<div className="text-3xl font-bold text-indigo-600">{yearsLabel}</div>
+								<div className="text-3xl font-bold text-blue-600">{yearsLabel}</div>
 								<div className="text-sm text-gray-600">Years of Experience</div>
 							</div>
 							<div className="text-center">
-								<div className="text-3xl font-bold text-indigo-600">50+</div>
+								<div className="text-3xl font-bold text-blue-600">50+</div>
 								<div className="text-sm text-gray-600">Projects</div>
 							</div>
 						</div>

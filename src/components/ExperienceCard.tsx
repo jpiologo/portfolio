@@ -13,7 +13,7 @@ const ExperienceCard = ({ title, company, period, description }: ExperienceCardP
       <div className="flex justify-between items-start mb-2">
         <div>
           <h3 className="text-xl font-semibold">{title}</h3>
-          <p className="text-indigo-600">{company}</p>
+          <p className="text-blue-600">{company}</p>
         </div>
         <span className="text-gray-500">{period}</span>
       </div>

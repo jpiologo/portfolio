@@ -5,8 +5,8 @@ import { Github, Linkedin, Mail, MapPin, Phone } from 'lucide-react';
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const ContactInfo = ({ icon: Icon, title, content }: { icon: any; title: string; content: string }) => (
   <div className="flex items-center p-4 bg-white rounded-lg shadow-md">
-    <div className="p-3 bg-indigo-100 rounded-lg">
-      <Icon className="w-6 h-6 text-indigo-600" />
+    <div className="p-3 bg-blue-100 rounded-lg">
+      <Icon className="w-6 h-6 text-blue-600" />
     </div>
     <div className="ml-4">
       <h3 className="text-sm font-medium text-gray-500">{title}</h3>
@@ -73,7 +73,7 @@ const Contact = () => {
                 id="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Your Name"
                 required
               />
@@ -85,7 +85,7 @@ const Contact = () => {
                 id="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="your@email.com"
                 required
               />
@@ -97,14 +97,14 @@ const Contact = () => {
                 rows={4}
                 value={formData.message}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Your message..."
                 required
               />
             </div>
             <button
               type="submit"
-              className="w-full bg-indigo-600 text-white py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors"
+              className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors"
             >
               Send Message
             </button>

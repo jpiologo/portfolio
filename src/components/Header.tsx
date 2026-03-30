@@ -26,7 +26,7 @@ const Header = () => {
 						// biome-ignore lint/a11y/useValidAnchor: <explanation>
 						href="#"
 						className={`text-xl font-bold ${
-							isScrolled ? "text-indigo-600" : "text-white"
+							isScrolled ? "text-blue-600" : "text-white"
 						}`}
 					>
 						João Piologo
@@ -60,8 +60,8 @@ const NavLink = ({
 		href={href}
 		className={`transition-colors duration-300 ${
 			isScrolled
-				? "text-gray-600 hover:text-indigo-600"
-				: "text-white hover:text-indigo-200"
+				? "text-slate-600 hover:text-blue-600"
+				: "text-white hover:text-blue-200"
 		}`}
 	>
 		{children}

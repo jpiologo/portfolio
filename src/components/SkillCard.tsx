@@ -17,7 +17,7 @@ const SkillCard = ({ icon, title, skills }: SkillCardProps) => {
 				{skills.map((skill, index) => (
 					// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 					<li key={index} className="flex items-center text-gray-600">
-						<span className="w-2 h-2 bg-indigo-600 rounded-full mr-2" />
+						<span className="w-2 h-2 bg-blue-600 rounded-full mr-2" />
 						{skill}
 					</li>
 				))}

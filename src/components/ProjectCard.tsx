@@ -80,7 +80,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 							<span
 								// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 								key={index}
-								className="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm"
+								className="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm"
 							>
 								{tag}
 							</span>
@@ -91,7 +91,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 						{/* biome-ignore lint/a11y/useButtonType: <explanation> */}
 						<button
 							onClick={() => setIsExpanded(true)}
-							className="flex items-center gap-2 text-purple-600 hover:text-purple-700 transition-colors"
+							className="flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors"
 						>
 							<ChevronDown className="w-4 h-4" />
 							<span>View Details</span>
@@ -125,21 +125,21 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 							/>
 
 							<div>
-								<h4 className="text-lg font-semibold mb-2 text-purple-600">
+								<h4 className="text-lg font-semibold mb-2 text-blue-600">
 									Challenge
 								</h4>
 								<p className="text-gray-600">{project.details.challenge}</p>
 							</div>
 
 							<div>
-								<h4 className="text-lg font-semibold mb-2 text-purple-600">
+								<h4 className="text-lg font-semibold mb-2 text-blue-600">
 									Solution
 								</h4>
 								<p className="text-gray-600">{project.details.solution}</p>
 							</div>
 
 							<div>
-								<h4 className="text-lg font-semibold mb-2 text-purple-600">
+								<h4 className="text-lg font-semibold mb-2 text-blue-600">
 									Tech Stack
 								</h4>
 								<div className="flex flex-wrap gap-2">
@@ -147,7 +147,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 										<span
 											// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 											key={index}
-											className="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm"
+											className="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm"
 										>
 											{tech}
 										</span>
@@ -156,7 +156,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 							</div>
 
 							<div>
-								<h4 className="text-lg font-semibold mb-2 text-purple-600">
+								<h4 className="text-lg font-semibold mb-2 text-blue-600">
 									Key Features
 								</h4>
 								<ul className="list-disc list-inside space-y-2 text-gray-600">
@@ -172,7 +172,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 									<a
 										target="_blank"
 										href={project.demoLink}
-										className="flex-1 bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors text-center"
+										className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors text-center"
 										rel="noreferrer"
 									>
 										Live Demo
@@ -189,7 +189,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 								<a
 									target="_blank"
 									href={project.githubLink}
-									className="flex-1 border border-purple-600 text-purple-600 py-2 px-4 rounded-lg hover:bg-purple-50 transition-colors text-center"
+									className="flex-1 border border-blue-600 text-blue-600 py-2 px-4 rounded-lg hover:bg-blue-50 transition-colors text-center"
 									rel="noreferrer"
 								>
 									View Code

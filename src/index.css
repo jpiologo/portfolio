@@ -39,3 +39,343 @@ html {
 .modal-content::-webkit-scrollbar-thumb:hover {
   background: #a855f7;
 }
+
+/* ================================================================== */
+/*  Neural Network Skills Section                                      */
+/* ================================================================== */
+
+.nn-section {
+  position: relative;
+  background: #ffffff;
+  padding: 5rem 1rem 2rem;
+  overflow: hidden;
+}
+
+.nn-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 2;
+  padding: 0 1rem;
+}
+
+.nn-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.nn-subtitle {
+  color: #4b5563;
+  max-width: 38rem;
+  margin: 0 auto;
+  line-height: 1.6;
+  font-size: 1.05rem;
+}
+
+/* Container -------------------------------------------------------- */
+
+.nn-container {
+  position: relative;
+  height: 480px;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0;
+  background: linear-gradient(135deg, #0f172a 0%, #0a192f 50%, #020617 100%);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.12),
+    0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.nn-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.nn-nodes {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* Node wrapper (positioned) --------------------------------------- */
+
+.nn-wrapper {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.nn-wrapper:hover {
+  z-index: 10;
+}
+
+.nn-float {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+/* Dot -------------------------------------------------------------- */
+
+.nn-dot {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nn-dot-point {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--dot-color);
+  box-shadow:
+    0 0 8px var(--dot-color),
+    0 0 20px var(--dot-glow),
+    0 0 40px var(--dot-glow);
+  transition:
+    width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.35s ease,
+    box-shadow 0.4s ease;
+}
+
+.nn-dot-icon {
+  position: absolute;
+  width: 0;
+  height: 0;
+  color: var(--dot-color);
+  opacity: 0;
+  transition:
+    width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.35s ease;
+}
+
+/* Hover / active state */
+
+.nn-dot-active {
+  transform: scale(1.1);
+}
+
+.nn-dot-active .nn-dot-point {
+  width: 38px;
+  height: 38px;
+  opacity: 0.15;
+  box-shadow:
+    0 0 16px var(--dot-color),
+    0 0 40px var(--dot-glow),
+    0 0 80px var(--dot-glow);
+}
+
+.nn-dot-active .nn-dot-icon {
+  width: 22px;
+  height: 22px;
+  opacity: 1;
+  filter: drop-shadow(0 0 8px var(--dot-glow));
+}
+
+/* Tooltip ---------------------------------------------------------- */
+
+.nn-tooltip {
+  position: absolute;
+  width: 220px;
+  padding: 14px 16px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 12px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.nn-tooltip-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Tooltip horizontal positioning */
+.nn-tip-center { left: 50%; margin-left: -110px; }
+.nn-tip-left   { right: 100%; margin-right: 12px; left: auto; }
+.nn-tip-right  { left: 100%; margin-left: 12px; }
+
+/* Tooltip vertical positioning */
+.nn-tip-below { top: 100%; margin-top: 10px; }
+.nn-tip-above { bottom: 100%; margin-bottom: 10px; top: auto; }
+.nn-tip-above.nn-tooltip { transform: translateY(-6px); }
+.nn-tip-above.nn-tooltip-show { transform: translateY(0); }
+
+.nn-tooltip-cat {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+  opacity: 0.9;
+}
+
+.nn-tooltip-name {
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 6px;
+}
+
+.nn-tooltip-desc {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Legend ------------------------------------------------------------ */
+
+.nn-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+  z-index: 2;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.nn-legend-top {
+  margin-top: 1.25rem;
+  display: inline-flex;
+  background: rgba(245, 245, 245, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.nn-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nn-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.nn-legend-label {
+  font-size: 0.7rem;
+  color: #4b5563;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* ================================================================== */
+/*  Responsive                                                         */
+/* ================================================================== */
+
+@media (max-width: 1024px) {
+  .nn-container {
+    height: 440px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nn-section {
+    padding: 3rem 1rem 2rem;
+  }
+
+  .nn-title {
+    font-size: 2rem;
+  }
+
+  .nn-container {
+    height: 400px;
+  }
+
+  .nn-tooltip {
+    width: 180px;
+    padding: 10px 12px;
+  }
+
+  .nn-tooltip-name {
+    font-size: 0.9rem;
+  }
+
+  .nn-tooltip-desc {
+    font-size: 0.75rem;
+  }
+
+  .nn-legend {
+    gap: 10px;
+    padding: 8px 14px;
+    border-radius: 12px;
+  }
+
+  .nn-legend-label {
+    font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .nn-container {
+    height: 360px;
+  }
+
+  .nn-dot {
+    width: 34px;
+    height: 34px;
+  }
+
+  .nn-dot-point {
+    width: 8px;
+    height: 8px;
+  }
+
+  .nn-dot-active .nn-dot-point {
+    width: 30px;
+    height: 30px;
+  }
+
+  .nn-dot-active .nn-dot-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .nn-legend {
+    gap: 6px;
+    padding: 6px 10px;
+    bottom: 8px;
+  }
+
+  .nn-legend-label {
+    font-size: 0.55rem;
+  }
+}
