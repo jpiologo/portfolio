@@ -19,13 +19,13 @@ const About = () => {
 						<div className="space-y-4">
 							<p className="text-gray-600 leading-relaxed">
 								With over {yearsText} years of hands-on experience in full-stack
-								development and graduating in Software Engineering, I specialize
-								in crafting scalable, high-performance applications using
-								cutting-edge technologies.
+								development and graduated at Software Engineering, my expertise spans across
+								web development, backend development and CI/CD pipelines. I'm also a specialist
+								at TOTVS Fluig plataform.
 							</p>
 							<p className="text-gray-600 leading-relaxed">
 								I thrive on tackling complex challenges and delivering
-								innovative solutions that make a tangible impact. Whether it’s
+								solutions that make a tangible impact. Whether it’s
 								building responsive, user-focused interfaces or engineering efficient, server-side systems.
 							</p>
 						</div>

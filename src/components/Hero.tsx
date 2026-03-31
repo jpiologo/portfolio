@@ -29,15 +29,6 @@ const CODE_STYLES = [
 		letterSpacing: "-0.02em",
 		textTransform: "lowercase",
 	},
-	{
-		color: "#fbbf24", // Amber
-		shadow: "0 0 25px rgba(251,191,36,0.5)",
-		fontFamily: "system-ui, sans-serif",
-		fontWeight: 300,
-		fontStyle: "normal",
-		letterSpacing: "0.15em",
-		textTransform: "uppercase",
-	},
 ];
 
 const Hero = () => {

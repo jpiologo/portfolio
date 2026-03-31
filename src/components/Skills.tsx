@@ -17,7 +17,8 @@ const Skills: FC = () => {
       <div className="nn-header">
         <h2 className="nn-title">Technical Skills</h2>
         <p className="nn-subtitle">
-          End-to-end expertise across modern technologies and engineering practices.
+          End-to-end expertise across modern technologies and engineering practices. <br /><br /> 
+          <span className="text-gray-600">(Hover for more)</span>
         </p>
 
         <div className="nn-legend nn-legend-top">
