@@ -41,6 +41,9 @@ const Header = () => {
 						<NavLink href="#projects" isScrolled={isScrolled}>
 							Projects
 						</NavLink>
+						<NavLink href="#testimonials" isScrolled={isScrolled}>
+							Testimonials
+						</NavLink>
 						<NavLink href="#contact" isScrolled={isScrolled}>
 							Contact
 						</NavLink>
