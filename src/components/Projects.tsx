@@ -155,7 +155,7 @@ const Projects = () => {
 							Featured Projects
 						</h2>
 						<p className="text-slate-500 max-w-xl mx-auto text-lg">
-							Real solutions built end-to-end — from architecture
+							Real solutions that I built end-to-end — from architecture
 							decisions to deployed products.
 						</p>
 					</div>
