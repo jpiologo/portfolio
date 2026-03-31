@@ -1,3 +1,4 @@
+import { useState } from "react";
 import ProjectCard from "./ProjectCard";
 import fokusImage from "../assets/Fokus.png";
 import weatherImage from "../assets/weatherApp.png";
@@ -373,6 +374,10 @@ const projects = [
 ];
 
 const Projects = () => {
+	const [visibleCount, setVisibleCount] = useState(3);
+
+	const visibleProjects = projects.slice(0, visibleCount);
+
 	return (
 		<>
 			<section id="projects" className="py-16 bg-slate-50">
@@ -387,10 +392,21 @@ const Projects = () => {
 					</div>
 
 					<div className="grid md:grid-cols-2 gap-8">
-						{projects.map((project) => (
+						{visibleProjects.map((project) => (
 							<ProjectCard key={project.title} project={project} />
 						))}
 					</div>
+
+					{visibleCount < projects.length && (
+						<div className="mt-14 text-center">
+							<button
+								onClick={() => setVisibleCount((prev) => prev + 3)}
+								className="px-8 py-3 bg-white text-slate-800 font-semibold rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-blue-400 hover:text-blue-600 transition-all duration-300 transform hover:-translate-y-1"
+							>
+								Load More Projects
+							</button>
+						</div>
+					)}
 				</div>
 			</section>
 		</>

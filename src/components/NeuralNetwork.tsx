@@ -49,7 +49,7 @@ type NodeSize = "lg" | "md" | "sm";
 type TechNode = {
   id: string;
   name: string;
-  icon: ComponentType<{ className?: string }>;
+  icon: ComponentType<{ className?: string; style?: React.CSSProperties }>;
   description: string;
   category: string;
   color: string;
@@ -240,10 +240,6 @@ function drawConnections(
 
       const pulse = Math.sin(time * 0.8 + i * 0.5 + j * 0.3) * 0.25 + 0.75;
       const alpha = (isHi ? base * 5 : base) * pulse * categoryDim;
-
-      const color = isHi
-        ? positions[hovered!]?.color || "148,163,184"
-        : "148,163,184";
 
       // Parse hex to rgb for the highlighted color
       let r = 148, g = 163, b = 184;
@@ -441,6 +437,65 @@ const NeuralNetwork: FC<NeuralNetworkProps> = ({ activeCategory }) => {
     mousePosRef.current = null;
   }, []);
 
+  /* ---- touch tracking ---- */
+  const handleTouchNode = useCallback((clientX: number, clientY: number) => {
+    const container = containerRef.current;
+    if (!container) return;
+    const r = container.getBoundingClientRect();
+    const tx = clientX - r.left;
+    const ty = clientY - r.top;
+
+    mousePosRef.current = { x: tx, y: ty };
+
+    const { w, h } = dimRef.current;
+    if (w === 0 || h === 0) return;
+    
+    // Using a more generous touch threshold compared to strict point hovering
+    const maxTouchDist = Math.max(80, Math.min(w, h) * 0.15);
+    
+    let closestNode: number | null = null;
+    let minDist = maxTouchDist;
+
+    for (let i = 0; i < NODES.length; i++) {
+        // We use base positions since the layout is stable enough around the float origin
+        const nx = (NODES[i].baseX / 100) * w;
+        const ny = (NODES[i].baseY / 100) * h;
+        const dx = tx - nx;
+        const dy = ty - ny;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        
+        if (d < minDist) {
+            minDist = d;
+            closestNode = i;
+        }
+    }
+
+    if (closestNode !== hoveredRef.current) {
+        setHoveredNode(closestNode);
+        hoveredRef.current = closestNode;
+    }
+  }, []);
+
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    if (e.touches.length > 0) {
+      handleTouchNode(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  }, [handleTouchNode]);
+
+  const onTouchMove = useCallback((e: React.TouchEvent) => {
+    if (e.touches.length > 0) {
+      // Intentionally not preventing default to preserve some page scrolling if drag starts outside node,
+      // but keeping node tracking smooth.
+      handleTouchNode(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  }, [handleTouchNode]);
+
+  const onTouchEnd = useCallback(() => {
+    mousePosRef.current = null;
+    setHoveredNode(null);
+    hoveredRef.current = null;
+  }, []);
+
   /* ---- hover handlers ---- */
   const enter = useCallback((i: number) => {
     setHoveredNode(i);
@@ -473,9 +528,13 @@ const NeuralNetwork: FC<NeuralNetworkProps> = ({ activeCategory }) => {
   return (
     <div
       ref={containerRef}
-      className="nn-container"
+      className="nn-container touch-pan-y"
       onMouseMove={onMove}
       onMouseLeave={onLeave}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+      onTouchCancel={onTouchEnd}
     >
       <canvas ref={canvasRef} className="nn-canvas" />
 
