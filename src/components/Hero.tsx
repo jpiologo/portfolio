@@ -114,7 +114,6 @@ const Hero = () => {
 							{/* Invisible placeholder for width to prevent layout shift */}
 							<span className="invisible font-light tracking-[0.15em] uppercase">CODE</span>
 						</span>
-						<span>.</span>
 					</p>
 					<div className="flex flex-wrap gap-4 justify-center">
 						<a
