@@ -1,5 +1,3 @@
-import React from "react";
-import { Code2, Database, Server } from "lucide-react";
 import { toWords } from "number-to-words";
 
 const About = () => {

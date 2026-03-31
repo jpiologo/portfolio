@@ -32,7 +32,7 @@ const CODE_STYLES = [
 ];
 
 const Hero = () => {
-	const textToType = "Full Stack Developer";
+	const textToType = "Full Stack Developer;";
 	const [typedText, setTypedText] = useState("");
 	const [styleIndex, setStyleIndex] = useState(0);
 

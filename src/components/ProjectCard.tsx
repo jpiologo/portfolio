@@ -19,7 +19,7 @@ interface ProjectCardProps {
 		image: string;
 		tags: string[];
 		demoLink?: string;
-		githubLink: string;
+		githubLink?: string;
 		details: {
 			challenge: string;
 			solution: string;
@@ -50,33 +50,37 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 						className="proj-card-image"
 					/>
 					<div className="proj-card-image-overlay">
-						<div className="proj-card-image-actions">
-							{project.demoLink ? (
-								<a
-									target="_blank"
-									href={project.demoLink}
-									className="proj-card-icon-btn"
-									rel="noreferrer"
-									onClick={(e) => e.stopPropagation()}
-								>
-									<ExternalLink className="w-4 h-4" />
-								</a>
-							) : (
-								<span className="proj-card-status">
-									<Wrench className="w-3.5 h-3.5" />
-									In Development
-								</span>
-							)}
-							<a
-								target="_blank"
-								href={project.githubLink}
-								className="proj-card-icon-btn"
-								rel="noreferrer"
-								onClick={(e) => e.stopPropagation()}
-							>
-								<Github className="w-4 h-4" />
-							</a>
-						</div>
+						{(project.demoLink || project.githubLink || project.title === "CleanUp") && (
+							<div className="proj-card-image-actions">
+								{project.demoLink ? (
+									<a
+										target="_blank"
+										href={project.demoLink}
+										className="proj-card-icon-btn"
+										rel="noreferrer"
+										onClick={(e) => e.stopPropagation()}
+									>
+										<ExternalLink className="w-4 h-4" />
+									</a>
+								) : project.title === "CleanUp" ? (
+									<span className="proj-card-status">
+										<Wrench className="w-3.5 h-3.5" />
+										In Development
+									</span>
+								) : null}
+								{project.githubLink && (
+									<a
+										target="_blank"
+										href={project.githubLink}
+										className="proj-card-icon-btn"
+										rel="noreferrer"
+										onClick={(e) => e.stopPropagation()}
+									>
+										<Github className="w-4 h-4" />
+									</a>
+								)}
+							</div>
+						)}
 					</div>
 				</div>
 
@@ -201,37 +205,41 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 							</div>
 
 							{/* Actions */}
-							<div className="proj-modal-actions">
-								{project.demoLink ? (
-									<a
-										target="_blank"
-										href={project.demoLink}
-										className="proj-modal-btn-primary"
-										rel="noreferrer"
-									>
-										<ExternalLink className="w-4 h-4" />
-										Live Demo
-									</a>
-								) : (
-									<button
-										type="button"
-										disabled
-										className="proj-modal-btn-disabled"
-									>
-										<Wrench className="w-4 h-4" />
-										In Development
-									</button>
-								)}
-								<a
-									target="_blank"
-									href={project.githubLink}
-									className="proj-modal-btn-secondary"
-									rel="noreferrer"
-								>
-									<Github className="w-4 h-4" />
-									View Source
-								</a>
-							</div>
+							{(project.demoLink || project.githubLink || project.title === "CleanUp") && (
+								<div className="proj-modal-actions">
+									{project.demoLink ? (
+										<a
+											target="_blank"
+											href={project.demoLink}
+											className="proj-modal-btn-primary"
+											rel="noreferrer"
+										>
+											<ExternalLink className="w-4 h-4" />
+											Live Demo
+										</a>
+									) : project.title === "CleanUp" ? (
+										<button
+											type="button"
+											disabled
+											className="proj-modal-btn-disabled"
+										>
+											<Wrench className="w-4 h-4" />
+											In Development
+										</button>
+									) : null}
+									{project.githubLink && (
+										<a
+											target="_blank"
+											href={project.githubLink}
+											className="proj-modal-btn-secondary"
+											rel="noreferrer"
+										>
+											<Github className="w-4 h-4" />
+											View Source
+										</a>
+									)}
+								</div>
+							)}
 						</div>
 					</div>
 				</div>
