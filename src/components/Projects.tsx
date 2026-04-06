@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProjectCard from "./ProjectCard";
 import fokusImage from "../assets/Fokus.png";
 import weatherImage from "../assets/weatherApp.png";
@@ -374,9 +374,26 @@ const projects = [
 ];
 
 const Projects = () => {
-	const [visibleCount, setVisibleCount] = useState(3);
+	const [visibleCount, setVisibleCount] = useState(4);
+	const [isMobile, setIsMobile] = useState(false);
+
+	useEffect(() => {
+		const checkMobile = () => {
+			const mobile = window.innerWidth < 768;
+			setIsMobile(mobile);
+			// Set initial visible count based on screen size on first load
+			if (visibleCount === 4 && mobile) {
+				setVisibleCount(2);
+			}
+		};
+
+		checkMobile();
+		window.addEventListener("resize", checkMobile);
+		return () => window.removeEventListener("resize", checkMobile);
+	}, []);
 
 	const visibleProjects = projects.slice(0, visibleCount);
+	const increment = isMobile ? 2 : 4;
 
 	return (
 		<>
@@ -400,7 +417,7 @@ const Projects = () => {
 					{visibleCount < projects.length && (
 						<div className="mt-14 text-center">
 							<button
-								onClick={() => setVisibleCount((prev) => prev + 3)}
+								onClick={() => setVisibleCount((prev) => prev + increment)}
 								className="px-8 py-3 bg-white text-slate-800 font-semibold rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-blue-400 hover:text-blue-600 transition-all duration-300 transform hover:-translate-y-1"
 							>
 								Load More Projects
