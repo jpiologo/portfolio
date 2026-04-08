@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { X, CheckCircle2, AlertCircle, Send } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import type { CommentInsert } from '../lib/types';
