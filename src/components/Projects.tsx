@@ -400,10 +400,10 @@ const Projects = () => {
 			<section id="projects" className="py-16 bg-slate-50">
 				<div className="max-w-6xl mx-auto px-4">
 					<div className="text-center mb-14">
-						<h2 className="text-4xl font-bold mb-3 text-slate-900 tracking-tight">
+						<h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 tracking-tight">
 							Featured Projects
 						</h2>
-						<p className="text-slate-500 max-w-xl mx-auto text-lg">
+						<p className="text-xl text-slate-500 leading-relaxed font-light max-w-xl mx-auto">
 							Here you can find <b>just some</b> of the solutions that I've built end-to-end — from architecture decisions to deployed products.
 						</p>
 					</div>

@@ -2,15 +2,15 @@ import type React from 'react';
 import { useState } from 'react';
 import { Github, Linkedin, Mail, MapPin, Phone } from 'lucide-react';
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+// biome-ignore lint/suspicious/noExplicitAny: icon prop accepts any Lucide component
 const ContactInfo = ({ icon: Icon, title, content }: { icon: any; title: string; content: string }) => (
-  <div className="flex items-center p-4 bg-white rounded-lg shadow-md">
-    <div className="p-3 bg-blue-100 rounded-lg">
+  <div className="flex items-center p-4 bg-white rounded-lg shadow-sm border border-slate-100">
+    <div className="p-3 bg-blue-50 rounded-lg">
       <Icon className="w-6 h-6 text-blue-600" />
     </div>
     <div className="ml-4">
-      <h3 className="text-sm font-medium text-gray-500">{title}</h3>
-      <p className="text-base font-semibold text-gray-900">{content}</p>
+      <h3 className="text-sm font-medium text-slate-500">{title}</h3>
+      <p className="text-base font-semibold text-slate-900">{content}</p>
     </div>
   </div>
 );
@@ -40,8 +40,8 @@ const Contact = () => {
     <section id="contact" className="py-20">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">Get in Touch</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 tracking-tight">Get in Touch</h2>
+          <p className="text-xl text-slate-500 leading-relaxed font-light max-w-2xl mx-auto">
             I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.
           </p>
         </div>

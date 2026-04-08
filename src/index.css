@@ -2,6 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ================================================================== */
+/*  GLOBAL TYPE SYSTEM                                                  */
+/*  Single source of truth for typography across the entire portfolio. */
+/*                                                                      */
+/*  Scale:                                                              */
+/*    --type-display  : 2.75rem / 700  — section headings (h2)         */
+/*    --type-title    : 1.5rem  / 700  — card/modal titles (h3)        */
+/*    --type-subtitle : 1rem    / 500  — lead / subtitle copy           */
+/*    --type-body     : 0.9rem  / 400  — general body copy              */
+/*    --type-label    : 0.72rem / 600  — tags, chip labels, eyebrows    */
+/*    --type-caption  : 0.68rem / 500  — meta, small hints              */
+/*                                                                      */
+/*  Colors:                                                             */
+/*    --color-ink       : #0f172a  — primary heading text               */
+/*    --color-ink-sub   : #475569  — subtitle / secondary text          */
+/*    --color-ink-muted : #94a3b8  — body copy, descriptions            */
+/*    --color-accent    : #2563eb  — links, active states, accent marks */
+/*    --color-surface   : #f8fafc  — shared light section background    */
+/* ================================================================== */
+
+:root {
+  --type-display   : 700 2.75rem / 1.1 system-ui, sans-serif;
+  --type-title     : 700 1.5rem  / 1.2 system-ui, sans-serif;
+  --type-subtitle  : 300 1.1rem  / 1.65 system-ui, sans-serif;
+  --type-body      : 400 0.9rem  / 1.6 system-ui, sans-serif;
+  --type-label     : 600 0.72rem / 1 system-ui, sans-serif;
+  --type-caption   : 500 0.68rem / 1 system-ui, sans-serif;
+
+  --color-ink       : #0f172a;
+  --color-ink-sub   : #475569;
+  --color-ink-muted : #94a3b8;
+  --color-accent    : #2563eb;
+  --color-surface   : #f8fafc;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -921,5 +956,348 @@ html {
 
   .proj-modal-actions {
     flex-direction: column;
+  }
+}
+
+/* ================================================================== */
+/*  Skills Section – Bento Grid                                        */
+/* ================================================================== */
+
+.sk-section {
+  position: relative;
+  background: #f1f5f9;
+  padding: 6rem 1.5rem 7rem;
+  overflow: hidden;
+}
+
+/* Ambient glow blobs */
+.sk-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(130px);
+  opacity: 0.07;
+}
+
+.sk-glow-1 {
+  width: 700px;
+  height: 700px;
+  background: #3b82f6;
+  top: -180px;
+  left: -120px;
+}
+
+.sk-glow-2 {
+  width: 500px;
+  height: 500px;
+  background: #818cf8;
+  bottom: -80px;
+  right: -80px;
+}
+
+/* ---- Header ------------------------------------------------------ */
+
+.sk-inner {
+  max-width: 72rem;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.sk-header {
+  margin-bottom: 2.5rem;
+}
+
+.sk-eyebrow {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #22d3ee;
+  margin-bottom: 0.6rem;
+}
+
+.sk-title {
+  font-size: 2.75rem;
+  font-weight: 700;
+  color: var(--color-ink);
+  letter-spacing: -0.03em;
+  margin-bottom: 0.75rem;
+  line-height: 1.1;
+}
+
+.sk-subtitle {
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--color-ink-sub);
+  line-height: 1.65;
+  max-width: 34rem;
+}
+
+/* ---- Filter chips ------------------------------------------------ */
+
+.sk-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 2.5rem;
+}
+
+.sk-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  outline: none;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--color-ink-sub);
+  white-space: nowrap;
+}
+
+.sk-chip:hover {
+  border-color: var(--chip-color, #cbd5e1);
+  background: var(--chip-glow, #f1f5f9);
+  color: var(--color-ink);
+}
+
+.sk-chip-active {
+  border-color: var(--chip-color, #94a3b8);
+  background: var(--chip-glow, #f1f5f9);
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+/* "All" chip — neutral accent */
+.sk-chip-all-active {
+  --chip-color: #cbd5e1;
+  --chip-glow: #f1f5f9;
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.sk-chip-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: box-shadow 0.25s ease;
+}
+
+/* ---- Bento grid -------------------------------------------------- */
+
+.sk-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.sk-card[data-span="2"] {
+  grid-column: span 2;
+}
+
+/* ---- Cards ------------------------------------------------------- */
+
+.sk-card {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition:
+    opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    filter 0.35s ease;
+  overflow: hidden;
+  user-select: none;
+}
+
+.sk-card:hover {
+  border-color: var(--cat-border);
+  box-shadow: 0 8px 24px var(--cat-glow), 0 1px 3px rgba(0,0,0,0.06);
+  transform: translateY(-2px);
+}
+
+.sk-card:focus-visible {
+  outline: 2px solid var(--cat-color);
+  outline-offset: 2px;
+}
+
+/* Active (spotlighted) card */
+.sk-card-lit {
+  border-color: var(--cat-border);
+  box-shadow: 0 8px 32px var(--cat-glow), 0 1px 3px rgba(0,0,0,0.06);
+  transform: translateY(-2px);
+}
+
+/* Dimmed cards */
+.sk-card-dim {
+  opacity: 0.2;
+  filter: grayscale(0.8);
+  transform: scale(0.985);
+}
+
+/* Top accent gradient bar */
+.sk-card-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cat-color), transparent 80%);
+  border-radius: 16px 16px 0 0;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.sk-card:hover .sk-card-bar,
+.sk-card-lit .sk-card-bar {
+  opacity: 1;
+}
+
+/* Card heading row */
+.sk-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.1rem;
+}
+
+.sk-card-cat {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--cat-color);
+}
+
+.sk-card-count {
+  font-size: 0.66rem;
+  font-weight: 600;
+  color: var(--color-ink-muted);
+  background: var(--color-surface);
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+}
+
+/* ---- Skill pills ------------------------------------------------- */
+
+.sk-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.sk-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  background: var(--color-surface);
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.sk-card:hover .sk-pill,
+.sk-card-lit .sk-pill {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.sk-pill-icon {
+  width: 14px;
+  height: 14px;
+  color: var(--cat-color);
+  opacity: 0.75;
+  flex-shrink: 0;
+  transition: opacity 0.2s ease;
+}
+
+.sk-card:hover .sk-pill-icon,
+.sk-card-lit .sk-pill-icon {
+  opacity: 1;
+}
+
+.sk-pill-name {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+
+/* ================================================================== */
+/*  Skills – Responsive                                                */
+/* ================================================================== */
+
+@media (max-width: 1024px) {
+  .sk-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sk-card[data-span="2"] {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .sk-section {
+    padding: 4rem 1rem 5rem;
+  }
+
+  .sk-title {
+    font-size: 2rem;
+  }
+
+  .sk-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .sk-card[data-span="2"] {
+    grid-column: span 2;
+  }
+
+  .sk-card {
+    padding: 1.1rem;
+  }
+
+  .sk-pill-name {
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 540px) {
+  .sk-grid {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+
+  .sk-card[data-span="2"] {
+    grid-column: span 1;
+  }
+
+  .sk-title {
+    font-size: 1.75rem;
+  }
+
+  .sk-filters {
+    gap: 6px;
+  }
+
+  .sk-chip {
+    padding: 5px 10px;
+    font-size: 0.68rem;
   }
 }
