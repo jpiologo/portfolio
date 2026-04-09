@@ -150,7 +150,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 							<div className="proj-modal-grid">
 								<div className="proj-modal-section">
 									<div className="proj-modal-section-icon">
-										<Lightbulb className="w-4 h-4 text-blue-500" />
+										<Lightbulb className="w-4 h-4 text-accent-secondary" />
 									</div>
 									<h4 className="proj-modal-section-title">
 										The Challenge
@@ -161,7 +161,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 								</div>
 								<div className="proj-modal-section">
 									<div className="proj-modal-section-icon">
-										<Rocket className="w-4 h-4 text-blue-500" />
+										<Rocket className="w-4 h-4 text-accent-secondary" />
 									</div>
 									<h4 className="proj-modal-section-title">
 										The Solution
@@ -176,7 +176,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 							<div className="proj-modal-grid">
 								<div className="proj-modal-section">
 									<div className="proj-modal-section-icon">
-										<Layers className="w-4 h-4 text-blue-500" />
+										<Layers className="w-4 h-4 text-accent-secondary" />
 									</div>
 									<h4 className="proj-modal-section-title">
 										Tech Stack
@@ -191,7 +191,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 								</div>
 								<div className="proj-modal-section">
 									<div className="proj-modal-section-icon">
-										<Code2 className="w-4 h-4 text-blue-500" />
+										<Code2 className="w-4 h-4 text-accent-secondary" />
 									</div>
 									<h4 className="proj-modal-section-title">
 										Key Deliverables
