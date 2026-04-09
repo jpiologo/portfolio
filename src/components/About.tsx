@@ -8,21 +8,21 @@ const About = () => {
   const yearsText = toWords(years);
 
   return (
-    <section id="about" className="py-20 bg-slate-50">
+    <section id="about" className="py-20 bg-background-base">
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 tracking-tight">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-text-primary tracking-tight">
               About Me
             </h2>
             <div className="space-y-4">
-              <p className="text-xl text-slate-500 leading-relaxed font-light">
+              <p className="text-xl text-text-muted leading-relaxed font-light">
                 With over {yearsText} years of hands-on experience in full-stack
                 development and graduated at Software Engineering, my expertise spans across
                 web development, backend development and CI/CD pipelines. I'm also a specialist
                 at TOTVS Fluig plataform.
               </p>
-              <p className="text-xl text-slate-500 leading-relaxed font-light">
+              <p className="text-xl text-text-muted leading-relaxed font-light">
                 I thrive on tackling complex challenges and delivering
                 solutions that make a tangible impact. Whether it's
                 building responsive, user-focused interfaces or engineering efficient, server-side systems.
@@ -31,12 +31,12 @@ const About = () => {
 
             <div className="mt-8 grid grid-cols-2 gap-4">
               <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600">{yearsLabel}</div>
-                <div className="text-sm font-medium text-slate-500 mt-1">Years of Experience</div>
+                <div className="text-3xl font-bold text-accent-secondary">{yearsLabel}</div>
+                <div className="text-sm font-medium text-text-muted mt-1">Years of Experience</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600">50+</div>
-                <div className="text-sm font-medium text-slate-500 mt-1">Projects</div>
+                <div className="text-3xl font-bold text-accent-secondary">50+</div>
+                <div className="text-sm font-medium text-text-muted mt-1">Projects</div>
               </div>
             </div>
           </div>

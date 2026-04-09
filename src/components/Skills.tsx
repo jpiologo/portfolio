@@ -69,7 +69,7 @@ const CATEGORIES: Category[] = [
   {
     id: "languages",
     name: "Languages",
-    color: "#0891b2",
+    color: "#22d3ee",
     span: 1,
     skills: [
       { name: "JavaScript", icon: SiJavascript },
@@ -80,7 +80,7 @@ const CATEGORIES: Category[] = [
   {
     id: "frontend",
     name: "Frontend",
-    color: "#7c3aed",
+    color: "#a78bfa",
     span: 2,
     skills: [
       { name: "React.js",    icon: SiReact },
@@ -92,7 +92,7 @@ const CATEGORIES: Category[] = [
   {
     id: "backend",
     name: "Backend",
-    color: "#059669",
+    color: "#34d399",
     span: 2,
     skills: [
       { name: "Node.js",    icon: SiNodedotjs },
@@ -105,7 +105,7 @@ const CATEGORIES: Category[] = [
   {
     id: "database",
     name: "Database & Infra",
-    color: "#b45309",
+    color: "#fbbf24",
     span: 1,
     skills: [
       { name: "PostgreSQL", icon: SiPostgresql },
@@ -119,7 +119,7 @@ const CATEGORIES: Category[] = [
   {
     id: "devtools",
     name: "Dev Tools",
-    color: "#be123c",
+    color: "#fb7185",
     span: 1,
     skills: [
       { name: "Biome",   icon: SiBiome },
@@ -130,7 +130,7 @@ const CATEGORIES: Category[] = [
   {
     id: "practices",
     name: "Best Practices",
-    color: "#0369a1",
+    color: "#38bdf8",
     span: 1,
     skills: [
       { name: "RESTful APIs", icon: FaGears },
@@ -144,7 +144,7 @@ const CATEGORIES: Category[] = [
   {
     id: "vcs",
     name: "Version Control",
-    color: "#4338ca",
+    color: "#818cf8",
     span: 1,
     skills: [
       { name: "Git",              icon: SiGit },
@@ -168,6 +168,8 @@ const Skills: FC = () => {
 
   return (
     <section id="skills" className="sk-section">
+      <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-accent-primary/10 rounded-full blur-[120px] pointer-events-none transform translate-x-1/3 -translate-y-1/3" />
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent-primary/5 rounded-full blur-[100px] pointer-events-none transform -translate-x-1/3 translate-y-1/3" />
       <div className="sk-inner">
         {/* Header */}
         <header className="sk-header">

@@ -47,7 +47,7 @@ const Header = () => {
 		<>
 			<header
 				className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-					isScrolled ? "bg-white shadow-md py-4" : "bg-transparent py-4 md:py-6"
+					isScrolled ? "bg-background-elevated shadow-md py-4" : "bg-transparent py-4 md:py-6"
 				}`}
 			>
 				<nav className="max-w-7xl mx-auto px-4">
@@ -57,7 +57,7 @@ const Header = () => {
 							onClick={toggleMenu}
 							className={`md:hidden p-2 rounded-lg transition-colors ${
 								isScrolled
-									? "text-slate-600 hover:bg-slate-100"
+									? "text-text-muted hover:bg-background-surface"
 									: "text-white hover:bg-white/10"
 							}`}
 							aria-label="Toggle menu"
@@ -70,7 +70,7 @@ const Header = () => {
 							// biome-ignore lint/a11y/useValidAnchor: <explanation>
 							href="#"
 							className={`text-xl font-bold ${
-								isScrolled ? "text-blue-600" : "text-white"
+								isScrolled ? "text-accent-secondary" : "text-white"
 							}`}
 						>
 							João Piologo
@@ -91,7 +91,7 @@ const Header = () => {
 			{/* Mobile Navigation Drawer Overlay */}
 			{isMobileMenuOpen && (
 				<div 
-					className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 md:hidden transition-opacity"
+					className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 md:hidden transition-opacity"
 					onClick={closeMenu}
 					aria-hidden="true"
 				/>
@@ -99,15 +99,15 @@ const Header = () => {
 
 			{/* Mobile Navigation Drawer Panel */}
 			<div
-				className={`fixed top-0 left-0 bottom-0 w-[280px] bg-white border-r border-slate-200 shadow-2xl z-50 md:hidden flex flex-col transition-transform duration-300 ease-in-out ${
+				className={`fixed top-0 left-0 bottom-0 w-[280px] bg-background-elevated border-r border-border-subtle shadow-2xl z-50 md:hidden flex flex-col transition-transform duration-300 ease-in-out ${
 					isMobileMenuOpen ? "translate-x-0 cursor-auto" : "-translate-x-full pointer-events-none"
 				}`}
 			>
-				<div className="p-4 flex justify-between items-center border-b border-slate-100">
-					<span className="text-xl font-bold text-slate-800">Menu</span>
+				<div className="p-4 flex justify-between items-center border-b border-border-subtle">
+					<span className="text-xl font-bold text-text-primary">Menu</span>
 					<button
 						onClick={closeMenu}
-						className="p-2 text-slate-500 hover:text-slate-900 transition-colors rounded-lg hover:bg-slate-100"
+						className="p-2 text-text-muted hover:text-text-primary transition-colors rounded-lg hover:bg-background-surface"
 						aria-label="Close menu"
 					>
 						<X size={24} />
@@ -119,7 +119,7 @@ const Header = () => {
 							key={link.href}
 							href={link.href}
 							onClick={closeMenu}
-							className="text-slate-600 hover:text-blue-600 text-lg font-medium transition-colors"
+							className="text-text-muted hover:text-accent-secondary text-lg font-medium transition-colors"
 						>
 							{link.label}
 						</a>
@@ -139,8 +139,8 @@ const NavLink = ({
 		href={href}
 		className={`transition-colors duration-300 ${
 			isScrolled
-				? "text-slate-600 hover:text-blue-600"
-				: "text-white hover:text-blue-200"
+				? "text-text-muted hover:text-accent-secondary"
+				: "text-white hover:text-accent-secondary"
 		}`}
 	>
 		{children}

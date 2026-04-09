@@ -397,13 +397,13 @@ const Projects = () => {
 
 	return (
 		<>
-			<section id="projects" className="py-16 bg-slate-50">
+			<section id="projects" className="py-16 bg-background-base">
 				<div className="max-w-6xl mx-auto px-4">
 					<div className="text-center mb-14">
-						<h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 tracking-tight">
+						<h2 className="text-4xl md:text-5xl font-bold mb-6 text-text-primary tracking-tight">
 							Featured Projects
 						</h2>
-						<p className="text-xl text-slate-500 leading-relaxed font-light max-w-xl mx-auto">
+						<p className="text-xl text-text-muted leading-relaxed font-light max-w-xl mx-auto">
 							Here you can find <b>just some</b> of the solutions that I've built end-to-end — from architecture decisions to deployed products.
 						</p>
 					</div>
@@ -418,7 +418,7 @@ const Projects = () => {
 						<div className="mt-14 text-center">
 							<button
 								onClick={() => setVisibleCount((prev) => prev + increment)}
-								className="px-8 py-3 bg-white text-slate-800 font-semibold rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-blue-400 hover:text-blue-600 transition-all duration-300 transform hover:-translate-y-1"
+								className="px-8 py-3 bg-background-surface text-text-primary font-semibold rounded-xl shadow-sm border border-border-subtle hover:shadow-md hover:border-accent-secondary hover:text-accent-secondary transition-all duration-300 transform hover:-translate-y-1"
 							>
 								Load More Projects
 							</button>

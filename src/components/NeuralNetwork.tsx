@@ -193,7 +193,7 @@ function drawParticles(
 
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(148, 163, 184, ${p.alpha})`;
+    ctx.fillStyle = `rgba(156, 163, 175, ${p.alpha})`;
     ctx.fill();
   }
 }
@@ -242,7 +242,7 @@ function drawConnections(
       const alpha = (isHi ? base * 5 : base) * pulse * categoryDim;
 
       // Parse hex to rgb for the highlighted color
-      let r = 148, g = 163, b = 184;
+      let r = 156, g = 163, b = 175;
       if (isHi && hovered !== null) {
         const hex = positions[hovered].color;
         r = parseInt(hex.slice(1, 3), 16);
@@ -285,7 +285,7 @@ function drawConnections(
         ctx.beginPath();
         ctx.moveTo(positions[i].x, positions[i].y);
         ctx.lineTo(mouse.x, mouse.y);
-        ctx.strokeStyle = `rgba(148,163,184,${alpha})`;
+        ctx.strokeStyle = `rgba(156,163,175,${alpha})`;
         ctx.lineWidth = 0.4;
         ctx.stroke();
       }

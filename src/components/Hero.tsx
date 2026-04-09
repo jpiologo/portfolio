@@ -76,10 +76,10 @@ const Hero = () => {
 	};
 
 	return (
-		<section className="min-h-[110vh] relative bg-gradient-to-br from-slate-900 via-blue-950 to-blue-900 text-white">
+		<section className="min-h-[110vh] relative bg-gradient-to-br from-background-base via-[#0E1A2E] to-accent-primary text-white">
 			{/* Background Overlays */}
 			<div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80')] bg-cover bg-center mix-blend-overlay opacity-20" />
-			<div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-50" />
+			<div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background-base" />
 
 			{/* Hero Content */}
 			<div className="relative max-w-6xl mx-auto px-4 pt-32 pb-20 flex flex-col items-center justify-center min-h-[110vh] gap-8">
@@ -87,9 +87,9 @@ const Hero = () => {
 				<div className="flex-1 text-center w-full max-w-4xl flex flex-col items-center justify-center">
 					<h1 className="text-5xl md:text-7xl font-extrabold mb-8 min-h-[5rem] md:min-h-[6.5rem] leading-tight md:leading-tight tracking-tight">
 						{renderTypedText()}
-						<span className="inline-block w-[4px] h-[3.5rem] md:h-[5rem] bg-white ml-2 animate-pulse align-middle mb-1 md:mb-2 rounded-full"></span>
+						<span className="inline-block w-[4px] h-[3.5rem] md:h-[5rem] bg-text-primary ml-2 animate-pulse align-middle mb-1 md:mb-2 rounded-full"></span>
 					</h1>
-					<p className="text-xl md:text-2xl text-slate-300/90 mb-10 max-w-2xl mx-auto leading-relaxed font-light tracking-wide flex items-center justify-center flex-wrap">
+					<p className="text-xl md:text-2xl text-text-muted mb-10 max-w-2xl mx-auto leading-relaxed font-light tracking-wide flex items-center justify-center flex-wrap">
 						<span>The one you need to transform your ideas into</span>
 						<span className="relative inline-flex items-center justify-center min-w-[5.5rem] ml-2">
 							{CODE_STYLES.map((style, index) => (
@@ -118,13 +118,13 @@ const Hero = () => {
 					<div className="flex flex-wrap gap-4 justify-center">
 						<a
 							href="#projects"
-							className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition-all transform hover:scale-105"
+							className="px-8 py-4 bg-accent-primary hover:bg-accent-hover rounded-lg font-semibold transition-all transform hover:scale-105"
 						>
 							View My Work
 						</a>
 						<a
 							href="#contact"
-							className="px-8 py-4 bg-transparent border-2 border-white hover:bg-white hover:text-blue-900 rounded-lg font-semibold transition-all"
+							className="px-8 py-4 bg-transparent border-2 border-text-primary hover:bg-text-primary hover:text-background-base rounded-lg font-semibold transition-all"
 						>
 							Get in Touch
 						</a>
