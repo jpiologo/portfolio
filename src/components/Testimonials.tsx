@@ -59,9 +59,9 @@ const Testimonials = () => {
           </div>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="group flex items-center justify-center gap-2 bg-background-elevated border border-border-subtle shadow-sm hover:shadow-md hover:border-accent-secondary text-text-muted hover:text-accent-secondary px-6 py-4 rounded-full font-bold transition-all shrink-0"
+            className="group btn-secondary shrink-0"
           >
-            <MessageSquarePlus className="w-5 h-5 text-accent-secondary group-hover:scale-110 transition-transform" />
+            <MessageSquarePlus className="w-5 h-5 group-hover:scale-110 transition-transform" />
             <span>Leave a comment!</span>
           </button>
         </div>
@@ -80,7 +80,7 @@ const Testimonials = () => {
             <p className="text-text-muted text-center max-w-md text-lg leading-relaxed">{error}</p>
             <button 
               onClick={fetchComments}
-              className="mt-8 px-8 py-3 bg-background-surface hover:bg-background-base text-text-muted font-bold rounded-full transition-colors border border-border-subtle"
+              className="mt-8 btn-secondary"
             >
               Try Again
             </button>
@@ -96,7 +96,7 @@ const Testimonials = () => {
             </p>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="bg-accent-primary hover:bg-accent-hover text-text-primary px-8 py-4 rounded-full font-bold transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+              className="btn-primary"
             >
               Write the first comment
             </button>

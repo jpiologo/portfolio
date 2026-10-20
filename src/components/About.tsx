@@ -1,4 +1,5 @@
 import { toWords } from "number-to-words";
+import profileImage from "../assets/eutotvs.jpeg";
 
 const About = () => {
   const startYear = 2021;
@@ -22,11 +23,6 @@ const About = () => {
                 web development, backend development and CI/CD pipelines. I'm also a specialist
                 at TOTVS Fluig plataform.
               </p>
-              <p className="text-xl text-text-muted leading-relaxed font-light">
-                I thrive on tackling complex challenges and delivering
-                solutions that make a tangible impact. Whether it's
-                building responsive, user-focused interfaces or engineering efficient, server-side systems.
-              </p>
             </div>
 
             <div className="mt-8 grid grid-cols-2 gap-4">
@@ -41,30 +37,19 @@ const About = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-4">
+          <div className="relative w-full max-w-sm mx-auto md:ml-auto md:mr-0">
+            {/* Offset accent frame behind the photo */}
+            <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-2xl border-2 border-accent-secondary/40 pointer-events-none" />
+            <div className="absolute -inset-6 bg-accent-primary/20 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="group relative aspect-[4/5] overflow-hidden rounded-2xl border border-border-subtle shadow-2xl">
               <img
-                src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?auto=format&fit=crop&q=80&w=300"
-                alt="Workspace"
-                className="rounded-lg shadow-lg transform hover:scale-105 transition-transform"
+                src={profileImage}
+                alt="João Piologo at Universo TOTVS"
+                className="w-full h-full object-cover object-[center_25%] group-hover:scale-105 transition-transform duration-500"
               />
-              <img
-                src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=300"
-                alt="Coding"
-                className="rounded-lg shadow-lg transform hover:scale-105 transition-transform"
-              />
-            </div>
-            <div className="space-y-4 mt-8">
-              <img
-                src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?auto=format&fit=crop&q=80&w=300"
-                alt="Setup"
-                className="rounded-lg shadow-lg transform hover:scale-105 transition-transform"
-              />
-              <img
-                src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=300"
-                alt="Code"
-                className="rounded-lg shadow-lg transform hover:scale-105 transition-transform"
-              />
+              <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background-base/90 to-transparent pointer-events-none" />
+              
             </div>
           </div>
         </div>

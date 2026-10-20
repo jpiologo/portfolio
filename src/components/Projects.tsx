@@ -15,7 +15,6 @@ const projects = [
 		description:
 			"End-to-end service marketplace connecting homeowners with cleaning professionals — featuring real-time booking, role-based dashboards, and automated scheduling.",
 		image: cleanUp,
-		tags: ["Next.js", "Nest.js", "TypeScript", "PostgreSQL", "Prisma"],
 		githubLink: "https://github.com/jpiologo/CleanUp---Frontend",
 		details: {
 			challenge:
@@ -45,7 +44,6 @@ const projects = [
 		description:
 			"Custom iPhone case designer with live preview, Stripe checkout, and automated order confirmation — deployed as a fully operational SaaS on Vercel.",
 		image: caseCobra,
-		tags: ["Next.js", "TypeScript", "Stripe", "PostgreSQL"],
 		demoLink: "https://casecobra-taupe.vercel.app/",
 		githubLink: "https://github.com/jpiologo/CaseCobra",
 		details: {
@@ -77,7 +75,6 @@ const projects = [
 		description:
 			"The client faced low confidence in the accuracy of their inventory data, which represented millions of reais in stock value. The inventory process was entirely manual, carried out using pen and paper. After the supply department completed the count, hundreds of handwritten pages were sent to accounting, where the data was manually entered into the ERP system.",
 		image: fluigLogo,
-		tags: ["Fluig", "Workflow", "Inventory", "REST APIs", "Datasets", "Forms", "Microservices"],
 		details: {
 			challenge:
 				"The main challenge was replacing a highly manual, paper-based inventory process with a digital workflow that employees could easily adopt, while ensuring seamless and reliable integration with the company’s TOTVS Protheus ERP. The solution also had to reduce errors, improve trust in inventory data, and eliminate the operational bottlenecks caused by manual handoffs between departments.",
@@ -110,17 +107,6 @@ const projects = [
 		description:
 			"The project covered the company’s entire purchasing flow, including purchase requests, purchase orders, receiving checks, inbound invoice registration, and inventory classification. Each stage required structured approvals, defined deadlines, role-based responsibilities, and seamless communication between departments. The process also demanded full integration with TOTVS Protheus, along with robust error handling, integration logs, and fallback mechanisms to ensure operational continuity.",
 		image: fluigLogo,
-		tags: [
-			"Fluig",
-			"Workflow",
-			"Procurement",
-			"ERP Integration",
-			"TOTVS Protheus",
-			"REST APIs",
-			"Datasets",
-			"Forms",
-			"Notifications"
-		],
 		details: {
 			challenge:
 				"The main challenge was designing and implementing a reliable end-to-end procurement workflow capable of supporting multiple business-critical stages, hierarchical approvals, strict deadlines, and role-based responsibilities. At the same time, the solution needed to ensure seamless integration with TOTVS Protheus, provide visibility into integration events through logs, and remain resilient through fallback strategies in case of communication or processing failures.",
@@ -160,17 +146,6 @@ const projects = [
 		description:
 			"I worked on a vehicle sales and billing workflow within the TOTVS Fluig platform for a large car dealership. The process included document validation at the time of purchase, direct ERP data consultation, decision gateways to route the workflow correctly, and sales automations that drastically reduced the time required to invoice a vehicle. By combining workflow intelligence, AI-based document analysis, and integration with regulatory entities, the solution made the sales process faster, more reliable, and operationally efficient.",
 		image: fluigLogo,
-		tags: [
-			"Fluig",
-			"Vehicle Sales",
-			"Billing Workflow",
-			"AI Integration",
-			"ERP Integration",
-			"Automation",
-			"Decision Gateways",
-			"Forms",
-			"Regulatory Integration"
-		],
 		details: {
 			challenge:
 				"The main challenge was streamlining a complex vehicle sales and billing process involving document validation, ERP data consultation, regulatory requirements, and multiple decision points. The solution needed to reduce the time required to complete a sale, prevent invalid document submissions, and ensure that each transaction followed the correct business and compliance path with minimal manual effort.",
@@ -208,17 +183,6 @@ const projects = [
 		description:
 			"I developed HR workflows within the TOTVS Fluig platform to support employee hiring and internal movement processes. The solution was deeply integrated with the company’s TOTVS Protheus ERP, using registered departments and hierarchy data to drive approval flows automatically. It also automated the provisioning and update of system and Active Directory access based on each employee’s role, ensuring faster onboarding, safer transitions, and consistent access control across the organization.",
 		image: fluigLogo,
-		tags: [
-			"Fluig",
-			"HR",
-			"Workflow",
-			"TOTVS Protheus",
-			"Active Directory",
-			"Access Management",
-			"Automation",
-			"Approvals",
-			"ERP Integration"
-		],
 		details: {
 			challenge:
 				"The main challenge was building HR workflows capable of handling employee hiring and internal movement processes with speed, reliability, and governance. The solution needed to reflect the company’s organizational structure as defined in TOTVS Protheus, route approvals according to departments and hierarchies, and automate access provisioning and permission changes across systems and Active Directory based on each employee’s role and movement.",
@@ -256,17 +220,6 @@ const projects = [
 		description:
 			"I developed an automated deployment pipeline using Jenkins to publish forms, datasets, workflows, and widgets to the Fluig platform. The pipeline monitored merges from predefined branches and triggered the deployment process automatically, reducing manual intervention and significantly accelerating delivery time. This brought more consistency, reliability, and speed to the release process across Fluig projects.",
 		image: jenkinsLogo,
-		tags: [
-			"Jenkins",
-			"CI/CD",
-			"Fluig",
-			"Automation",
-			"Deployment",
-			"Workflow",
-			"Datasets",
-			"Forms",
-			"DevOps"
-		],
 		details: {
 			challenge:
 				"The main challenge was creating a reliable deployment pipeline capable of automatically identifying and publishing different Fluig artifacts, such as forms, datasets, workflows, and widgets, based on merges from specific branches. The solution needed to reduce deployment time, minimize manual errors, and make the release process more consistent and scalable.",
@@ -302,7 +255,6 @@ const projects = [
 		description:
 			"Pomodoro-based task manager with persistent local storage — helping users structure focused work sessions and track progress without account friction.",
 		image: fokusImage,
-		tags: ["JavaScript", "Local Storage", "CRUD"],
 		demoLink: "https://fokus-mu-eight.vercel.app/",
 		githubLink: "https://github.com/jpiologo/fokusProject",
 		details: {
@@ -325,7 +277,6 @@ const projects = [
 		description:
 			"Real-time weather dashboard consuming the OpenWeatherMap API — demonstrating clean API integration patterns and responsive data visualization.",
 		image: weatherImage,
-		tags: ["JavaScript", "REST API", "UX/UI"],
 		demoLink: "https://weather-app-kappa-black.vercel.app/",
 		githubLink: "https://github.com/jpiologo/weatherApp",
 		details: {
@@ -348,7 +299,6 @@ const projects = [
 		description:
 			"Browser-based game controlled entirely by voice — exploring the Web Speech API to create accessible, hands-free user interactions.",
 		image: vocalVaultImage,
-		tags: ["JavaScript", "Speech API", "Frontend"],
 		demoLink:
 			"https://vocalvault-c5qkg3u7e-joao-piologos-projects.vercel.app/",
 		githubLink: "https://github.com/jpiologo/voiceCommandApp",
@@ -418,7 +368,7 @@ const Projects = () => {
 						<div className="mt-14 text-center">
 							<button
 								onClick={() => setVisibleCount((prev) => prev + increment)}
-								className="px-8 py-3 bg-background-surface text-text-primary font-semibold rounded-xl shadow-sm border border-border-subtle hover:shadow-md hover:border-accent-secondary hover:text-accent-secondary transition-all duration-300 transform hover:-translate-y-1"
+								className="btn-secondary"
 							>
 								Load More Projects
 							</button>
