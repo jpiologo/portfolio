@@ -5,6 +5,24 @@
     <link rel="icon" type="image/svg+xml" href="./public/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>João Piologo - Software Engineer</title>
+    <!-- Display fonts for the alternating "code" word in the hero -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@700&family=Fira+Code:wght@700&family=Monoton&family=Orbitron:wght@800&family=Pacifico&family=Playfair+Display:ital,wght@1,600&family=Press+Start+2P&family=Space+Grotesk:wght@700&display=swap"
+    />
+    <script>
+      // Apply saved (or system) theme before first paint to avoid a flash
+      (function () {
+        var theme;
+        try { theme = localStorage.getItem('theme'); } catch (e) {}
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        }
+        if (theme === 'dark') document.documentElement.classList.add('dark');
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

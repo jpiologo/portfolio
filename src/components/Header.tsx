@@ -1,10 +1,13 @@
 import type React from "react";
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Menu, Moon, Sun, X } from "lucide-react";
+import { useTheme } from "../lib/theme";
 
 const Header = () => {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+	const { theme, toggleTheme } = useTheme();
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -36,11 +39,11 @@ const Header = () => {
 	};
 
 	const navLinks = [
-		{ href: "#about", label: "About" },
-		{ href: "#skills", label: "Skills" },
-		{ href: "#projects", label: "Projects" },
-		{ href: "#testimonials", label: "Testimonials" },
-		{ href: "#contact", label: "Contact" },
+		{ href: "/#about", label: "About" },
+		{ href: "/#blog", label: "Blog" },
+		{ href: "/#projects", label: "Projects" },
+		{ href: "/#testimonials", label: "Testimonials" },
+		{ href: "/#contact", label: "Contact" },
 	];
 
 	return (
@@ -58,31 +61,45 @@ const Header = () => {
 							className={`md:hidden p-2 rounded-lg transition-colors ${
 								isScrolled
 									? "text-text-muted hover:bg-background-surface"
-									: "text-white hover:bg-white/10"
+									: "text-text-primary hover:bg-text-primary/10"
 							}`}
 							aria-label="Toggle menu"
 						>
 							<Menu size={24} />
 						</button>
 
-						{/* biome-ignore lint/a11y/useValidAnchor: <explanation> */}
-						<a
-							// biome-ignore lint/a11y/useValidAnchor: <explanation>
-							href="#"
+						<Link
+							to="/"
 							className={`text-xl font-bold ${
-								isScrolled ? "text-accent-secondary" : "text-white"
+								isScrolled ? "text-accent-secondary" : "text-text-primary"
 							}`}
 						>
 							João Piologo
-						</a>
+						</Link>
 
-						{/* Desktop Navigation */}
-						<div className="hidden md:flex space-x-8">
-							{navLinks.map((link) => (
-								<NavLink key={link.href} href={link.href} isScrolled={isScrolled}>
-									{link.label}
-								</NavLink>
-							))}
+						<div className="flex items-center gap-8">
+							{/* Desktop Navigation */}
+							<div className="hidden md:flex space-x-8">
+								{navLinks.map((link) => (
+									<NavLink key={link.href} href={link.href} isScrolled={isScrolled}>
+										{link.label}
+									</NavLink>
+								))}
+							</div>
+
+							<button
+								type="button"
+								onClick={toggleTheme}
+								className={`p-2 rounded-full border transition-colors ${
+									isScrolled
+										? "border-border-subtle text-text-muted hover:text-accent-secondary hover:border-accent-secondary"
+										: "border-text-primary/20 text-text-primary hover:text-accent-secondary hover:border-accent-secondary"
+								}`}
+								aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+								title={theme === "dark" ? "Light mode" : "Dark mode"}
+							>
+								{theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+							</button>
 						</div>
 					</div>
 				</nav>
@@ -115,14 +132,14 @@ const Header = () => {
 				</div>
 				<div className="flex-1 py-6 px-4 flex flex-col gap-6 overflow-y-auto">
 					{navLinks.map((link) => (
-						<a
+						<Link
 							key={link.href}
-							href={link.href}
+							to={link.href}
 							onClick={closeMenu}
 							className="text-text-muted hover:text-accent-secondary text-lg font-medium transition-colors"
 						>
 							{link.label}
-						</a>
+						</Link>
 					))}
 				</div>
 			</div>
@@ -135,16 +152,16 @@ const NavLink = ({
 	children,
 	isScrolled,
 }: { href: string; children: React.ReactNode; isScrolled: boolean }) => (
-	<a
-		href={href}
+	<Link
+		to={href}
 		className={`transition-colors duration-300 ${
 			isScrolled
 				? "text-text-muted hover:text-accent-secondary"
-				: "text-white hover:text-accent-secondary"
+				: "text-text-primary hover:text-accent-secondary"
 		}`}
 	>
 		{children}
-	</a>
+	</Link>
 );
 
 export default Header;

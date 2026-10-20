@@ -17,7 +17,6 @@ interface ProjectCardProps {
 		subtitle: string;
 		description: string;
 		image: string;
-		tags: string[];
 		demoLink?: string;
 		githubLink?: string;
 		details: {
@@ -89,14 +88,6 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 					<span className="proj-card-subtitle">{project.subtitle}</span>
 					<h3 className="proj-card-title">{project.title}</h3>
 					<p className="proj-card-desc">{project.description}</p>
-
-					<div className="proj-card-tags">
-						{project.tags.map((tag) => (
-							<span key={tag} className="proj-card-tag">
-								{tag}
-							</span>
-						))}
-					</div>
 
 					<div className="proj-card-cta">
 						<span>View Case Study</span>
@@ -181,13 +172,11 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 									<h4 className="proj-modal-section-title">
 										Tech Stack
 									</h4>
-									<div className="proj-modal-tags">
+									<ol className="proj-modal-stack">
 										{project.details.techStack.map((tech) => (
-											<span key={tech} className="proj-modal-tag">
-												{tech}
-											</span>
+											<li key={tech}>{tech}</li>
 										))}
-									</div>
+									</ol>
 								</div>
 								<div className="proj-modal-section">
 									<div className="proj-modal-section-icon">
@@ -211,7 +200,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 										<a
 											target="_blank"
 											href={project.demoLink}
-											className="proj-modal-btn-primary"
+											className="btn-primary"
 											rel="noreferrer"
 										>
 											<ExternalLink className="w-4 h-4" />
@@ -221,7 +210,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 										<button
 											type="button"
 											disabled
-											className="proj-modal-btn-disabled"
+											className="btn-secondary"
 										>
 											<Wrench className="w-4 h-4" />
 											In Development
@@ -231,7 +220,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 										<a
 											target="_blank"
 											href={project.githubLink}
-											className="proj-modal-btn-secondary"
+											className="btn-secondary"
 											rel="noreferrer"
 										>
 											<Github className="w-4 h-4" />

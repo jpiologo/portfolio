@@ -1,29 +1,46 @@
+import typography from '@tailwindcss/typography';
+
+// Theme colors are RGB channels defined in src/index.css (light on :root, dark on .dark)
+const themeColor = (name) => `rgb(var(--c-${name}) / <alpha-value>)`;
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  darkMode: 'class',
   theme: {
     extend: {
+      keyframes: {
+        'caret-blink': {
+          '0%, 49%': { opacity: '1' },
+          '50%, 100%': { opacity: '0' },
+        },
+      },
+      animation: {
+        'caret-blink': 'caret-blink 1.06s step-end infinite',
+      },
       colors: {
         background: {
-          base: '#111318',
-          surface: '#1C1F26',
-          elevated: '#252830',
+          base: themeColor('bg-base'),
+          surface: themeColor('bg-surface'),
+          elevated: themeColor('bg-elevated'),
         },
         accent: {
-          primary: '#0E4D8A',
-          secondary: '#1E88E5',
-          hover: '#1565C0',
+          primary: themeColor('accent-primary'),
+          secondary: themeColor('accent-secondary'),
+          hover: themeColor('accent-hover'),
           glow: 'rgba(14, 77, 138, 0.15)',
         },
         text: {
-          primary: '#E8EAF0',
-          muted: '#9CA3AF',
+          primary: themeColor('text-primary'),
+          muted: themeColor('text-muted'),
         },
         border: {
-          subtle: '#2C3040',
-          focus: '#1E88E5',
-          hover: '#1E88E5',
+          subtle: themeColor('border'),
+          focus: themeColor('accent-secondary'),
+          hover: themeColor('accent-secondary'),
         },
+        // Text placed on top of accent-primary backgrounds
+        'on-accent': '#FFFFFF',
         feedback: {
           error: '#EF4444',
           'error-bg': 'rgba(239, 68, 68, 0.1)',
@@ -31,21 +48,12 @@ export default {
           'success-bg': 'rgba(34, 197, 94, 0.1)',
         },
         social: {
-          github: '#E8EAF0',
+          github: themeColor('text-primary'),
           linkedin: '#0E4D8A',
           email: '#DC2626',
-        },
-        category: {
-          lang: '#22d3ee',
-          front: '#a78bfa',
-          back: '#34d399',
-          db: '#fbbf24',
-          tool: '#fb7185',
-          best: '#38bdf8',
-          vc: '#818cf8',
         },
       },
     },
   },
-  plugins: [],
+  plugins: [typography],
 };

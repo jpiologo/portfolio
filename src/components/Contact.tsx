@@ -56,10 +56,10 @@ const Contact = () => {
               <a href="https://github.com/jpiologo" className="p-3 bg-social-github text-background-base rounded-lg hover:opacity-80 transition-opacity">
                 <Github className="w-6 h-6" />
               </a>
-              <a href="https://www.linkedin.com/in/jo%C3%A3o-piologo-85ba9a226/" className="p-3 bg-social-linkedin text-text-primary rounded-lg hover:opacity-80 transition-opacity">
+              <a href="https://www.linkedin.com/in/jo%C3%A3o-piologo-85ba9a226/" className="p-3 bg-social-linkedin text-on-accent rounded-lg hover:opacity-80 transition-opacity">
                 <Linkedin className="w-6 h-6" />
               </a>
-              <a href="mailto:joaotpiologo@hotmail.com" className="p-3 bg-social-email text-text-primary rounded-lg hover:opacity-80 transition-opacity">
+              <a href="mailto:joaotpiologo@hotmail.com" className="p-3 bg-social-email text-on-accent rounded-lg hover:opacity-80 transition-opacity">
                 <Mail className="w-6 h-6" />
               </a>
             </div>
@@ -104,7 +104,7 @@ const Contact = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-accent-primary text-text-primary py-3 px-6 rounded-lg hover:bg-accent-hover transition-colors font-semibold"
+              className="btn-primary w-full"
             >
               Send Message
             </button>

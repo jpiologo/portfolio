@@ -103,7 +103,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ isOpen, onClose }) => {
               </p>
               <button
                 onClick={onClose}
-                className="px-8 py-3 bg-background-surface hover:bg-background-base text-text-muted font-bold rounded-full transition-colors border border-border-subtle"
+                className="btn-secondary"
               >
                 Close Window
               </button>
@@ -170,7 +170,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ isOpen, onClose }) => {
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-6 py-3 text-text-muted hover:text-text-primary font-bold transition-colors"
+                  className="btn-ghost"
                   disabled={isSubmitting}
                 >
                   Cancel
@@ -178,11 +178,11 @@ const CommentForm: React.FC<CommentFormProps> = ({ isOpen, onClose }) => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex items-center justify-center gap-2 bg-accent-primary text-text-primary px-8 py-3 rounded-full font-bold hover:bg-accent-hover focus:ring-4 focus:ring-accent-secondary/20 transition-all disabled:opacity-70 disabled:cursor-not-allowed min-w-[150px]"
+                  className="btn-primary min-w-[150px]"
                 >
                   {isSubmitting ? (
                     <>
-                      <span className="w-5 h-5 border-2 border-text-primary/30 border-t-text-primary rounded-full animate-spin" />
+                      <span className="w-5 h-5 border-2 border-on-accent/30 border-t-on-accent rounded-full animate-spin" />
                     </>
                   ) : (
                     <>
