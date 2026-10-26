@@ -147,12 +147,23 @@ git push
 
 O deploy (Vercel/Netlify) gera o site com o post novo. Se o deploy publica só a branch `main`, abra um PR e faça o merge.
 
+## 7. SEO (Google e redes sociais)
+
+O build (`vite-plugin-seo.ts`) gera sozinho, para cada post, uma página HTML com o texto já renderizado, `<title>`, `meta description`, URL canônica, Open Graph e dados estruturados (`BlogPosting`), além de `sitemap.xml` e `robots.txt`. Não há nada para configurar por post, mas o conteúdo faz diferença:
+
+- **`title`:** até ~60 caracteres, com o termo que alguém digitaria no Google (ex.: "Fluig", "Jenkins").
+- **`description`:** entre ~120 e 160 caracteres. É o texto que o Google costuma mostrar abaixo do título.
+- **`cover`:** use `png`, `jpg` ou `webp` para a capa aparecer na prévia do link no LinkedIn/WhatsApp. Capas `svg` funcionam no site, mas não viram prévia.
+- **Links internos:** cite posts anteriores com `[texto](/blog/outro-post)`. Isso ajuda o Google a descobrir e relacionar as páginas.
+- **Slug:** depois de publicado, não renomeie a pasta. A URL muda e o Google perde a página indexada.
+
 ## Checklist rápido
 
 - [ ] Pasta `src/posts/<slug>/` criada (minúsculas e hífens)
 - [ ] Arquivo `index.md` com `title`, `date` (`AAAA-MM-DD`) e `description`
 - [ ] Imagens dentro da pasta do post, referenciadas com `./`
-- [ ] Capa em 16:9 e imagens leves
+- [ ] Capa em 16:9 (`png`/`jpg`/`webp` para ter prévia nas redes) e imagens leves
+- [ ] `description` com ~120 a 160 caracteres
 - [ ] Post conferido no `npm run dev`
 - [ ] `draft: true` removido antes de publicar
 - [ ] Commit, push e deploy
