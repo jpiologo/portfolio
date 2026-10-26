@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Header from './components/Header';
+import SocialSidebar from './components/SocialSidebar';
 import Home from './pages/Home';
 import BlogIndex from './pages/BlogIndex';
 
@@ -30,6 +31,7 @@ function App() {
     <div className="min-h-screen bg-background-base">
       <ScrollManager />
       <Header />
+      <SocialSidebar />
       <Suspense fallback={<div className="min-h-screen" />}>
         <Routes>
           <Route path="/" element={<Home />} />

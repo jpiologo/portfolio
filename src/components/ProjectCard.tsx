@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { parallaxHandlers } from "../lib/parallax";
 import {
 	ExternalLink,
 	Github,
@@ -35,7 +36,8 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 		<>
 			{/* Card */}
 			<div
-				className="proj-card group"
+				className="proj-card parallax-card group"
+				{...parallaxHandlers}
 				onClick={() => setIsExpanded(true)}
 				onKeyDown={(e) => e.key === "Enter" && setIsExpanded(true)}
 				role="button"
@@ -46,7 +48,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 					<img
 						src={project.image}
 						alt={project.title}
-						className="proj-card-image"
+						className="proj-card-image parallax-media"
 					/>
 					<div className="proj-card-image-overlay">
 						{(project.demoLink || project.githubLink || project.title === "CleanUp") && (

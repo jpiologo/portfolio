@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Menu, Moon, Sun, X } from "lucide-react";
 import { useTheme } from "../lib/theme";
+import Logo from "./Logo";
 
 const Header = () => {
 	const [isScrolled, setIsScrolled] = useState(false);
@@ -70,11 +71,10 @@ const Header = () => {
 
 						<Link
 							to="/"
-							className={`text-xl font-bold ${
-								isScrolled ? "text-accent-secondary" : "text-text-primary"
-							}`}
+							aria-label="João Piologo – home"
+							className="text-text-primary hover:opacity-80 transition-opacity"
 						>
-							João Piologo
+							<Logo className="w-10 h-10" />
 						</Link>
 
 						<div className="flex items-center gap-8">

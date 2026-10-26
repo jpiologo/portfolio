@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase';
 import type { Comment } from '../lib/types';
 import { MessageSquarePlus, Quote, Loader2, AlertCircle } from 'lucide-react';
 import CommentForm from './CommentForm';
+import { parallaxHandlers } from '../lib/parallax';
 
 const Testimonials = () => {
   const [comments, setComments] = useState<Comment[]>([]);
@@ -106,14 +107,15 @@ const Testimonials = () => {
             {comments.map((comment, index) => (
               <div 
                 key={comment.id}
-                className="bg-background-elevated rounded-[2rem] p-8 md:p-10 border border-border-subtle shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 relative group flex flex-col h-full overflow-hidden"
+                {...parallaxHandlers}
+                className="parallax-card bg-background-elevated rounded-[2rem] p-8 md:p-10 border border-border-subtle shadow-sm hover:shadow-xl group flex flex-col h-full overflow-hidden"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 {/* Decorative background glow that appears on hover */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-accent-primary/10 to-transparent rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none translate-x-1/2 -translate-y-1/2" />
                 
-                {/* Decorative Quote Mark */}
-                <div className="absolute top-8 right-8 text-border-subtle group-hover:text-accent-primary/30 transition-colors pointer-events-none z-0">
+                {/* Decorative Quote Mark (drifts behind the text for depth) */}
+                <div className="parallax-depth [--depth:28px] absolute top-8 right-8 text-border-subtle group-hover:text-accent-primary/30 pointer-events-none z-0">
                   <Quote className="w-20 h-20 transform rotate-180" />
                 </div>
                 
@@ -137,7 +139,7 @@ const Testimonials = () => {
                     </h4>
                     <div className="flex flex-wrap items-center gap-x-2 text-sm">
                       {comment.company && (
-                        <span className="text-accent-secondary/90 font-semibold tracking-wide uppercase text-xs">
+                        <span className="font-label text-accent-secondary/90 font-semibold tracking-wide uppercase text-xs">
                           {comment.company}
                         </span>
                       )}

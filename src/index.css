@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Headings take their font role by level; a font-* class on the element still wins */
+@layer base {
+  h1, h2 {
+    font-family: theme('fontFamily.heading');
+  }
+
+  h3, h4, h5, h6 {
+    font-family: theme('fontFamily.title');
+  }
+}
+
 /* ================================================================== */
 /*  GLOBAL TYPE SYSTEM                                                  */
 /*  Single source of truth for typography across the entire portfolio. */
@@ -14,7 +25,11 @@
 /*    --type-label    : 0.72rem / 600  — tags, chip labels, eyebrows    */
 /*    --type-caption  : 0.68rem / 500  — meta, small hints              */
 /*                                                                      */
-/*  Colors:                                                             */
+/*  Fonts: chosen in fonts.config.ts, exposed as --font-hero,           */
+/*  --font-heading, --font-title, --font-body, --font-mono and          */
+/*  --font-label (Tailwind: font-display, font-heading, ...).           */
+/*                                                                      */
+/*  Colors:                                                           */
 /*    --color-ink       : #0f172a  — primary heading text               */
 /*    --color-ink-sub   : #475569  — subtitle / secondary text          */
 /*    --color-ink-muted : #94a3b8  — body copy, descriptions            */
@@ -23,12 +38,12 @@
 /* ================================================================== */
 
 :root {
-  --type-display   : 700 2.75rem / 1.1 system-ui, sans-serif;
-  --type-title     : 700 1.5rem  / 1.2 system-ui, sans-serif;
-  --type-subtitle  : 300 1.1rem  / 1.65 system-ui, sans-serif;
-  --type-body      : 400 0.9rem  / 1.6 system-ui, sans-serif;
-  --type-label     : 600 0.72rem / 1 system-ui, sans-serif;
-  --type-caption   : 500 0.68rem / 1 system-ui, sans-serif;
+  --type-display   : 700 2.75rem / 1.1 theme('fontFamily.heading');
+  --type-title     : 700 1.5rem  / 1.2 theme('fontFamily.title');
+  --type-subtitle  : 300 1.1rem  / 1.65 theme('fontFamily.sans');
+  --type-body      : 400 0.9rem  / 1.6 theme('fontFamily.sans');
+  --type-label     : 600 0.72rem / 1 theme('fontFamily.label');
+  --type-caption   : 500 0.68rem / 1 theme('fontFamily.sans');
 
   /*
    * Theme palette as RGB channels (consumed by Tailwind and the vars below).
@@ -132,6 +147,84 @@ body {
   animation: fadeIn 1s ease-out;
 }
 
+/* ================================================================== */
+/*  Hero lava lamp                                                     */
+/*  Soft color blobs that rise, sink and stretch at different speeds,  */
+/*  so they keep merging and splitting like wax in a lava lamp.        */
+/*  Only `transform` is animated, which keeps it on the GPU.           */
+/* ================================================================== */
+
+.hero-lava {
+  /* Vivid on the light theme... */
+  --lava-1: 59 130 246;   /* blue   */
+  --lava-2: 168 85 247;   /* violet */
+  --lava-3: 244 114 182;  /* pink   */
+  --lava-4: 34 211 238;   /* cyan   */
+  --lava-5: 251 146 60;   /* orange */
+  --lava-alpha: 0.55;
+
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* ...deep and subdued on the dark one, so text keeps its contrast */
+.dark .hero-lava {
+  --lava-1: 29 78 216;
+  --lava-2: 109 40 217;
+  --lava-3: 190 24 93;
+  --lava-4: 14 116 144;
+  --lava-5: 67 56 202;
+  --lava-alpha: 0.35;
+}
+
+.hero-lava span {
+  position: absolute;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgb(var(--lava-color) / var(--lava-alpha)) 0%,
+    rgb(var(--lava-color) / 0) 68%
+  );
+  will-change: transform;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+/* Negative delays start every blob mid-motion instead of all at rest */
+.hero-lava span:nth-child(1) { --lava-color: var(--lava-1); width: 55vmax; left: -15%; top: 20%;  animation-name: lava-rise; animation-duration: 22s; animation-delay: -4s; }
+.hero-lava span:nth-child(2) { --lava-color: var(--lava-2); width: 48vmax; left: 45%;  top: -25%; animation-name: lava-sink; animation-duration: 26s; animation-delay: -11s; }
+.hero-lava span:nth-child(3) { --lava-color: var(--lava-3); width: 40vmax; left: 55%;  top: 35%;  animation-name: lava-sway; animation-duration: 19s; animation-delay: -7s; }
+.hero-lava span:nth-child(4) { --lava-color: var(--lava-4); width: 36vmax; left: 10%;  top: -15%; animation-name: lava-sink; animation-duration: 17s; animation-delay: -2s; }
+.hero-lava span:nth-child(5) { --lava-color: var(--lava-5); width: 32vmax; left: 25%;  top: 45%;  animation-name: lava-rise; animation-duration: 24s; animation-delay: -15s; }
+
+@keyframes lava-rise {
+  0%   { transform: translate(0, 30%) scale(1, 1); }
+  50%  { transform: translate(15%, -10%) scale(1.15, 0.9); }
+  100% { transform: translate(-10%, -40%) scale(0.9, 1.1); }
+}
+
+@keyframes lava-sink {
+  0%   { transform: translate(0, -30%) scale(1.1, 0.9); }
+  50%  { transform: translate(-20%, 10%) scale(0.9, 1.12); }
+  100% { transform: translate(10%, 40%) scale(1.05, 1); }
+}
+
+@keyframes lava-sway {
+  0%   { transform: translate(-25%, 0) scale(1); }
+  50%  { transform: translate(10%, -20%) scale(1.2, 1); }
+  100% { transform: translate(25%, 15%) scale(0.95, 1.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-lava span {
+    animation: none;
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -171,8 +264,8 @@ html {
   box-shadow: 0 1px 3px rgb(var(--c-shadow) / 0.2);
 }
 
+/* Lift, tilt and image movement on hover come from .parallax-card / .parallax-media */
 .proj-card:hover {
-  transform: translateY(-6px);
   box-shadow:
     0 20px 40px rgb(var(--c-shadow) / 0.3),
     0 0 0 1px rgb(var(--c-accent-secondary) / 0.15);
@@ -189,11 +282,6 @@ html {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.proj-card:hover .proj-card-image {
-  transform: scale(1.06);
 }
 
 .proj-card-image-overlay {
@@ -257,6 +345,7 @@ html {
 
 .proj-card-subtitle {
   display: inline-block;
+  font-family: theme('fontFamily.label');
   font-size: 0.65rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -340,6 +429,7 @@ html {
 
 .proj-modal-subtitle {
   display: block;
+  font-family: theme('fontFamily.label');
   font-size: 0.65rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -598,4 +688,93 @@ html {
   display: block;
   padding: 1.25rem 1.5rem;
   padding-top: 3rem; /* room for the copy button above the first line */
+}
+
+/* ================================================================== */
+/*  Parallax cards                                                     */
+/*  .parallax-card  : tilts toward the cursor and lifts on hover       */
+/*  .parallax-depth : layer that drifts against the cursor by --depth  */
+/*                    (negative values drift with it, i.e. "closer")   */
+/*  .parallax-media : image version of a depth layer, zoomed in so its */
+/*                    edges never show while it moves                  */
+/*  Cursor position comes from parallaxHandlers (src/lib/parallax.ts). */
+/*  Kept at the end of the file so it wins over the card styles above. */
+/* ================================================================== */
+
+.parallax-card {
+  --px: 0;
+  --py: 0;
+  --lift: 0px;
+  --glare: rgb(var(--c-accent-secondary) / 0.1);
+
+  position: relative;
+  transform: perspective(1000px)
+    rotateX(calc(var(--py) * -7deg))
+    rotateY(calc(var(--px) * 7deg))
+    translateY(var(--lift));
+  transition:
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.dark .parallax-card {
+  --glare: rgb(255 255 255 / 0.07);
+}
+
+.parallax-card:hover {
+  --lift: -6px;
+}
+
+/* Soft highlight that follows the cursor */
+.parallax-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at calc(50% + var(--px) * 100%) calc(50% + var(--py) * 100%),
+    var(--glare),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.parallax-card:hover::after {
+  opacity: 1;
+}
+
+.parallax-depth,
+.parallax-media {
+  transform: translate3d(
+      calc(var(--px) * var(--depth, 14px) * -1),
+      calc(var(--py) * var(--depth, 14px) * -1),
+      0
+    )
+    scale(var(--media-scale, 1));
+  transition:
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.3s ease;
+}
+
+.parallax-card:hover .parallax-media {
+  --media-scale: 1.08;
+}
+
+/* Follow the cursor closely while hovering, ease back slowly on leave */
+.parallax-card:hover,
+.parallax-card:hover .parallax-depth,
+.parallax-card:hover .parallax-media {
+  transition-duration: 0.2s, 0.3s, 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax-card,
+  .parallax-depth,
+  .parallax-media {
+    transform: none;
+  }
 }

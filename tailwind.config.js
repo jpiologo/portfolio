@@ -9,6 +9,16 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      // Font roles are CSS variables set from fonts.config.ts (see vite-plugin-fonts.ts).
+      // `sans` is the default for the whole site, so it maps to the body font.
+      fontFamily: {
+        sans: ['var(--font-body, system-ui, sans-serif)'],
+        display: ['var(--font-hero, serif)'],
+        heading: ['var(--font-heading, system-ui, sans-serif)'],
+        title: ['var(--font-title, system-ui, sans-serif)'],
+        label: ['var(--font-label, system-ui, sans-serif)'],
+        mono: ['var(--font-mono, ui-monospace, monospace)'],
+      },
       keyframes: {
         'caret-blink': {
           '0%, 49%': { opacity: '1' },

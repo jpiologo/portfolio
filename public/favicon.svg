@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="5 5 31 31" fill="none">
+  <!-- Same "JP." monogram as src/components/Logo.tsx, cropped and thicker so it reads at 16px -->
+  <style>
+    path { stroke: #0F172A; }
+    circle { fill: #2563EB; }
+    @media (prefers-color-scheme: dark) {
+      path { stroke: #E8EAF0; }
+      circle { fill: #1E88E5; }
+    }
+  </style>
+  <path d="M14 8H24A6 6 0 0 1 24 20H20M20 8V26A6 6 0 0 1 8 26" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="31.5" cy="29.5" r="2.8"/>
+</svg>
