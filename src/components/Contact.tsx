@@ -1,11 +1,15 @@
 import type React from 'react';
 import { useState } from 'react';
 import { Github, Linkedin, Mail, MapPin, Phone } from 'lucide-react';
+import { parallaxHandlers } from '../lib/parallax';
 
 // biome-ignore lint/suspicious/noExplicitAny: icon prop accepts any Lucide component
 const ContactInfo = ({ icon: Icon, title, content }: { icon: any; title: string; content: string }) => (
-  <div className="flex items-center p-4 bg-background-elevated rounded-lg shadow-sm border border-border-subtle">
-    <div className="p-3 bg-accent-primary/15 rounded-lg">
+  <div
+    {...parallaxHandlers}
+    className="parallax-card flex-1 flex items-center p-4 bg-background-elevated rounded-lg shadow-sm border border-border-subtle hover:shadow-md hover:border-accent-secondary/40"
+  >
+    <div className="parallax-depth [--depth:-10px] p-3 bg-accent-primary/15 rounded-lg">
       <Icon className="w-6 h-6 text-accent-secondary" />
     </div>
     <div className="ml-4">
@@ -47,12 +51,14 @@ const Contact = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          <div className="space-y-4">
+          {/* Cards grow to fill the column so they line up with the form's top and bottom */}
+          <div className="flex flex-col gap-4">
             <ContactInfo icon={MapPin} title="Location" content="Curitiba, PR - Brazil" />
             <ContactInfo icon={Mail} title="Email" content="joaotpiologo@hotmail.com" />
             <ContactInfo icon={Phone} title="Phone" content="+55 (41) 99592-7885" />
             
-            <div className="flex gap-4 mt-8">
+            {/* On xl screens these live in the fixed SocialSidebar instead */}
+            <div className="flex gap-4 mt-4 xl:hidden">
               <a href="https://github.com/jpiologo" className="p-3 bg-social-github text-background-base rounded-lg hover:opacity-80 transition-opacity">
                 <Github className="w-6 h-6" />
               </a>

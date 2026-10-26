@@ -2,11 +2,13 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Clock, FileText } from "lucide-react";
 import type { Post } from "../lib/types";
 import { formatPostDate } from "../lib/posts";
+import { parallaxHandlers } from "../lib/parallax";
 
 const PostCard = ({ post }: { post: Post }) => (
 	<Link
 		to={`/blog/${post.slug}`}
-		className="group flex flex-col h-full bg-background-elevated rounded-2xl border border-border-subtle overflow-hidden shadow-sm hover:shadow-xl hover:border-accent-secondary/60 hover:-translate-y-1.5 transition-all duration-300"
+		{...parallaxHandlers}
+		className="parallax-card group flex flex-col h-full bg-background-elevated rounded-2xl border border-border-subtle overflow-hidden shadow-sm hover:shadow-xl hover:border-accent-secondary/60"
 	>
 		{/* Cover */}
 		<div className="aspect-[16/9] overflow-hidden bg-background-surface">
@@ -15,11 +17,11 @@ const PostCard = ({ post }: { post: Post }) => (
 					src={post.cover}
 					alt={post.title}
 					loading="lazy"
-					className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+					className="parallax-media w-full h-full object-cover"
 				/>
 			) : (
 				<div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-accent-primary/40 to-background-surface">
-					<FileText className="w-12 h-12 text-accent-secondary/70" />
+					<FileText className="parallax-depth [--depth:-16px] w-12 h-12 text-accent-secondary/70" />
 				</div>
 			)}
 		</div>

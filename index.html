@@ -2,16 +2,20 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <!-- "JP." logo: the SVG adapts to the browser's light/dark theme, the .ico is the fallback -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Replaced by the SEO tags from vite-plugin-seo.ts -->
     <title>João Piologo - Software Engineer</title>
-    <!-- Display fonts for the alternating "code" word in the hero -->
+    <!-- Site fonts are not set here: vite-plugin-fonts.ts injects them from fonts.config.ts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Serif fonts the "code" word in the hero cycles through -->
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@700&family=Fira+Code:wght@700&family=Monoton&family=Orbitron:wght@800&family=Pacifico&family=Playfair+Display:ital,wght@1,600&family=Press+Start+2P&family=Space+Grotesk:wght@700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bodoni+Moda:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=DM+Serif+Display&family=Fraunces:ital,wght@1,600&family=Libre+Baskerville:ital@1&family=Playfair+Display:ital,wght@1,600&display=swap"
     />
     <script>
       // Apply saved (or system) theme before first paint to avoid a flash
