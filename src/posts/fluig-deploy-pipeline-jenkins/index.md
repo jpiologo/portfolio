@@ -7,14 +7,16 @@ cover: ./cover.svg
 
 For a long time, deploying to Fluig meant opening Fluig Studio, right-clicking a file and choosing *Export*. That's fine for one developer and one server. With a team, a staging server and production, manual exports are slow, easy to forget and impossible to audit.
 
-The good news: Fluig exposes **standard REST APIs** for datasets, forms and processes. In this post I'll show the backbone of the Jenkins pipeline I use, focusing on one artifact: **datasets**. It's a short guide, not a complete one. The goal is to give you a working path you can grow from.
+The good news: Fluig exposes **standard REST APIs** for datasets, forms and processes, all documented in the [official Fluig API reference](https://api.fluig.com/latest/index.html). In this post I'll walk through the general shape of a Jenkins pipeline built on them, focusing on one artifact: **datasets**. It's a short guide, not a complete one. The goal is to give you a path you can grow from.
+
+> The snippets below are simplified illustrations of each idea, not production code. Adapt names, paths and error handling to your own project.
 
 ## The big picture
 
 ```text
 git push ──> Jenkins ──> which files changed? ──> sign request (OAuth 1.0) ──> Fluig REST API
                 │
-                └── branch decides the target: master -> production, anything else -> staging
+                └── branch decides the target: main -> production, anything else -> staging
 ```
 
 The pipeline does five things:
@@ -28,71 +30,45 @@ The pipeline does five things:
 ## Prerequisites
 
 - **Your Fluig project in Git.** The standard Fluig Studio layout works as-is. Each process folder has its own `datasets/`, `forms/` and `workflow/` folders.
-- **Jenkins** with the *Pipeline* and *Pipeline Utility Steps* plugins (`readJSON`, `writeJSON` and `readProperties` come from the latter).
-- **OAuth credentials for each Fluig server.** In Fluig's Control Panel, register an OAuth consumer and an application user. You'll end up with four values: `consumer_key`, `consumer_secret`, `access_token` and `token_secret`. Give that user only the permissions the deploy needs.
+- **Jenkins** with the *Pipeline* plugin. The *Pipeline Utility Steps* plugin is handy for reading and writing JSON and properties files.
+- **OAuth credentials for each Fluig server.** In Fluig's Control Panel, register an OAuth consumer and an application user. You'll end up with four values: consumer key, consumer secret, access token and token secret. Give that user only the permissions the deploy needs.
 
 > **Tip:** before automating anything, call the API from Postman. It supports *OAuth 1.0* with *HMAC-SHA1* out of the box, so you can confirm your keys and the endpoint work before debugging Groovy.
 
 ## Step 1: choose the environment from the branch
 
-```groovy
-def ENVIRONMENT = 'hml'
-def FLUIG_URL = 'https://fluig-hml.yourcompany.com'
+Keep the rule simple and make staging the default. A small lookup is enough:
 
-stage('Select environment') {
-    steps {
-        script {
-            def branch = env.GIT_BRANCH?.replaceAll('origin/', '') ?: 'unknown'
-            if (branch == 'master') {
-                ENVIRONMENT = 'prod'
-                FLUIG_URL = 'https://fluig.yourcompany.com'
-            }
-            echo "Branch: ${branch} | Environment: ${ENVIRONMENT}"
-        }
-    }
-}
+```groovy
+// Illustrative: any branch not listed here goes to staging
+def targets = [main: 'production']
+def target = targets.get(env.BRANCH_NAME, 'staging')
 ```
 
-Merging into `master` deploys to production; everything else goes to staging. Just like in the [environment dataset post](/blog/fluig-dataset-detect-environment), the default is the safe one.
+Merging into the main branch deploys to production; everything else goes to staging. Just like in the [environment dataset post](/blog/fluig-dataset-detect-environment), the default is the safe one. Keep each environment's server URL next to its credentials (step 3) instead of hard-coding it in the pipeline.
 
 ## Step 2: deploy only what changed
 
-Comparing against `HEAD^` only sees the last commit. If a push has three commits, or the previous build failed, changes get lost. Compare against the **last successful build** instead:
+Comparing against `HEAD^` only sees the last commit. If a push has three commits, or the previous build failed, changes get lost. Compare against the **last successful build** instead. The Jenkins Git plugin exposes that commit as `GIT_PREVIOUS_SUCCESSFUL_COMMIT`, and Git can filter the result by path:
 
-```groovy
-// Declared at the top of the Jenkinsfile, so later stages can read it:
-// def changedDatasets = []
-
-def base = 'HEAD^'
-if (env.GIT_PREVIOUS_SUCCESSFUL_COMMIT) {
-    def exists = sh(script: "git cat-file -e ${env.GIT_PREVIOUS_SUCCESSFUL_COMMIT} 2>/dev/null && echo ok || true",
-                    returnStdout: true).trim()
-    if (exists == 'ok') base = env.GIT_PREVIOUS_SUCCESSFUL_COMMIT
-}
-
-changedDatasets = sh(script: "git diff --name-only ${base} HEAD", returnStdout: true)
-    .trim()
-    .split('\n')
-    .findAll { it.contains('/datasets/') && it.endsWith('.js') && fileExists(it) }
+```bash
+# List datasets changed between the last successful build and now
+git diff --name-only <last-successful-commit> HEAD -- '*/datasets/*.js'
 ```
 
-`fileExists` drops files that were deleted in the diff. Deleting datasets on the server is a decision you probably want to keep manual.
+Two details to handle around that command:
+
+- **The first build has no previous successful commit**, and that commit may also disappear after a force-push. Fall back to something sensible, such as the previous commit or a full deploy.
+- **Skip files that no longer exist.** A deleted dataset still shows up in the diff. Deleting datasets on the server is a decision you probably want to keep manual.
 
 ## Step 3: load credentials per environment
 
-Store each environment's four OAuth values as a Jenkins **secret file** (a simple `.properties` file), one per server, and load it at runtime:
+Store each environment's OAuth values (and its server URL) in **Jenkins credentials**, one entry per server, and only read them inside a `withCredentials` block:
 
 ```groovy
-def auth = [:]
-
-withCredentials([file(credentialsId: "fluig-oauth-${ENVIRONMENT}", variable: 'OAUTH_FILE')]) {
-    def props = readProperties file: OAUTH_FILE
-    auth = [
-        consumerKey   : props.consumer_key,
-        consumerSecret: props.consumer_secret,
-        accessToken   : props.access_token,
-        tokenSecret   : props.token_secret
-    ]
+// Illustrative: the credential ID and file format are up to you
+withCredentials([file(credentialsId: "<credentials-id-for-${target}>", variable: 'CREDS_FILE')]) {
+    // read the four OAuth values and the server URL from CREDS_FILE
 }
 ```
 
@@ -100,42 +76,18 @@ Never write tokens, passwords or webhook URLs directly in the `Jenkinsfile`. Any
 
 ## Step 4: sign requests with OAuth 1.0
 
-Fluig's API uses **OAuth 1.0a with HMAC-SHA1**. Every request carries a signature computed from the HTTP method, the URL and **all** query parameters. These two helpers handle it:
+Fluig's API uses **OAuth 1.0a with HMAC-SHA1** ([RFC 5849](https://www.rfc-editor.org/rfc/rfc5849)). You don't send the secrets themselves; every request carries a signature built like this:
 
-```groovy
-def percentEncode(String s) {
-    java.net.URLEncoder.encode(s, 'UTF-8').replace('+', '%20').replace('*', '%2A').replace('%7E', '~')
-}
+1. Collect **all** parameters: the request's query parameters plus the OAuth ones (`oauth_consumer_key`, `oauth_token`, `oauth_signature_method=HMAC-SHA1`, `oauth_timestamp`, `oauth_nonce`, `oauth_version=1.0`).
+2. Percent-encode each name and value, sort them by name and join them as `name=value&name=value`.
+3. Build the *signature base string*: `METHOD&encoded-url&encoded-parameters`.
+4. Sign it with HMAC-SHA1, using `consumer-secret&token-secret` as the key, and Base64-encode the result.
+5. Send the parameters along with `oauth_signature`, either in the query string or in an `Authorization` header.
 
-// Returns baseUrl + query string with the OAuth parameters and signature
-def signedUrl(String method, String baseUrl, Map query, Map auth) {
-    def params = query + [
-        oauth_consumer_key    : auth.consumerKey,
-        oauth_token           : auth.accessToken,
-        oauth_signature_method: 'HMAC-SHA1',
-        oauth_timestamp       : (System.currentTimeMillis() / 1000).toLong().toString(),
-        oauth_nonce           : UUID.randomUUID().toString(),
-        oauth_version         : '1.0'
-    ]
+You can implement this in a small Groovy helper or use an OAuth library. Either way, two things cost me time:
 
-    def paramString = new TreeMap(params)
-        .collect { k, v -> "${percentEncode(k)}=${percentEncode(v.toString())}" }
-        .join('&')
-    def baseString = [method.toUpperCase(), percentEncode(baseUrl), percentEncode(paramString)].join('&')
-    def signingKey = "${percentEncode(auth.consumerSecret)}&${percentEncode(auth.tokenSecret)}"
-
-    def mac = javax.crypto.Mac.getInstance('HmacSHA1')
-    mac.init(new javax.crypto.spec.SecretKeySpec(signingKey.bytes, 'HmacSHA1'))
-    def signature = mac.doFinal(baseString.bytes).encodeBase64().toString()
-
-    return "${baseUrl}?${paramString}&oauth_signature=${percentEncode(signature)}"
-}
-```
-
-Two things that cost me time:
-
-- **Business query parameters are part of the signature.** If the request has `?ignoreConflicts=true`, it must be inside `params` *before* signing. Otherwise Fluig answers `401`.
-- **Jenkins script security.** The first run may fail with `RejectedAccessException` for `javax.crypto.Mac`. An admin needs to approve the signature under *Manage Jenkins → In-process Script Approval*.
+- **Business query parameters are part of the signature.** If the request has `?ignoreConflicts=true`, it must be included *before* signing. Otherwise Fluig answers `401`.
+- **Jenkins script security.** Using Java crypto classes (like `javax.crypto.Mac`) from a pipeline may fail the first time with `RejectedAccessException`. An admin needs to approve the signature under *Manage Jenkins → In-process Script Approval*.
 
 ## Step 5: deploy a dataset
 
@@ -145,65 +97,39 @@ The endpoint is `POST /dataset/api/v2/datasets`. The body is a JSON with a list 
 {
   "datasets": [
     {
-      "code": "dsEnvironment",
-      "description": "dsEnvironment",
+      "code": "dsExample",
+      "description": "dsExample",
       "impl": "function createDataset(fields, constraints, sortFields) { ... }"
     }
   ]
 }
 ```
 
-With `ignoreConflicts=true`, the same call **creates** a new dataset or **updates** an existing one. The pipeline doesn't need to check first.
+With `ignoreConflicts=true`, the same call **creates** a new dataset or **updates** an existing one, so the pipeline doesn't need to check first.
 
-```groovy
-def deployDataset(String file, Map auth, String fluigUrl) {
-    def code = file.tokenize('/')[-1].replaceFirst(/\.js$/, '') // datasets/dsEnvironment.js -> dsEnvironment
+The deploy stage then follows this flow:
 
-    // writeJSON escapes the source code (quotes, line breaks) for us
-    writeJSON(file: 'dataset_payload.json', json: [
-        datasets: [[code: code, description: code, impl: readFile(file)]]
-    ])
+```text
+for each changed dataset file:
+    name     = file name without ".js"
+    payload  = { datasets: [ { code: name, description: name, impl: <file contents> } ] }
+    response = signed POST to <server>/dataset/api/v2/datasets?ignoreConflicts=true
+    if the status is not 2xx:
+        log the error and add the file to the failures list
+        continue with the next file
 
-    def url = signedUrl('POST', "${fluigUrl}/dataset/api/v2/datasets", [ignoreConflicts: 'true'], auth)
-    def status = sh(returnStdout: true, script: """
-        curl -s -w '%{http_code}' -o dataset_response.json -X POST '${url}' \\
-             -H 'Content-Type: application/json' -d @dataset_payload.json
-    """).trim()
-
-    if (!(status in ['200', '201', '204'])) {
-        error("Dataset ${code} failed (HTTP ${status}): ${readFile('dataset_response.json')}")
-    }
-    echo "Dataset ${code} deployed (HTTP ${status})"
-}
+if there are failures: mark the build as unstable and list them
 ```
 
-And the stage that ties it together:
+A few practical notes:
 
-```groovy
-stage('Deploy datasets') {
-    when { expression { changedDatasets } }
-    steps {
-        script {
-            def failures = []
-            changedDatasets.each { file ->
-                try {
-                    deployDataset(file, auth, FLUIG_URL)
-                } catch (e) {
-                    failures << file
-                    echo e.message
-                }
-            }
-            if (failures) unstable("Failed datasets: ${failures.join(', ')}")
-        }
-    }
-}
-```
-
-One failing dataset doesn't stop the others. The build ends as **unstable**, with the list of what failed.
+- **Let a JSON library build the payload.** The source code is full of quotes and line breaks, and escaping it by hand is a reliable way to break the request.
+- **One failing dataset shouldn't stop the others.** Catch errors per file, keep going, and end the build as **unstable** with the list of what failed.
+- **Log the response body on errors.** Fluig's error messages usually say exactly what's wrong (a syntax error in the dataset, a missing permission, a bad signature).
 
 ## Where to go next
 
-Datasets are the easiest artifact to start with. The same pattern (diff → sign → call the API) extends to the rest of the project:
+Datasets are the easiest artifact to start with. The same pattern (diff → sign → call the API) extends to the rest of the project. The [Fluig API reference](https://api.fluig.com/latest/index.html) lists every endpoint with its parameters and payloads, so check it for the exact details of each call:
 
 - **Forms:** `POST`/`PUT /ecm-forms/api/v2/cardindex`, sending the zipped form folder as `multipart/form-data`.
 - **Process diagrams:** `POST /process-management/api/v2/processes/{processId}/import/xml`, with the `.xml` from `workflow/.resources` as the body.
@@ -214,8 +140,8 @@ Datasets are the easiest artifact to start with. The same pattern (diff → sign
 
 - [ ] Fluig project versioned in Git
 - [ ] OAuth consumer + application user created on **each** Fluig server
-- [ ] Credentials stored as Jenkins secret files, one per environment
-- [ ] `master` deploys to production; other branches deploy to staging
+- [ ] Credentials stored in Jenkins, one entry per environment
+- [ ] Main branch deploys to production; other branches deploy to staging
 - [ ] Diff against the last successful build, not just `HEAD^`
 - [ ] Query parameters included in the OAuth signature
 - [ ] HTTPS on both servers (OAuth 1.0 signs requests but doesn't encrypt them, and your source code travels in the body)
