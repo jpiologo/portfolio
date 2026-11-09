@@ -1,10 +1,13 @@
 import { ArrowDown } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useVisitorRegion } from "../lib/region";
+import RegionFlag from "./RegionFlag";
 
 const Hero = () => {
 	const textToType = "Full Stack Developer;";
 	const [typedText, setTypedText] = useState("");
 	const [isTypingDone, setIsTypingDone] = useState(false);
+	const region = useVisitorRegion();
 
 	// Typing effect for the title
 	useEffect(() => {
@@ -57,6 +60,14 @@ const Hero = () => {
 					<p className="text-xl md:text-2xl text-text-muted mb-10 max-w-2xl mx-auto leading-relaxed tracking-wide flex items-center justify-center flex-wrap">
 						<span>Transforming ideas into</span>
 						<span className="ml-2 font-['Momo_Signature',cursive] text-accent-secondary">code</span>
+						{/* Slot keeps its width while the country lookup runs, so the line never shifts */}
+						<span
+							className={`ml-3 inline-flex h-[0.85em] min-w-[1.6em] transition-opacity duration-500 ${
+								region ? "opacity-100" : "opacity-0"
+							}`}
+						>
+							{region && <RegionFlag region={region} />}
+						</span>
 					</p>
 					<div className="flex flex-wrap gap-4 justify-center font-sans">
 						<a
