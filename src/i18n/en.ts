@@ -33,6 +33,9 @@ export const en = {
 		switchToDark: "Switch to dark mode",
 		lightMode: "Light mode",
 		darkMode: "Dark mode",
+		// Written in the target language, so a reader who doesn't understand the current page still finds it
+		switchLanguage: "Mudar para português",
+		otherLanguageCode: "PT",
 	},
 
 	hero: {
