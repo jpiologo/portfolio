@@ -1,9 +1,11 @@
 <!doctype html>
-<!-- The site ships its own EN/PT translation; browser auto-translate rewrites text React manages and garbles it -->
-<html lang="en" translate="no">
+<!--
+  lang must match the language actually shown, or Chrome offers to "translate" text that is already
+  in the reader's language and garbles it. pt-BR is the default; React keeps it in sync afterwards.
+-->
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta name="google" content="notranslate" />
     <!-- "JP." logo: the SVG adapts to the browser's light/dark theme, the .ico is the fallback -->
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -34,7 +36,7 @@
       (function () {
         var language;
         try { language = localStorage.getItem('language'); } catch (e) {}
-        if (language === 'pt') document.documentElement.lang = 'pt-BR';
+        if (language === 'en') document.documentElement.lang = 'en';
       })();
     </script>
   </head>

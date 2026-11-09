@@ -1,7 +1,9 @@
 import type { GenericTechId } from "../lib/techCatalog";
+import type { Language } from "./language";
 import { toWords } from "number-to-words";
 
 export const en = {
+	language: "en" as Language,
 	locale: "en-US",
 	htmlLang: "en",
 
