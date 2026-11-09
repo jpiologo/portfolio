@@ -22,3 +22,19 @@ export interface Post {
   readingMinutes: number;
   content: string;
 }
+
+export interface Project {
+  title: string;
+  subtitle: string;
+  description: string;
+  image: string;
+  demoLink?: string;
+  githubLink?: string;
+  inDevelopment?: boolean;
+  details: {
+    challenge: string;
+    solution: string;
+    techStack: string[];
+    features: string[];
+  };
+}

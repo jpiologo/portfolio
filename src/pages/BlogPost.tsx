@@ -5,6 +5,7 @@ import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import { ArrowLeft, Clock } from "lucide-react";
 import "highlight.js/styles/github-dark.css";
+import BackToTop from "../components/BackToTop";
 import CodeBlock from "../components/CodeBlock";
 import { formatPostDate, getPost, resolvePostAsset } from "../lib/posts";
 
@@ -94,6 +95,7 @@ const BlogPost = () => {
 					</ReactMarkdown>
 				</div>
 			</div>
+			<BackToTop />
 		</article>
 	);
 };

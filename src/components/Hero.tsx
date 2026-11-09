@@ -1,28 +1,13 @@
 import { ArrowDown } from "lucide-react";
-import type React from "react";
 import { useState, useEffect } from "react";
-
-/*
- * Fonts the word "code" cycles through. All are serifs, alternating roman/italic
- * and contrast so each swap is noticeable without jumping between unrelated styles.
- * They're independent of the site fonts (fonts.config.ts) and are loaded from
- * Google Fonts in index.html.
- */
-const CODE_FONTS: React.CSSProperties[] = [
-	{ fontFamily: "'Playfair Display', serif", fontWeight: 600, fontStyle: "italic" },
-	{ fontFamily: "'DM Serif Display', serif" },
-	{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, fontStyle: "italic", fontSize: "1.15em" },
-	{ fontFamily: "'Bodoni Moda', serif", fontWeight: 700 },
-	{ fontFamily: "'Fraunces', serif", fontWeight: 600, fontStyle: "italic" },
-	{ fontFamily: "'Abril Fatface', serif" },
-	{ fontFamily: "'Libre Baskerville', serif", fontStyle: "italic", fontSize: "0.9em" },
-];
+import { useVisitorRegion } from "../lib/region";
+import RegionFlag from "./RegionFlag";
 
 const Hero = () => {
 	const textToType = "Full Stack Developer;";
 	const [typedText, setTypedText] = useState("");
 	const [isTypingDone, setIsTypingDone] = useState(false);
-	const [fontIndex, setFontIndex] = useState(0);
+	const region = useVisitorRegion();
 
 	// Typing effect for the title
 	useEffect(() => {
@@ -37,14 +22,6 @@ const Hero = () => {
 			}
 		}, 100);
 		return () => clearInterval(typingInterval);
-	}, []);
-
-	// Alternating font effect for "code"
-	useEffect(() => {
-		const fontInterval = setInterval(() => {
-			setFontIndex((prev) => (prev + 1) % CODE_FONTS.length);
-		}, 2500);
-		return () => clearInterval(fontInterval);
 	}, []);
 
 	// Helper to retain the gradient on "Developer"
@@ -65,21 +42,9 @@ const Hero = () => {
 	};
 
 	return (
-		<section className="min-h-[110vh] relative bg-gradient-to-br from-background-base via-[#EEF2FB] to-[#DDE6F7] dark:via-[#0E1A2E] dark:to-accent-primary text-text-primary">
-			{/* Lava lamp gradient: colors and motion live in index.css (.hero-lava) */}
-			<div aria-hidden="true" className="hero-lava">
-				<span />
-				<span />
-				<span />
-				<span />
-				<span />
-			</div>
-
-			{/* Background Overlays */}
-			<div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background-base" />
-
+		<section className="relative text-text-primary">
 			{/* Hero Content */}
-			<div className="relative max-w-6xl mx-auto px-4 pt-32 pb-20 flex flex-col items-center justify-center min-h-[110vh] gap-8">
+			<div className="relative w-full max-w-6xl mx-auto px-4 pt-32 pb-20 flex flex-col items-center justify-center min-h-screen gap-8">
 				{/* Text Section */}
 				<div className="flex-1 text-center w-full max-w-4xl flex flex-col items-center justify-center font-display">
 					<h1 className="font-display text-5xl md:text-7xl font-extrabold mb-8 min-h-[5rem] md:min-h-[6.5rem] leading-tight md:leading-tight tracking-tight">
@@ -94,22 +59,14 @@ const Hero = () => {
 					</h1>
 					<p className="text-xl md:text-2xl text-text-muted mb-10 max-w-2xl mx-auto leading-relaxed tracking-wide flex items-center justify-center flex-wrap">
 						<span>Transforming ideas into</span>
-						{/* Fixed-size slot so switching fonts never shifts the sentence */}
-						<span className="relative inline-flex items-center w-[4.5rem] md:w-[5.5rem] h-[2.5rem] md:h-[3rem] ml-2 text-accent-secondary">
-							{CODE_FONTS.map((font, index) => (
-								<span
-									key={String(font.fontFamily)}
-									aria-hidden={fontIndex !== index}
-									className="absolute inset-0 flex items-center whitespace-nowrap pointer-events-none"
-									style={{
-										...font,
-										opacity: fontIndex === index ? 1 : 0,
-										transition: "opacity 1.2s ease-in-out",
-									}}
-								>
-									code
-								</span>
-							))}
+						<span className="ml-2 font-['Momo_Signature',cursive] text-accent-secondary">code</span>
+						{/* Slot keeps its width while the country lookup runs, so the line never shifts */}
+						<span
+							className={`ml-3 inline-flex h-[0.85em] min-w-[1.6em] transition-opacity duration-500 ${
+								region ? "opacity-100" : "opacity-0"
+							}`}
+						>
+							{region && <RegionFlag region={region} />}
 						</span>
 					</p>
 					<div className="flex flex-wrap gap-4 justify-center font-sans">

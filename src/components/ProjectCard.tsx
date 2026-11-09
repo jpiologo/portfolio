@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { parallaxHandlers } from "../lib/parallax";
 import {
 	ExternalLink,
@@ -11,25 +12,9 @@ import {
 	Lightbulb,
 	Layers,
 } from "lucide-react";
+import type { Project } from "../lib/types";
 
-interface ProjectCardProps {
-	project: {
-		title: string;
-		subtitle: string;
-		description: string;
-		image: string;
-		demoLink?: string;
-		githubLink?: string;
-		details: {
-			challenge: string;
-			solution: string;
-			techStack: string[];
-			features: string[];
-		};
-	};
-}
-
-const ProjectCard = ({ project }: ProjectCardProps) => {
+const ProjectCard = ({ project }: { project: Project }) => {
 	const [isExpanded, setIsExpanded] = useState(false);
 
 	return (
@@ -51,7 +36,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 						className="proj-card-image parallax-media"
 					/>
 					<div className="proj-card-image-overlay">
-						{(project.demoLink || project.githubLink || project.title === "CleanUp") && (
+						{(project.demoLink || project.githubLink || project.inDevelopment) && (
 							<div className="proj-card-image-actions">
 								{project.demoLink ? (
 									<a
@@ -63,7 +48,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 									>
 										<ExternalLink className="w-4 h-4" />
 									</a>
-								) : project.title === "CleanUp" ? (
+								) : project.inDevelopment ? (
 									<span className="proj-card-status">
 										<Wrench className="w-3.5 h-3.5" />
 										In Development
@@ -98,8 +83,8 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 				</div>
 			</div>
 
-			{/* Modal */}
-			{isExpanded && (
+			{/* Portaled: a transformed ancestor (the carousel track) would otherwise contain the fixed overlay */}
+			{isExpanded && createPortal(
 				<div
 					className="proj-modal-overlay"
 					onClick={() => setIsExpanded(false)}
@@ -174,11 +159,11 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 									<h4 className="proj-modal-section-title">
 										Tech Stack
 									</h4>
-									<ol className="proj-modal-stack">
+									<ul className="proj-modal-list">
 										{project.details.techStack.map((tech) => (
 											<li key={tech}>{tech}</li>
 										))}
-									</ol>
+									</ul>
 								</div>
 								<div className="proj-modal-section">
 									<div className="proj-modal-section-icon">
@@ -187,7 +172,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 									<h4 className="proj-modal-section-title">
 										Key Deliverables
 									</h4>
-									<ul className="proj-modal-features">
+									<ul className="proj-modal-list">
 										{project.details.features.map((f) => (
 											<li key={f}>{f}</li>
 										))}
@@ -196,7 +181,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 							</div>
 
 							{/* Actions */}
-							{(project.demoLink || project.githubLink || project.title === "CleanUp") && (
+							{(project.demoLink || project.githubLink || project.inDevelopment) && (
 								<div className="proj-modal-actions">
 									{project.demoLink ? (
 										<a
@@ -208,7 +193,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 											<ExternalLink className="w-4 h-4" />
 											Live Demo
 										</a>
-									) : project.title === "CleanUp" ? (
+									) : project.inDevelopment ? (
 										<button
 											type="button"
 											disabled
@@ -233,7 +218,8 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 							)}
 						</div>
 					</div>
-				</div>
+				</div>,
+				document.body,
 			)}
 		</>
 	);

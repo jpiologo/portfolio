@@ -9,7 +9,7 @@ const Blog = () => {
 	const latestPosts = posts.slice(0, LATEST_COUNT);
 
 	return (
-		<section id="blog" className="py-24 bg-background-surface relative overflow-hidden">
+		<section id="blog" className="py-24 bg-background-surface/60 relative overflow-hidden">
 			<div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-accent-primary/10 rounded-full blur-[120px] pointer-events-none transform -translate-x-1/3 translate-y-1/3" />
 
 			<div className="max-w-6xl mx-auto px-4 relative z-10">
