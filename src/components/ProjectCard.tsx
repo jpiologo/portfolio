@@ -13,8 +13,10 @@ import {
 	Layers,
 } from "lucide-react";
 import type { Project } from "../lib/types";
+import { useI18n } from "../i18n/context";
 
 const ProjectCard = ({ project }: { project: Project }) => {
+	const t = useI18n();
 	const [isExpanded, setIsExpanded] = useState(false);
 
 	return (
@@ -51,7 +53,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
 								) : project.inDevelopment ? (
 									<span className="proj-card-status">
 										<Wrench className="w-3.5 h-3.5" />
-										In Development
+										{t.projects.inDevelopment}
 									</span>
 								) : null}
 								{project.githubLink && (
@@ -77,7 +79,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
 					<p className="proj-card-desc">{project.description}</p>
 
 					<div className="proj-card-cta">
-						<span>View Case Study</span>
+						<span>{t.projects.viewCaseStudy}</span>
 						<ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
 					</div>
 				</div>
@@ -131,7 +133,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
 										<Lightbulb className="w-4 h-4 text-accent-secondary" />
 									</div>
 									<h4 className="proj-modal-section-title">
-										The Challenge
+										{t.projects.challenge}
 									</h4>
 									<p className="proj-modal-section-text">
 										{project.details.challenge}
@@ -142,7 +144,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
 										<Rocket className="w-4 h-4 text-accent-secondary" />
 									</div>
 									<h4 className="proj-modal-section-title">
-										The Solution
+										{t.projects.solution}
 									</h4>
 									<p className="proj-modal-section-text">
 										{project.details.solution}
@@ -157,7 +159,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
 										<Layers className="w-4 h-4 text-accent-secondary" />
 									</div>
 									<h4 className="proj-modal-section-title">
-										Tech Stack
+										{t.projects.techStack}
 									</h4>
 									<ul className="proj-modal-list">
 										{project.details.techStack.map((tech) => (
@@ -170,7 +172,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
 										<Code2 className="w-4 h-4 text-accent-secondary" />
 									</div>
 									<h4 className="proj-modal-section-title">
-										Key Deliverables
+										{t.projects.deliverables}
 									</h4>
 									<ul className="proj-modal-list">
 										{project.details.features.map((f) => (
@@ -191,7 +193,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
 											rel="noreferrer"
 										>
 											<ExternalLink className="w-4 h-4" />
-											Live Demo
+											{t.projects.liveDemo}
 										</a>
 									) : project.inDevelopment ? (
 										<button
@@ -200,7 +202,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
 											className="btn-secondary"
 										>
 											<Wrench className="w-4 h-4" />
-											In Development
+											{t.projects.inDevelopment}
 										</button>
 									) : null}
 									{project.githubLink && (
@@ -211,7 +213,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
 											rel="noreferrer"
 										>
 											<Github className="w-4 h-4" />
-											View Source
+											{t.projects.viewSource}
 										</a>
 									)}
 								</div>

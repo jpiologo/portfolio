@@ -1,17 +1,20 @@
 import { ArrowDown } from "lucide-react";
 import { useState, useEffect } from "react";
-import { useVisitorRegion } from "../lib/region";
-import RegionFlag from "./RegionFlag";
+import { useI18n } from "../i18n/context";
+
+const TYPING_INTERVAL_MS = 100;
 
 const Hero = () => {
-	const textToType = "Full Stack Developer;";
+	const t = useI18n();
+	const { titlePlain, titleHighlight } = t.hero;
+	const textToType = titlePlain + titleHighlight;
 	const [typedText, setTypedText] = useState("");
 	const [isTypingDone, setIsTypingDone] = useState(false);
-	const region = useVisitorRegion();
 
-	// Typing effect for the title
+	// Typing effect for the title; restarts when the language changes
 	useEffect(() => {
 		let i = 0;
+		setIsTypingDone(false);
 		const typingInterval = setInterval(() => {
 			if (i < textToType.length) {
 				setTypedText(textToType.slice(0, i + 1));
@@ -20,23 +23,22 @@ const Hero = () => {
 				clearInterval(typingInterval);
 				setIsTypingDone(true);
 			}
-		}, 100);
+		}, TYPING_INTERVAL_MS);
 		return () => clearInterval(typingInterval);
-	}, []);
+	}, [textToType]);
 
-	// Helper to retain the gradient on "Developer"
+	// The highlighted part of the title keeps its gradient while it's being typed
 	const renderTypedText = () => {
-		if (typedText.length <= 11) {
-			return <span className="whitespace-pre-wrap">{typedText}</span>;
-		}
-		const firstPart = typedText.slice(0, 11);
-		const devPart = typedText.slice(11);
+		const plainPart = typedText.slice(0, titlePlain.length);
+		const highlightPart = typedText.slice(titlePlain.length);
 		return (
 			<>
-				<span className="whitespace-pre-wrap">{firstPart}</span>
-				<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-500 dark:from-blue-400 dark:to-blue-200 py-1">
-					{devPart}
-				</span>
+				<span className="whitespace-pre-wrap">{plainPart}</span>
+				{highlightPart && (
+					<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-500 dark:from-blue-400 dark:to-blue-200 py-1">
+						{highlightPart}
+					</span>
+				)}
 			</>
 		);
 	};
@@ -58,15 +60,9 @@ const Hero = () => {
 						></span>
 					</h1>
 					<p className="text-xl md:text-2xl text-text-muted mb-10 max-w-2xl mx-auto leading-relaxed tracking-wide flex items-center justify-center flex-wrap">
-						<span>Transforming ideas into</span>
-						<span className="ml-2 font-['Momo_Signature',cursive] text-accent-secondary">code</span>
-						{/* Slot keeps its width while the country lookup runs, so the line never shifts */}
-						<span
-							className={`ml-3 inline-flex h-[0.85em] min-w-[1.6em] transition-opacity duration-500 ${
-								region ? "opacity-100" : "opacity-0"
-							}`}
-						>
-							{region && <RegionFlag region={region} />}
+						<span>{t.hero.subtitle}</span>
+						<span className="ml-2 font-['Momo_Signature',cursive] text-accent-secondary">
+							{t.hero.subtitleHighlight}
 						</span>
 					</p>
 					<div className="flex flex-wrap gap-4 justify-center font-sans">
@@ -74,13 +70,13 @@ const Hero = () => {
 							href="#projects"
 							className="btn-primary"
 						>
-							View My Work
+							{t.hero.viewWork}
 						</a>
 						<a
 							href="#contact"
 							className="btn-secondary"
 						>
-							Get in Touch
+							{t.hero.getInTouch}
 						</a>
 					</div>
 				</div>

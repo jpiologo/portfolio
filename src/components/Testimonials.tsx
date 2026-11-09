@@ -5,16 +5,18 @@ import type { Comment } from '../lib/types';
 import { MessageSquarePlus, Quote, Loader2, AlertCircle } from 'lucide-react';
 import CommentForm from './CommentForm';
 import { parallaxHandlers } from '../lib/parallax';
+import { useI18n } from '../i18n/context';
 
 const Testimonials = () => {
+  const t = useI18n();
   const [comments, setComments] = useState<Comment[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [hasError, setHasError] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fetchComments = async () => {
     setIsLoading(true);
-    setError(null);
+    setHasError(false);
     try {
       // The Supabase RLS policy strictly controls returning only approved=true
       const { data, error: fetchError } = await supabase
@@ -27,7 +29,7 @@ const Testimonials = () => {
       setComments(data as Comment[] || []);
     } catch (err: any) {
       console.error('Error fetching comments:', err);
-      setError('Unable to load testimonials at this time. Please try again later.');
+      setHasError(true);
     } finally {
       setIsLoading(false);
     }
@@ -39,7 +41,7 @@ const Testimonials = () => {
 
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long' };
-    return new Date(dateString).toLocaleDateString('en-US', options);
+    return new Date(dateString).toLocaleDateString(t.locale, options);
   };
 
   return (
@@ -52,10 +54,10 @@ const Testimonials = () => {
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-2xl">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-text-primary tracking-tight">
-              Testimonials
+              {t.testimonials.heading}
             </h2>
             <p className="text-xl text-text-muted leading-relaxed font-light">
-              Don't just take my word for it. Here is what people who have worked with me have to say about my impact, skills, and collaboration.
+              {t.testimonials.intro}
             </p>
           </div>
           <button
@@ -63,27 +65,27 @@ const Testimonials = () => {
             className="group btn-secondary shrink-0"
           >
             <MessageSquarePlus className="w-5 h-5 group-hover:scale-110 transition-transform" />
-            <span>Leave a comment!</span>
+            <span>{t.testimonials.leaveComment}</span>
           </button>
         </div>
 
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-24 px-4 bg-background-elevated/50 backdrop-blur-sm rounded-[2rem] border border-border-subtle shadow-sm">
             <Loader2 className="w-12 h-12 text-accent-secondary animate-spin mb-6" />
-            <p className="text-text-muted font-medium text-lg animate-pulse">Loading amazing comments...</p>
+            <p className="text-text-muted font-medium text-lg animate-pulse">{t.testimonials.loading}</p>
           </div>
-        ) : error ? (
+        ) : hasError ? (
           <div className="flex flex-col items-center justify-center py-20 px-4 bg-background-elevated rounded-[2rem] border border-feedback-error/30 shadow-sm">
             <div className="w-20 h-20 bg-feedback-error-bg rounded-full flex items-center justify-center mb-6">
               <AlertCircle className="w-10 h-10 text-feedback-error" />
             </div>
-            <h3 className="text-2xl font-bold text-text-primary mb-3">Oops! Something went wrong</h3>
-            <p className="text-text-muted text-center max-w-md text-lg leading-relaxed">{error}</p>
+            <h3 className="text-2xl font-bold text-text-primary mb-3">{t.testimonials.errorTitle}</h3>
+            <p className="text-text-muted text-center max-w-md text-lg leading-relaxed">{t.testimonials.errorText}</p>
             <button 
               onClick={fetchComments}
               className="mt-8 btn-secondary"
             >
-              Try Again
+              {t.testimonials.tryAgain}
             </button>
           </div>
         ) : comments.length === 0 ? (
@@ -91,15 +93,15 @@ const Testimonials = () => {
             <div className="w-24 h-24 bg-accent-primary/15 rounded-full flex items-center justify-center mb-8 relative">
               <Quote className="w-10 h-10 text-accent-secondary absolute" />
             </div>
-            <h3 className="text-3xl font-extrabold text-text-primary mb-4 tracking-tight">No comments yet</h3>
+            <h3 className="text-3xl font-extrabold text-text-primary mb-4 tracking-tight">{t.testimonials.emptyTitle}</h3>
             <p className="text-text-muted max-w-lg mx-auto mb-10 text-lg leading-relaxed font-light">
-              Be the first one to share your experience working with me. Your feedback is highly appreciated!
+              {t.testimonials.emptyText}
             </p>
             <button
               onClick={() => setIsModalOpen(true)}
               className="btn-primary"
             >
-              Write the first comment
+              {t.testimonials.writeFirst}
             </button>
           </div>
         ) : (

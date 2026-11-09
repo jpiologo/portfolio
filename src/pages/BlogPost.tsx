@@ -8,27 +8,29 @@ import "highlight.js/styles/github-dark.css";
 import BackToTop from "../components/BackToTop";
 import CodeBlock from "../components/CodeBlock";
 import { formatPostDate, getPost, resolvePostAsset } from "../lib/posts";
+import { useI18n } from "../i18n/context";
 
 const BlogPost = () => {
 	const { slug = "" } = useParams();
 	const post = getPost(slug);
+	const t = useI18n();
 
 	useEffect(() => {
-		document.title = post ? `${post.title} | João Piologo` : "Post not found | João Piologo";
-	}, [post]);
+		document.title = post ? `${post.title} | João Piologo` : t.blogPost.notFoundDocumentTitle;
+	}, [post, t]);
 
 	if (!post) {
 		return (
 			<section className="pt-40 pb-24 bg-background-base min-h-screen">
 				<div className="max-w-3xl mx-auto px-4 text-center">
-					<h1 className="text-4xl font-bold text-text-primary mb-4">Post not found</h1>
-					<p className="text-text-muted text-lg mb-10">This post doesn't exist or was removed.</p>
+					<h1 className="text-4xl font-bold text-text-primary mb-4">{t.blogPost.notFoundTitle}</h1>
+					<p className="text-text-muted text-lg mb-10">{t.blogPost.notFoundText}</p>
 					<Link
 						to="/blog"
 						className="btn-primary"
 					>
 						<ArrowLeft className="w-4 h-4" />
-						Back to blog
+						{t.blogPost.backToBlog}
 					</Link>
 				</div>
 			</section>
@@ -43,7 +45,7 @@ const BlogPost = () => {
 					className="inline-flex items-center gap-2 text-text-muted hover:text-accent-secondary transition-colors mb-10"
 				>
 					<ArrowLeft className="w-4 h-4" />
-					All posts
+					{t.blogPost.allPosts}
 				</Link>
 
 				{/* Post header */}
@@ -55,10 +57,10 @@ const BlogPost = () => {
 						<p className="text-xl text-text-muted font-light leading-relaxed mb-6">{post.description}</p>
 					)}
 					<div className="flex items-center gap-4 text-sm text-text-muted">
-						{post.date && <time dateTime={post.date}>{formatPostDate(post.date)}</time>}
+						{post.date && <time dateTime={post.date}>{formatPostDate(post.date, t.locale)}</time>}
 						<span className="flex items-center gap-1">
 							<Clock className="w-3.5 h-3.5" />
-							{post.readingMinutes} min read
+							{t.common.minRead(post.readingMinutes)}
 						</span>
 					</div>
 				</header>

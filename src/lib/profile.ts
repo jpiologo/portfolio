@@ -1,12 +1,10 @@
 export const CONTACT_EMAIL = "joaotpiologo@hotmail.com";
 
+// Labels live in src/i18n (footer.resumes), keyed by id
 export const RESUMES = [
-	{ label: "Resume (English)", href: "/resume/joao-piologo-resume-en.pdf" },
-	{ label: "Currículo (Português)", href: "/resume/joao-piologo-resume-pt-br.pdf" },
-];
+	{ id: "en", href: "/resume/joao-piologo-resume-en.pdf" },
+	{ id: "ptBr", href: "/resume/joao-piologo-resume-pt-br.pdf" },
+] as const;
 
-export const buildContactMailto = (name: string, message: string) => {
-	const subject = `Portfolio contact - ${name}`;
-	const body = `${message}\n\n${name}`;
-	return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-};
+export const buildContactMailto = (subject: string, body: string) =>
+	`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;

@@ -2,10 +2,12 @@ import { Link } from "react-router-dom";
 import { ArrowRight, PenLine } from "lucide-react";
 import PostCard from "./PostCard";
 import { posts } from "../lib/posts";
+import { useI18n } from "../i18n/context";
 
 const LATEST_COUNT = 3;
 
 const Blog = () => {
+	const t = useI18n();
 	const latestPosts = posts.slice(0, LATEST_COUNT);
 
 	return (
@@ -16,18 +18,16 @@ const Blog = () => {
 				<div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-14 gap-6">
 					<div className="max-w-2xl">
 						<h2 className="text-4xl md:text-5xl font-bold mb-6 text-text-primary tracking-tight">
-							Blog
+							{t.blog.heading}
 						</h2>
-						<p className="text-xl text-text-muted leading-relaxed font-light">
-							Notes, tutorials and lessons learned about software engineering, tooling and the technologies I work with every day.
-						</p>
+						<p className="text-xl text-text-muted leading-relaxed font-light">{t.blog.intro}</p>
 					</div>
 					{posts.length > 0 && (
 						<Link
 							to="/blog"
 							className="group btn-secondary shrink-0"
 						>
-							<span>View all posts</span>
+							<span>{t.blog.viewAll}</span>
 							<ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
 						</Link>
 					)}
@@ -36,10 +36,8 @@ const Blog = () => {
 				{latestPosts.length === 0 ? (
 					<div className="flex flex-col items-center justify-center py-20 px-4 bg-background-elevated rounded-[2rem] border border-border-subtle text-center">
 						<PenLine className="w-10 h-10 text-accent-secondary mb-6" />
-						<h3 className="text-2xl font-bold text-text-primary mb-3">First post coming soon</h3>
-						<p className="text-text-muted max-w-md text-lg font-light">
-							I'm writing about the things I build and learn. Check back shortly!
-						</p>
+						<h3 className="text-2xl font-bold text-text-primary mb-3">{t.blog.emptyTitle}</h3>
+						<p className="text-text-muted max-w-md text-lg font-light">{t.blog.emptyText}</p>
 					</div>
 				) : (
 					<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
