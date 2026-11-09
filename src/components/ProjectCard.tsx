@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import type { Project } from "../lib/types";
 import { useI18n } from "../i18n/context";
+import TechStack from "./TechStack";
 
 const ProjectCard = ({ project }: { project: Project }) => {
 	const t = useI18n();
@@ -161,11 +162,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
 									<h4 className="proj-modal-section-title">
 										{t.projects.techStack}
 									</h4>
-									<ul className="proj-modal-list">
-										{project.details.techStack.map((tech) => (
-											<li key={tech}>{tech}</li>
-										))}
-									</ul>
+									<TechStack ids={project.techStack} />
 								</div>
 								<div className="proj-modal-section">
 									<div className="proj-modal-section-icon">
@@ -174,7 +171,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
 									<h4 className="proj-modal-section-title">
 										{t.projects.deliverables}
 									</h4>
-									<ul className="proj-modal-list">
+									<ul className="proj-modal-deliverables">
 										{project.details.features.map((f) => (
 											<li key={f}>{f}</li>
 										))}

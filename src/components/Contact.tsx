@@ -1,8 +1,16 @@
 import type React from 'react';
 import { useState } from 'react';
-import { Github, Linkedin, Mail, MapPin } from 'lucide-react';
+import { Mail, MapPin } from 'lucide-react';
 import { buildContactMailto, CONTACT_EMAIL } from '../lib/profile';
+import { isExternalLink, type SocialLink, SOCIAL_LINKS } from '../lib/socialLinks';
 import { useI18n } from '../i18n/context';
+
+const SOCIAL_BUTTON_COLORS: Record<SocialLink['id'], string> = {
+  github: 'bg-social-github text-background-base',
+  linkedin: 'bg-social-linkedin text-on-accent',
+  instagram: 'bg-social-instagram text-on-accent',
+  email: 'bg-social-email text-on-accent',
+};
 
 const Contact = () => {
   const t = useI18n();
@@ -84,15 +92,18 @@ const Contact = () => {
 
           {/* On xl screens these live in the fixed SocialSidebar instead */}
           <div className="flex justify-center gap-4 mt-8 xl:hidden">
-            <a href="https://github.com/jpiologo" className="p-3 bg-social-github text-background-base rounded-lg hover:opacity-80 transition-opacity">
-              <Github className="w-6 h-6" />
-            </a>
-            <a href="https://www.linkedin.com/in/jo%C3%A3o-piologo-85ba9a226/" className="p-3 bg-social-linkedin text-on-accent rounded-lg hover:opacity-80 transition-opacity">
-              <Linkedin className="w-6 h-6" />
-            </a>
-            <a href={`mailto:${CONTACT_EMAIL}`} className="p-3 bg-social-email text-on-accent rounded-lg hover:opacity-80 transition-opacity">
-              <Mail className="w-6 h-6" />
-            </a>
+            {SOCIAL_LINKS.map(({ id, label, href, icon: Icon }) => (
+              <a
+                key={id}
+                href={href}
+                target={isExternalLink(href) ? '_blank' : undefined}
+                rel="noopener noreferrer"
+                aria-label={label}
+                className={`p-3 rounded-lg hover:opacity-80 transition-opacity ${SOCIAL_BUTTON_COLORS[id]}`}
+              >
+                <Icon className="w-6 h-6" />
+              </a>
+            ))}
           </div>
         </div>
       </div>

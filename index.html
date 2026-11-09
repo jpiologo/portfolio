@@ -1,7 +1,9 @@
 <!doctype html>
-<html lang="en">
+<!-- The site ships its own EN/PT translation; browser auto-translate rewrites text React manages and garbles it -->
+<html lang="en" translate="no">
   <head>
     <meta charset="UTF-8" />
+    <meta name="google" content="notranslate" />
     <!-- "JP." logo: the SVG adapts to the browser's light/dark theme, the .ico is the fallback -->
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -26,6 +28,13 @@
           theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
         }
         if (theme === 'dark') document.documentElement.classList.add('dark');
+      })();
+
+      // Language detected on a previous visit (key and values from src/i18n/LanguageProvider.tsx)
+      (function () {
+        var language;
+        try { language = localStorage.getItem('language'); } catch (e) {}
+        if (language === 'pt') document.documentElement.lang = 'pt-BR';
       })();
     </script>
   </head>

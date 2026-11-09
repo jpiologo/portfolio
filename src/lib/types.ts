@@ -1,3 +1,5 @@
+import type { TechId } from "./techCatalog";
+
 export interface Comment {
   id: string;
   created_at: string;
@@ -31,10 +33,10 @@ export interface Project {
   demoLink?: string;
   githubLink?: string;
   inDevelopment?: boolean;
+  techStack: TechId[];
   details: {
     challenge: string;
     solution: string;
-    techStack: string[];
     features: string[];
   };
 }
