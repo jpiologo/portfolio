@@ -1,8 +1,8 @@
 import type React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Menu, Moon, Sun, X } from "lucide-react";
-import { useI18n } from "../i18n/context";
+import { Languages, Menu, Moon, Sun, X } from "lucide-react";
+import { useI18n, useLanguageControl } from "../i18n/context";
 import { useTheme } from "../lib/theme";
 import Logo from "./Logo";
 
@@ -11,6 +11,14 @@ const Header = () => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 	const { theme, toggleTheme } = useTheme();
 	const t = useI18n();
+	const { language, chooseLanguage } = useLanguageControl();
+	const otherLanguage = language === "pt" ? "en" : "pt";
+
+	const headerButtonClass = `rounded-full border transition-colors ${
+		isScrolled
+			? "border-border-subtle text-text-muted hover:text-accent-secondary hover:border-accent-secondary"
+			: "border-text-primary/20 text-text-primary hover:text-accent-secondary hover:border-accent-secondary"
+	}`;
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -89,19 +97,27 @@ const Header = () => {
 								))}
 							</div>
 
-							<button
-								type="button"
-								onClick={toggleTheme}
-								className={`p-2 rounded-full border transition-colors ${
-									isScrolled
-										? "border-border-subtle text-text-muted hover:text-accent-secondary hover:border-accent-secondary"
-										: "border-text-primary/20 text-text-primary hover:text-accent-secondary hover:border-accent-secondary"
-								}`}
-								aria-label={theme === "dark" ? t.header.switchToLight : t.header.switchToDark}
-								title={theme === "dark" ? t.header.lightMode : t.header.darkMode}
-							>
-								{theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-							</button>
+							<div className="flex items-center gap-2">
+								<button
+									type="button"
+									onClick={() => chooseLanguage(otherLanguage)}
+									className={`flex items-center gap-1.5 px-3 py-2 ${headerButtonClass}`}
+									aria-label={t.header.switchLanguage}
+									title={t.header.switchLanguage}
+								>
+									<Languages size={16} />
+									<span className="text-xs font-semibold leading-none">{t.header.otherLanguageCode}</span>
+								</button>
+								<button
+									type="button"
+									onClick={toggleTheme}
+									className={`p-2 ${headerButtonClass}`}
+									aria-label={theme === "dark" ? t.header.switchToLight : t.header.switchToDark}
+									title={theme === "dark" ? t.header.lightMode : t.header.darkMode}
+								>
+									{theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+								</button>
+							</div>
 						</div>
 					</div>
 				</nav>

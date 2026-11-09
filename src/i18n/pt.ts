@@ -57,6 +57,8 @@ export const pt: Messages = {
 		switchToDark: "Mudar para o modo escuro",
 		lightMode: "Modo claro",
 		darkMode: "Modo escuro",
+		switchLanguage: "Switch to English",
+		otherLanguageCode: "EN",
 	},
 
 	hero: {
