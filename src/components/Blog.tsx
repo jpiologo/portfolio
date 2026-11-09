@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, PenLine } from "lucide-react";
 import PostCard from "./PostCard";
-import { posts } from "../lib/posts";
+import { getPosts } from "../lib/posts";
 import { useI18n } from "../i18n/context";
 
 const LATEST_COUNT = 3;
 
 const Blog = () => {
 	const t = useI18n();
+	const posts = getPosts(t.language);
 	const latestPosts = posts.slice(0, LATEST_COUNT);
 
 	return (

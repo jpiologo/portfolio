@@ -1,8 +1,9 @@
 import { createContext, useContext } from "react";
 import { en, type Messages } from "./en";
+import type { Language } from "./language";
 import { pt } from "./pt";
 
-export type Language = "en" | "pt";
+export type { Language };
 
 export const MESSAGES: Record<Language, Messages> = { en, pt };
 

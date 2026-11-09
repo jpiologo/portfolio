@@ -12,8 +12,8 @@ import { useI18n } from "../i18n/context";
 
 const BlogPost = () => {
 	const { slug = "" } = useParams();
-	const post = getPost(slug);
 	const t = useI18n();
+	const post = getPost(slug, t.language);
 
 	useEffect(() => {
 		document.title = post ? `${post.title} | João Piologo` : t.blogPost.notFoundDocumentTitle;

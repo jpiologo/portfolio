@@ -27,6 +27,7 @@ const NUMBER_WORDS = [
 const toWordsPt = (value: number) => NUMBER_WORDS[value] ?? String(value);
 
 export const pt: Messages = {
+	language: "pt",
 	locale: "pt-BR",
 	htmlLang: "pt-BR",
 

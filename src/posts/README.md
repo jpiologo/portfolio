@@ -2,7 +2,7 @@
 
 Cada post é um arquivo Markdown dentro desta pasta (`src/posts`). Não existe banco de dados nem painel: criar um post é criar uma pasta, escrever o texto e publicar o site.
 
-> **Idioma:** todos os posts são escritos em **inglês**: título, descrição, texto, comentários e nomes no código, e o texto da capa. Quem preferir outro idioma usa o tradutor do navegador (Google Tradutor). O slug (nome da pasta) também fica em inglês.
+> **Idioma:** o post principal (`index.md`) é escrito em **inglês**: título, descrição, texto, comentários e nomes no código, e o texto da capa. O slug (nome da pasta) também fica em inglês. A versão em português é opcional (veja [Tradução para português](#tradução-para-português)); quem preferir outro idioma usa o tradutor do navegador (Google Tradutor).
 
 ## 1. Crie a pasta do post
 
@@ -116,6 +116,33 @@ Dicas:
 - Links externos (`https://...`) abrem automaticamente em uma nova aba.
 - Para destacar a sintaxe de um bloco de código, informe a linguagem depois das três crases: `ts`, `tsx`, `js`, `bash`, `json`, `sql`, `java`, `python`, `yaml` etc.
 - O tempo de leitura ("X min read") é calculado sozinho, a partir do número de palavras.
+
+## Tradução para português
+
+Visitantes no Brasil veem o site em português. Para o post também aparecer traduzido, crie um `index.pt.md` ao lado do `index.md`:
+
+```
+src/posts/meu-primeiro-tutorial/
+├── index.md       ← inglês (obrigatório)
+└── index.pt.md    ← português (opcional)
+```
+
+O `index.pt.md` tem **só** `title` e `description` no frontmatter, seguidos do texto traduzido:
+
+```md
+---
+title: Como configurar um pipeline de CI/CD com Jenkins
+description: Um guia prático, do Jenkinsfile ao deploy automático.
+---
+
+Aqui começa o texto do post em português...
+```
+
+- `date`, `cover` e `draft` vêm **sempre** do `index.md`. Não repita esses campos no `index.pt.md`.
+- Sem `index.pt.md`, o visitante no Brasil vê a versão em inglês.
+- Mantenha os blocos de código iguais aos do `index.md`; traduza só o texto.
+- A URL é a mesma para os dois idiomas (`/blog/<slug>`).
+- As páginas geradas para o Google (passo 7) usam a versão em inglês.
 
 ## 5. Veja o post localmente
 

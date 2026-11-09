@@ -20,6 +20,7 @@ import { parseFrontmatter } from "./src/lib/frontmatter";
  */
 
 const AUTHOR = "João Piologo";
+const PRERENDER_LANG = "en";
 const SOCIAL_PROFILES = [
 	"https://github.com/jpiologo",
 	"https://www.linkedin.com/in/jo%C3%A3o-piologo-85ba9a226/",
@@ -224,8 +225,10 @@ export default function seo(): Plugin {
 			}
 
 			const template = fs.readFileSync(path.join(config.build.outDir, "index.html"), "utf-8");
+			// Pre-rendered pages hold the English posts, while the template defaults to pt-BR
 			const renderPage = (meta: PageMeta, body: string) =>
 				template
+					.replace(/<html lang="[^"]*"/, `<html lang="${PRERENDER_LANG}"`)
 					.replace(SEO_BLOCK, renderHead(meta))
 					.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
 

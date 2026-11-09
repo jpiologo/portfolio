@@ -9,7 +9,7 @@ const BlogIndex = () => {
 	const t = useI18n();
 	const [searchParams, setSearchParams] = useSearchParams();
 	const query = searchParams.get("q") ?? "";
-	const visiblePosts = searchPosts(query);
+	const visiblePosts = searchPosts(query, t.language);
 
 	useEffect(() => {
 		document.title = t.blogIndex.documentTitle;
