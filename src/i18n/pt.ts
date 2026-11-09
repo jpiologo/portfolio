@@ -72,7 +72,7 @@ export const pt: Messages = {
 		intro: (years: number) =>
 			`Com mais de ${toWordsPt(years)} anos de experiência prática em desenvolvimento full-stack e formado em Engenharia de Software, minha atuação abrange desenvolvimento web, backend e pipelines de CI/CD. Também sou especialista na plataforma TOTVS Fluig.`,
 		story:
-			"Minha trajetória na tecnologia começou como aprendiz, escrevendo VBA no Excel para automatizar processos manuais — e me apaixonei por resolver problemas. Essa paixão inicial me levou à graduação em Engenharia de Software e a uma carreira arquitetando soluções corporativas complexas e escaláveis. Hoje, atuo como Consultor B2B e Engenheiro Sênior, apoiado em uma stack robusta e poliglota para construir software que entrega valor real ao negócio.",
+			"Minha trajetória na tecnologia começou como aprendiz, escrevendo VBA no Excel para automatizar processos manuais — e desde então me apaixonei por resolver problemas. Essa paixão inicial me levou à graduação em Engenharia de Software e a uma carreira arquitetando soluções corporativas complexas e escaláveis. Hoje, atuo como Consultor B2B e Engenheiro Sênior, apoiado em uma stack robusta e poliglota para construir softwares.",
 		yearsOfExperience: "Anos de Experiência",
 		projects: "Projetos",
 		photoAlt: "João Piologo no Universo TOTVS 2026",
@@ -109,6 +109,18 @@ export const pt: Messages = {
 		allPosts: "Todos os posts",
 	},
 
+	techNames: {
+		restApi: "APIs REST",
+		datasets: "Datasets",
+		forms: "Formulários",
+		microservices: "Microsserviços",
+		workflowEngine: "Motor de Workflow",
+		emailNotifications: "Notificações por E-mail",
+		erpIntegration: "Integração com ERP",
+		aiDocumentAnalysis: "Análise de Documentos com IA",
+		automation: "Automação",
+	},
+
 	projects: {
 		heading: "Projetos em Destaque",
 		introBefore: "Aqui você encontra ",
@@ -139,7 +151,6 @@ export const pt: Messages = {
 						"Projetar e entregar um marketplace de serviços pronto para produção, com fluxos separados para usuários e administradores, horários de agendamento em tempo real e autenticação segura — do schema do banco de dados ao frontend publicado.",
 					solution:
 						"Construí uma arquitetura desacoplada, com o Next.js cuidando do SSR e das interações no cliente e o Nest.js fornecendo uma API REST modular baseada em decorators. O Prisma ORM mapeou os relacionamentos complexos de agendamento para o PostgreSQL, enquanto guards JWT garantem o controle de acesso por perfil em toda a plataforma.",
-					techStack: ["TypeScript", "Next.js", "Nest.js", "PostgreSQL", "Prisma ORM", "TailwindCSS", "JWT Auth"],
 					features: [
 						"Autenticação por perfil (usuário / administrador)",
 						"Sistema de agendamento com disponibilidade em tempo real",
@@ -158,16 +169,6 @@ export const pt: Messages = {
 						"Construir um produto SaaS voltado ao consumidor que permita enviar imagens, pré-visualizar capas personalizadas em tempo real e concluir a compra por um fluxo de pagamento seguro — tudo em uma experiência visualmente refinada.",
 					solution:
 						"Implementei um configurador de capas interativo com pré-visualização ao vivo em estilo 3D usando Next.js. Integrei o Stripe para pagamentos em conformidade com o PCI, o Uploadthing para gestão de arquivos, o Kinde para autenticação e o Resend para confirmações automáticas de pedidos. Publicado na Vercel com SSR otimizado na edge.",
-					techStack: [
-						"TypeScript",
-						"Next.js",
-						"PostgreSQL",
-						"Prisma ORM",
-						"Stripe",
-						"Kinde Auth",
-						"Uploadthing",
-						"Resend",
-					],
 					features: [
 						"Pré-visualização da capa com envio de imagem",
 						"Integração de pagamentos com Stripe",
@@ -186,17 +187,6 @@ export const pt: Messages = {
 						"O principal desafio foi substituir um processo de inventário altamente manual e em papel por um fluxo digital que os colaboradores pudessem adotar com facilidade, garantindo uma integração confiável e transparente com o ERP TOTVS Protheus da empresa. A solução também precisava reduzir erros, aumentar a confiança nos dados de inventário e eliminar os gargalos operacionais causados pelas passagens manuais entre departamentos.",
 					solution:
 						"Desenvolvi um processo mobile na plataforma TOTVS Fluig, totalmente integrado ao ERP TOTVS Protheus da empresa, permitindo que o departamento de suprimentos realizasse as contagens de inventário de forma mais confiável e integrada. Isso eliminou o trabalho manual antes necessário entre os departamentos.",
-					techStack: [
-						"JavaScript",
-						"HTML5",
-						"CSS3",
-						"TOTVS Fluig",
-						"TOTVS Protheus",
-						"APIs REST",
-						"Datasets",
-						"Formulários",
-						"Microsserviços",
-					],
 					features: [
 						"Fluxo de contagem de inventário adaptado para dispositivos móveis",
 						"Integração com o ERP TOTVS Protheus",
@@ -217,18 +207,6 @@ export const pt: Messages = {
 						"O principal desafio foi projetar e implementar um fluxo de compras de ponta a ponta confiável, capaz de suportar diversas etapas críticas para o negócio, aprovações hierárquicas, prazos rigorosos e responsabilidades por perfil. Ao mesmo tempo, a solução precisava garantir uma integração transparente com o TOTVS Protheus, dar visibilidade aos eventos de integração por meio de logs e se manter resiliente com estratégias de contingência em caso de falhas de comunicação ou processamento.",
 					solution:
 						"Projetei e implementei um fluxo de compras completo na plataforma TOTVS Fluig, totalmente integrado ao TOTVS Protheus. A solução cobriu todo o ciclo de compras, da solicitação à classificação de estoque, com formulários personalizados para cada etapa, fluxos de aprovação hierárquicos, notificações automáticas, alertas por e-mail, atribuição de responsáveis por perfil, logs de integração e mecanismos de contingência para tratar erros de integração com o ERP de forma segura e eficiente.",
-					techStack: [
-						"JavaScript",
-						"HTML5",
-						"CSS3",
-						"TOTVS Fluig",
-						"TOTVS Protheus",
-						"APIs REST",
-						"Datasets",
-						"Formulários",
-						"Motor de Workflow",
-						"Notificações por E-mail",
-					],
 					features: [
 						"Fluxo de compras de ponta a ponta",
 						"Gestão de solicitações e pedidos de compra",
@@ -255,18 +233,6 @@ export const pt: Messages = {
 						"O principal desafio foi simplificar um processo complexo de venda e faturamento de veículos, que envolvia validação de documentos, consulta a dados do ERP, exigências regulatórias e diversos pontos de decisão. A solução precisava reduzir o tempo para concluir uma venda, impedir o envio de documentos inválidos e garantir que cada transação seguisse o caminho correto de negócio e conformidade com o mínimo de esforço manual.",
 					solution:
 						"Contribuí para a implementação e evolução de um fluxo de venda de veículos na plataforma TOTVS Fluig, com foco em velocidade, confiabilidade e automação. A solução incluiu integração com IA para análise de documentos durante a compra, consulta direta aos dados do ERP da empresa, gateways de decisão para definir o caminho correto do processo e automações de venda que permitiram aos vendedores faturar veículos em poucos minutos, usando apenas as informações essenciais. O fluxo também contemplou as integrações necessárias com órgãos reguladores, mantendo o processo em conformidade e eficiente.",
-					techStack: [
-						"JavaScript",
-						"HTML5",
-						"CSS3",
-						"TOTVS Fluig",
-						"Integração com ERP",
-						"Análise de Documentos com IA",
-						"APIs REST",
-						"Datasets",
-						"Formulários",
-						"Motor de Workflow",
-					],
 					features: [
 						"Validação de documentos com IA na compra do veículo",
 						"Consulta direta a dados do ERP",
@@ -291,18 +257,6 @@ export const pt: Messages = {
 						"O principal desafio foi construir fluxos de RH capazes de tratar admissões e movimentações internas com agilidade, confiabilidade e governança. A solução precisava refletir a estrutura organizacional da empresa definida no TOTVS Protheus, direcionar as aprovações de acordo com departamentos e hierarquias e automatizar a concessão de acessos e as mudanças de permissão nos sistemas e no Active Directory conforme o cargo e a movimentação de cada colaborador.",
 					solution:
 						"Projetei e implementei fluxos de RH na plataforma TOTVS Fluig para automatizar processos-chave do ciclo de vida do colaborador, incluindo admissão e movimentação interna. Os fluxos foram totalmente integrados ao TOTVS Protheus para identificar departamentos, hierarquias e cargos, permitindo o roteamento dinâmico das aprovações. Além disso, a solução automatizou a criação de contas nos sistemas e no Active Directory, definiu os níveis de acesso de acordo com o cargo e atualizou direitos e permissões sempre que um colaborador mudava de função na empresa.",
-					techStack: [
-						"JavaScript",
-						"HTML5",
-						"CSS3",
-						"TOTVS Fluig",
-						"TOTVS Protheus",
-						"Active Directory",
-						"APIs REST",
-						"Datasets",
-						"Formulários",
-						"Motor de Workflow",
-					],
 					features: [
 						"Fluxo de admissão de colaboradores",
 						"Fluxo de movimentação de colaboradores",
@@ -327,7 +281,6 @@ export const pt: Messages = {
 						"O principal desafio foi criar um pipeline de deploy confiável, capaz de identificar e publicar automaticamente diferentes artefatos do Fluig, como formulários, datasets, workflows e widgets, a partir de merges em branches específicas. A solução precisava reduzir o tempo de deploy, minimizar erros manuais e tornar o processo de release mais consistente e escalável.",
 					solution:
 						"Projetei e implementei um pipeline automatizado no Jenkins, responsável por publicar os artefatos do Fluig sempre que ocorriam merges em branches predefinidas. O pipeline cuidava da publicação de formulários, datasets, workflows e widgets, tornando a entrega mais rápida, segura e muito menos dependente de execução manual. Como resultado, o tempo de deploy caiu drasticamente e o fluxo de release ficou mais eficiente e padronizado.",
-					techStack: ["Jenkins", "Groovy", "Fluig", "CI/CD", "APIs REST", "Git", "Automação", "DevOps"],
 					features: [
 						"Deploy automático disparado por merges em branches",
 						"Publicação de formulários do Fluig",
@@ -352,7 +305,6 @@ export const pt: Messages = {
 						"Criar uma ferramenta de produtividade sem atritos, que combine gestão de tarefas com a técnica Pomodoro e armazene todos os dados no navegador, sem exigir contas de usuário.",
 					solution:
 						"Construí um CRUD leve em JavaScript puro com persistência em localStorage. O timer alterna automaticamente entre períodos de foco e de pausa, incentivando sessões de trabalho estruturadas. A interface limpa garante curva de aprendizado zero.",
-					techStack: ["JavaScript", "HTML5", "CSS3", "LocalStorage API"],
 					features: [
 						"Timer Pomodoro com ciclos de foco / pausa",
 						"Gestão de tarefas (CRUD) com persistência",
@@ -371,7 +323,6 @@ export const pt: Messages = {
 						"Construir um app de clima limpo e responsivo, que busque dados em tempo real de uma API externa e apresente informações meteorológicas complexas em um layout intuitivo e fácil de ler.",
 					solution:
 						"Implementei a busca assíncrona de dados com tratamento de erros e estados de carregamento adequados. A interface exibe temperatura, umidade, velocidade do vento e ícones de condição em uma hierarquia visual clara. Debounce na digitação e validação de cidade garantem uma busca fluida.",
-					techStack: ["JavaScript", "OpenWeatherMap API", "APIs REST", "JSON"],
 					features: [
 						"Dados do clima em tempo real por cidade",
 						"Exibição de temperatura, umidade e vento",
@@ -390,7 +341,6 @@ export const pt: Messages = {
 						"Explorar os recursos de reconhecimento de fala nativos do navegador para criar uma experiência interativa totalmente controlada por voz — indo além das interfaces tradicionais baseadas em cliques.",
 					solution:
 						"Usei a API webkitSpeechRecognition para capturar e interpretar a voz em tempo real. Construí um jogo de adivinhação de números com retorno claro por voz, mostrando como interfaces de fala podem criar experiências envolventes e acessíveis sem nenhuma entrada manual.",
-					techStack: ["JavaScript", "Web Speech API", "HTML5", "CSS3"],
 					features: [
 						"Reconhecimento de comandos de voz em tempo real",
 						"Jogo interativo de adivinhação de números",
@@ -448,7 +398,8 @@ export const pt: Messages = {
 	},
 
 	footer: {
-		rights: "Todos os direitos reservados.",
+		social: "Redes Sociais",
+		rights: "All rights reserved.",
 		downloads: "Downloads",
 		resumes: {
 			en: "Currículo (Inglês)",

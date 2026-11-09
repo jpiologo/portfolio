@@ -60,6 +60,7 @@ export default {
         social: {
           github: themeColor('text-primary'),
           linkedin: '#0E4D8A',
+          instagram: '#C13584',
           email: '#DC2626',
         },
       },

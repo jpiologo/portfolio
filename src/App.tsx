@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Footer from './components/Footer';
 import Header from './components/Header';
@@ -29,12 +29,14 @@ const ScrollManager = () => {
 };
 
 function App() {
+  const [isFooterInView, setIsFooterInView] = useState(false);
+
   return (
     <div className="min-h-screen">
       <TriangleMesh />
       <ScrollManager />
       <Header />
-      <SocialSidebar />
+      <SocialSidebar isHidden={isFooterInView} />
       <Suspense fallback={<div className="min-h-screen" />}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -44,7 +46,7 @@ function App() {
         </Routes>
       </Suspense>
 
-      <Footer />
+      <Footer onInViewChange={setIsFooterInView} />
     </div>
   );
 }
