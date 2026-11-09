@@ -2,6 +2,7 @@ import type React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Menu, Moon, Sun, X } from "lucide-react";
+import { useI18n } from "../i18n/context";
 import { useTheme } from "../lib/theme";
 import Logo from "./Logo";
 
@@ -9,6 +10,7 @@ const Header = () => {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 	const { theme, toggleTheme } = useTheme();
+	const t = useI18n();
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -40,11 +42,11 @@ const Header = () => {
 	};
 
 	const navLinks = [
-		{ href: "/#about", label: "About" },
-		{ href: "/#blog", label: "Blog" },
-		{ href: "/#projects", label: "Projects" },
-		{ href: "/#testimonials", label: "Testimonials" },
-		{ href: "/#contact", label: "Contact" },
+		{ href: "/#about", label: t.header.nav.about },
+		{ href: "/#blog", label: t.header.nav.blog },
+		{ href: "/#projects", label: t.header.nav.projects },
+		{ href: "/#testimonials", label: t.header.nav.testimonials },
+		{ href: "/#contact", label: t.header.nav.contact },
 	];
 
 	return (
@@ -64,14 +66,14 @@ const Header = () => {
 									? "text-text-muted hover:bg-background-surface"
 									: "text-text-primary hover:bg-text-primary/10"
 							}`}
-							aria-label="Toggle menu"
+							aria-label={t.header.toggleMenu}
 						>
 							<Menu size={24} />
 						</button>
 
 						<Link
 							to="/"
-							aria-label="João Piologo – home"
+							aria-label={t.common.homeLabel}
 							className="text-text-primary hover:opacity-80 transition-opacity"
 						>
 							<Logo className="w-10 h-10" />
@@ -95,8 +97,8 @@ const Header = () => {
 										? "border-border-subtle text-text-muted hover:text-accent-secondary hover:border-accent-secondary"
 										: "border-text-primary/20 text-text-primary hover:text-accent-secondary hover:border-accent-secondary"
 								}`}
-								aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-								title={theme === "dark" ? "Light mode" : "Dark mode"}
+								aria-label={theme === "dark" ? t.header.switchToLight : t.header.switchToDark}
+								title={theme === "dark" ? t.header.lightMode : t.header.darkMode}
 							>
 								{theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
 							</button>
@@ -121,11 +123,11 @@ const Header = () => {
 				}`}
 			>
 				<div className="p-4 flex justify-between items-center border-b border-border-subtle">
-					<span className="text-xl font-bold text-text-primary">Menu</span>
+					<span className="text-xl font-bold text-text-primary">{t.header.menu}</span>
 					<button
 						onClick={closeMenu}
 						className="p-2 text-text-muted hover:text-text-primary transition-colors rounded-lg hover:bg-background-surface"
-						aria-label="Close menu"
+						aria-label={t.header.closeMenu}
 					>
 						<X size={24} />
 					</button>

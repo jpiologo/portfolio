@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { X, CheckCircle2, AlertCircle, Send } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import type { CommentInsert } from '../lib/types';
+import { useI18n } from '../i18n/context';
 
 interface CommentFormProps {
   isOpen: boolean;
@@ -10,6 +11,7 @@ interface CommentFormProps {
 }
 
 const CommentForm: React.FC<CommentFormProps> = ({ isOpen, onClose }) => {
+  const t = useI18n();
   const [formData, setFormData] = useState<CommentInsert>({
     user_name: '',
     company: '',
@@ -30,15 +32,19 @@ const CommentForm: React.FC<CommentFormProps> = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus('idle');
     setErrorMessage('');
 
+    // HTML5 required catches empty fields; this also rejects whitespace-only input
+    if (!formData.user_name.trim() || !formData.commentary.trim()) {
+      setSubmitStatus('error');
+      setErrorMessage(t.commentForm.requiredError);
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
     try {
-      // Validate inputs loosely (HTML5 required handles basic empty checks)
-      if (!formData.user_name.trim() || !formData.commentary.trim()) {
-        throw new Error('Name and commentary are required fields.');
-      }
 
       // Insert into Supabase
       // Note: RLS forces `approved` = false on insertion by default if the policy is configured properly
@@ -64,7 +70,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ isOpen, onClose }) => {
     } catch (err: any) {
       console.error('Error submitting comment:', err);
       setSubmitStatus('error');
-      setErrorMessage(err.message || 'An unexpected error occurred while submitting.');
+      setErrorMessage(t.commentForm.genericError);
     } finally {
       setIsSubmitting(false);
     }
@@ -81,11 +87,12 @@ const CommentForm: React.FC<CommentFormProps> = ({ isOpen, onClose }) => {
       {/* Modal Content */}
       <div className="relative bg-background-elevated rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden transform transition-all border border-border-subtle">
         <div className="px-8 py-6 border-b border-border-subtle flex justify-between items-center">
-          <h3 className="text-2xl font-extrabold text-text-primary tracking-tight">Leave a testimonial</h3>
+          <h3 className="text-2xl font-extrabold text-text-primary tracking-tight">{t.commentForm.title}</h3>
           <button 
             onClick={onClose}
             className="text-text-muted hover:text-text-primary transition-colors p-2 rounded-full hover:bg-background-surface"
             disabled={isSubmitting}
+            aria-label={t.commentForm.close}
           >
             <X className="w-6 h-6" />
           </button>
@@ -97,15 +104,15 @@ const CommentForm: React.FC<CommentFormProps> = ({ isOpen, onClose }) => {
               <div className="mx-auto w-20 h-20 bg-feedback-success-bg rounded-full flex items-center justify-center mb-6">
                 <CheckCircle2 className="w-10 h-10 text-feedback-success" />
               </div>
-              <h4 className="text-2xl font-bold text-text-primary mb-3 tracking-tight">Thank you!</h4>
+              <h4 className="text-2xl font-bold text-text-primary mb-3 tracking-tight">{t.commentForm.successTitle}</h4>
               <p className="text-text-muted leading-relaxed mb-8 max-w-md mx-auto text-lg">
-                Your comment has been submitted successfully and will appear publicly after review.
+                {t.commentForm.successText}
               </p>
               <button
                 onClick={onClose}
                 className="btn-secondary"
               >
-                Close Window
+                {t.commentForm.closeWindow}
               </button>
             </div>
           ) : (
@@ -121,7 +128,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ isOpen, onClose }) => {
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="user_name" className="block text-sm font-bold text-text-muted mb-2 hover:text-accent-secondary transition-colors">
-                    Your Name <span className="text-feedback-error">*</span>
+                    {t.commentForm.nameLabel} <span className="text-feedback-error">*</span>
                   </label>
                   <input
                     type="text"
@@ -129,14 +136,14 @@ const CommentForm: React.FC<CommentFormProps> = ({ isOpen, onClose }) => {
                     value={formData.user_name}
                     onChange={handleChange}
                     className="w-full px-5 py-3.5 bg-background-surface border border-border-subtle rounded-xl focus:ring-4 focus:ring-accent-secondary/10 focus:border-accent-secondary transition-all outline-none text-text-primary placeholder:text-text-muted/50 font-medium"
-                    placeholder="John Doe"
+                    placeholder={t.commentForm.namePlaceholder}
                     required
                     disabled={isSubmitting}
                   />
                 </div>
                 <div>
                   <label htmlFor="company" className="block text-sm font-bold text-text-muted mb-2 hover:text-accent-secondary transition-colors">
-                    Company / Role
+                    {t.commentForm.companyLabel}
                   </label>
                   <input
                     type="text"
@@ -144,7 +151,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ isOpen, onClose }) => {
                     value={formData.company}
                     onChange={handleChange}
                     className="w-full px-5 py-3.5 bg-background-surface border border-border-subtle rounded-xl focus:ring-4 focus:ring-accent-secondary/10 focus:border-accent-secondary transition-all outline-none text-text-primary placeholder:text-text-muted/50 font-medium"
-                    placeholder="Tech Corp / CEO"
+                    placeholder={t.commentForm.companyPlaceholder}
                     disabled={isSubmitting}
                   />
                 </div>
@@ -152,7 +159,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ isOpen, onClose }) => {
 
               <div>
                 <label htmlFor="commentary" className="block text-sm font-bold text-text-muted mb-2 hover:text-accent-secondary transition-colors">
-                  Your Comment <span className="text-feedback-error">*</span>
+                  {t.commentForm.commentLabel} <span className="text-feedback-error">*</span>
                 </label>
                 <textarea
                   id="commentary"
@@ -160,7 +167,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ isOpen, onClose }) => {
                   value={formData.commentary}
                   onChange={handleChange}
                   className="w-full px-5 py-4 bg-background-surface border border-border-subtle rounded-xl focus:ring-4 focus:ring-accent-secondary/10 focus:border-accent-secondary transition-all outline-none text-text-primary placeholder:text-text-muted/50 resize-none font-medium leading-relaxed"
-                  placeholder="Share your experience working with me. How did treating challenge and projects go?..."
+                  placeholder={t.commentForm.commentPlaceholder}
                   required
                   disabled={isSubmitting}
                 />
@@ -173,7 +180,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ isOpen, onClose }) => {
                   className="btn-ghost"
                   disabled={isSubmitting}
                 >
-                  Cancel
+                  {t.commentForm.cancel}
                 </button>
                 <button
                   type="submit"
@@ -186,7 +193,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ isOpen, onClose }) => {
                     </>
                   ) : (
                     <>
-                      Submit <Send className="w-4 h-4" />
+                      {t.commentForm.submit} <Send className="w-4 h-4" />
                     </>
                   )}
                 </button>
@@ -195,7 +202,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ isOpen, onClose }) => {
               <div className="text-center pt-2">
                 <p className="inline-flex items-center gap-1.5 text-xs font-medium text-text-muted bg-background-surface px-3 py-1.5 rounded-md">
                   <AlertCircle className="w-3.5 h-3.5" />
-                  Comments are securely submitted and manually reviewed prior to display.
+                  {t.commentForm.reviewNotice}
                 </p>
               </div>
             </form>

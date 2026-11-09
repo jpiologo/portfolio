@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ComponentPropsWithoutRef } from "react";
 import { Check, Copy } from "lucide-react";
+import { useI18n } from "../i18n/context";
 
 const RESET_DELAY = 2000;
 
@@ -22,6 +23,7 @@ const copyText = async (text: string) => {
 
 /** Markdown code block with a one-click copy button in the top-right corner. */
 const CodeBlock = ({ children, ...props }: ComponentPropsWithoutRef<"pre">) => {
+	const t = useI18n();
 	const preRef = useRef<HTMLPreElement>(null);
 	const [copied, setCopied] = useState(false);
 
@@ -50,18 +52,18 @@ const CodeBlock = ({ children, ...props }: ComponentPropsWithoutRef<"pre">) => {
 				type="button"
 				onClick={handleCopy}
 				className="absolute top-2.5 right-2.5 inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border border-white/10 bg-white/5 text-xs font-medium text-gray-300 backdrop-blur-sm hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary transition-colors"
-				aria-label={copied ? "Code copied" : "Copy code"}
-				title={copied ? "Copied!" : "Copy code"}
+				aria-label={copied ? t.common.codeCopied : t.common.copyCode}
+				title={copied ? t.common.copied : t.common.copyCode}
 			>
 				{copied ? (
 					<>
 						<Check className="w-3.5 h-3.5 text-feedback-success" />
-						Copied!
+						{t.common.copied}
 					</>
 				) : (
 					<>
 						<Copy className="w-3.5 h-3.5" />
-						Copy
+						{t.common.copy}
 					</>
 				)}
 			</button>

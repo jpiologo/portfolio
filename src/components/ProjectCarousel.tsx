@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import ProjectCard from "./ProjectCard";
 import type { Project } from "../lib/types";
 import { useMediaQuery } from "../lib/useMediaQuery";
+import { useI18n } from "../i18n/context";
 
 const PER_PAGE_DESKTOP = 2;
 const PER_PAGE_MOBILE = 1;
@@ -16,13 +17,11 @@ const chunk = <T,>(items: T[], size: number): T[][] => {
 	return pages;
 };
 
-const pageLabel = (index: number, pageProjects: Project[]) =>
-	`Page ${index + 1}: ${pageProjects.map((p) => p.title).join(", ")}`;
-
 const arrowClass =
 	"p-2 rounded-full border border-border-subtle bg-background-elevated text-text-muted shadow-sm transition-colors hover:text-accent-secondary hover:border-accent-secondary disabled:opacity-40 disabled:pointer-events-none";
 
 const ProjectCarousel = ({ projects }: { projects: Project[] }) => {
+	const t = useI18n();
 	const perPage = useMediaQuery(DESKTOP_QUERY) ? PER_PAGE_DESKTOP : PER_PAGE_MOBILE;
 	const pages = chunk(projects, perPage);
 	const [page, setPage] = useState(0);
@@ -44,7 +43,7 @@ const ProjectCarousel = ({ projects }: { projects: Project[] }) => {
 	};
 
 	return (
-		<div aria-roledescription="carousel" aria-label="Featured projects">
+		<div aria-roledescription="carousel" aria-label={t.projects.carouselLabel}>
 			{/* Negative margin + page padding leave room for card shadows and tilt inside the clipped viewport */}
 			<div
 				className="overflow-hidden -m-3"
@@ -63,7 +62,7 @@ const ProjectCarousel = ({ projects }: { projects: Project[] }) => {
 							// Off-screen pages must not take keyboard focus
 							ref={(el) => el?.toggleAttribute("inert", index !== page)}
 							aria-roledescription="slide"
-							aria-label={pageLabel(index, pageProjects)}
+							aria-label={t.projects.pageLabel(index + 1, pageProjects.map((p) => p.title))}
 							className="w-full shrink-0 grid gap-8 p-3"
 							style={{ gridTemplateColumns: `repeat(${perPage}, minmax(0, 1fr))` }}
 						>
@@ -81,7 +80,7 @@ const ProjectCarousel = ({ projects }: { projects: Project[] }) => {
 					onClick={() => goTo(page - 1)}
 					disabled={page === 0}
 					className={arrowClass}
-					aria-label="Previous projects"
+					aria-label={t.projects.previous}
 				>
 					<ChevronLeft className="w-5 h-5" />
 				</button>
@@ -94,7 +93,7 @@ const ProjectCarousel = ({ projects }: { projects: Project[] }) => {
 								<button
 									type="button"
 									onClick={() => goTo(index)}
-									aria-label={pageLabel(index, pageProjects)}
+									aria-label={t.projects.pageLabel(index + 1, pageProjects.map((p) => p.title))}
 									aria-current={isActive ? "true" : undefined}
 									className="p-1.5 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary"
 								>
@@ -139,7 +138,7 @@ const ProjectCarousel = ({ projects }: { projects: Project[] }) => {
 					onClick={() => goTo(page + 1)}
 					disabled={page === pages.length - 1}
 					className={arrowClass}
-					aria-label="Next projects"
+					aria-label={t.projects.next}
 				>
 					<ChevronRight className="w-5 h-5" />
 				</button>
