@@ -64,7 +64,12 @@
   --c-accent-hover     : 21 75 140;    /* #154B8C                          */
   --c-shadow           : 15 23 42;
 
-  --color-ink       : rgb(var(--c-text-primary));
+  /* Background triangle mesh (TriangleMesh.tsx) */
+  --c-mesh-line        : 100 116 139;
+  --mesh-line-alpha    : 0.16;
+  --c-mesh-glow        : 37 99 235;
+
+  --color-ink      : rgb(var(--c-text-primary));
   --color-ink-sub   : rgb(var(--c-text-muted));
   --color-ink-muted : rgb(var(--c-text-muted));
   --color-accent    : rgb(var(--c-accent-secondary));
@@ -92,6 +97,10 @@
   --c-accent-secondary : 30 136 229;   /* #1E88E5 */
   --c-accent-hover     : 21 101 192;   /* #1565C0 */
   --c-shadow           : 0 0 0;
+
+  --c-mesh-line        : 148 163 184;
+  --mesh-line-alpha    : 0.08;
+  --c-mesh-glow        : 30 136 229;
 
   color-scheme: dark;
 }
@@ -147,105 +156,8 @@ body {
   animation: fadeIn 1s ease-out;
 }
 
-/* ================================================================== */
-/*  Hero lava lamp                                                     */
-/*  Soft color blobs that rise, sink and stretch at different speeds,  */
-/*  so they keep merging and splitting like wax in a lava lamp.        */
-/*  Only `transform` is animated, which keeps it on the GPU.           */
-/* ================================================================== */
-
-.hero-lava {
-  /* Vivid on the light theme... */
-  --lava-1: 59 130 246;   /* blue   */
-  --lava-2: 168 85 247;   /* violet */
-  --lava-3: 244 114 182;  /* pink   */
-  --lava-4: 34 211 238;   /* cyan   */
-  --lava-5: 251 146 60;   /* orange */
-  --lava-alpha: 0.55;
-
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-/* ...deep and subdued on the dark one, so text keeps its contrast */
-.dark .hero-lava {
-  --lava-1: 29 78 216;
-  --lava-2: 109 40 217;
-  --lava-3: 190 24 93;
-  --lava-4: 14 116 144;
-  --lava-5: 67 56 202;
-  --lava-alpha: 0.35;
-}
-
-.hero-lava span {
-  position: absolute;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgb(var(--lava-color) / var(--lava-alpha)) 0%,
-    rgb(var(--lava-color) / 0) 68%
-  );
-  will-change: transform;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-}
-
-/* Negative delays start every blob mid-motion instead of all at rest */
-.hero-lava span:nth-child(1) { --lava-color: var(--lava-1); width: 55vmax; left: -15%; top: 20%;  animation-name: lava-rise; animation-duration: 22s; animation-delay: -4s; }
-.hero-lava span:nth-child(2) { --lava-color: var(--lava-2); width: 48vmax; left: 45%;  top: -25%; animation-name: lava-sink; animation-duration: 26s; animation-delay: -11s; }
-.hero-lava span:nth-child(3) { --lava-color: var(--lava-3); width: 40vmax; left: 55%;  top: 35%;  animation-name: lava-sway; animation-duration: 19s; animation-delay: -7s; }
-.hero-lava span:nth-child(4) { --lava-color: var(--lava-4); width: 36vmax; left: 10%;  top: -15%; animation-name: lava-sink; animation-duration: 17s; animation-delay: -2s; }
-.hero-lava span:nth-child(5) { --lava-color: var(--lava-5); width: 32vmax; left: 25%;  top: 45%;  animation-name: lava-rise; animation-duration: 24s; animation-delay: -15s; }
-
-@keyframes lava-rise {
-  0%   { transform: translate(0, 30%) scale(1, 1); }
-  50%  { transform: translate(15%, -10%) scale(1.15, 0.9); }
-  100% { transform: translate(-10%, -40%) scale(0.9, 1.1); }
-}
-
-@keyframes lava-sink {
-  0%   { transform: translate(0, -30%) scale(1.1, 0.9); }
-  50%  { transform: translate(-20%, 10%) scale(0.9, 1.12); }
-  100% { transform: translate(10%, 40%) scale(1.05, 1); }
-}
-
-@keyframes lava-sway {
-  0%   { transform: translate(-25%, 0) scale(1); }
-  50%  { transform: translate(10%, -20%) scale(1.2, 1); }
-  100% { transform: translate(25%, 15%) scale(0.95, 1.1); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-lava span {
-    animation: none;
-  }
-}
-
 html {
   scroll-behavior: smooth;
-}
-
-/* Custom scrollbar for project details modal */
-.modal-content::-webkit-scrollbar {
-  width: 8px;
-}
-
-.modal-content::-webkit-scrollbar-track {
-  background: var(--color-bg-surface);
-  border-radius: 4px;
-}
-
-.modal-content::-webkit-scrollbar-thumb {
-  background: var(--color-accent-secondary);
-  border-radius: 4px;
-}
-
-.modal-content::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent-primary);
 }
 
 /* ================================================================== */
@@ -367,6 +279,12 @@ html {
   color: var(--color-ink-sub);
   line-height: 1.55;
   margin-bottom: 16px;
+  /* Full text lives in the modal; clamping keeps carousel pages close in height */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  overflow: hidden;
 }
 
 .proj-card-cta {
@@ -517,7 +435,7 @@ html {
   margin: 0;
 }
 
-.proj-modal-features {
+.proj-modal-list {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -526,7 +444,7 @@ html {
   gap: 6px;
 }
 
-.proj-modal-features li {
+.proj-modal-list li {
   font-size: 0.82rem;
   color: var(--color-ink-sub);
   padding-left: 16px;
@@ -534,7 +452,7 @@ html {
   line-height: 1.4;
 }
 
-.proj-modal-features li::before {
+.proj-modal-list li::before {
   content: "";
   position: absolute;
   left: 0;
@@ -543,27 +461,6 @@ html {
   height: 6px;
   border-radius: 50%;
   background: var(--color-accent-secondary);
-}
-
-.proj-modal-stack {
-  list-style: decimal;
-  padding-left: 1.25rem;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.proj-modal-stack li {
-  font-size: 0.82rem;
-  color: var(--color-ink-sub);
-  line-height: 1.4;
-  padding-left: 4px;
-}
-
-.proj-modal-stack li::marker {
-  color: var(--color-accent-secondary);
-  font-weight: 600;
 }
 
 .proj-modal-actions {

@@ -1,7 +1,9 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
+import Footer from './components/Footer';
 import Header from './components/Header';
 import SocialSidebar from './components/SocialSidebar';
+import TriangleMesh from './components/TriangleMesh';
 import Home from './pages/Home';
 import BlogIndex from './pages/BlogIndex';
 
@@ -28,7 +30,8 @@ const ScrollManager = () => {
 
 function App() {
   return (
-    <div className="min-h-screen bg-background-base">
+    <div className="min-h-screen">
+      <TriangleMesh />
       <ScrollManager />
       <Header />
       <SocialSidebar />
@@ -41,11 +44,7 @@ function App() {
         </Routes>
       </Suspense>
 
-      <footer className="bg-background-surface text-text-muted py-8 border-t border-border-subtle">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <p>© {new Date().getFullYear()} João Piologo. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

@@ -1,9 +1,10 @@
 import { Github, Linkedin, Mail } from "lucide-react";
+import { CONTACT_EMAIL } from "../lib/profile";
 
 const SOCIAL_LINKS = [
 	{ label: "GitHub", href: "https://github.com/jpiologo", icon: Github },
 	{ label: "LinkedIn", href: "https://www.linkedin.com/in/jo%C3%A3o-piologo-85ba9a226/", icon: Linkedin },
-	{ label: "Email", href: "mailto:joaotpiologo@hotmail.com", icon: Mail },
+	{ label: "Email", href: `mailto:${CONTACT_EMAIL}`, icon: Mail },
 ];
 
 /*

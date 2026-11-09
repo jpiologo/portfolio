@@ -1,36 +1,18 @@
 import type React from 'react';
 import { useState } from 'react';
-import { Github, Linkedin, Mail, MapPin, Phone } from 'lucide-react';
-import { parallaxHandlers } from '../lib/parallax';
-
-// biome-ignore lint/suspicious/noExplicitAny: icon prop accepts any Lucide component
-const ContactInfo = ({ icon: Icon, title, content }: { icon: any; title: string; content: string }) => (
-  <div
-    {...parallaxHandlers}
-    className="parallax-card flex-1 flex items-center p-4 bg-background-elevated rounded-lg shadow-sm border border-border-subtle hover:shadow-md hover:border-accent-secondary/40"
-  >
-    <div className="parallax-depth [--depth:-10px] p-3 bg-accent-primary/15 rounded-lg">
-      <Icon className="w-6 h-6 text-accent-secondary" />
-    </div>
-    <div className="ml-4">
-      <h3 className="text-sm font-medium text-text-muted">{title}</h3>
-      <p className="text-base font-semibold text-text-primary">{content}</p>
-    </div>
-  </div>
-);
+import { Github, Linkedin, Mail, MapPin } from 'lucide-react';
+import { buildContactMailto, CONTACT_EMAIL } from '../lib/profile';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
     message: ''
   });
 
+  // Opens the visitor's mail app, so their own address is the sender
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const whatsappNumber = '5541995927885';
-    const message = `Name: ${formData.name}%0AEmail: ${formData.email}%0AMessage: ${formData.message}`;
-    window.open(`https://wa.me/${whatsappNumber}?text=${message}`);
+    window.location.href = buildContactMailto(formData.name, formData.message);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -41,7 +23,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-background-base">
+    <section id="contact" className="py-20">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-text-primary tracking-tight">Get in Touch</h2>
@@ -50,25 +32,19 @@ const Contact = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {/* Cards grow to fill the column so they line up with the form's top and bottom */}
-          <div className="flex flex-col gap-4">
-            <ContactInfo icon={MapPin} title="Location" content="Curitiba, PR - Brazil" />
-            <ContactInfo icon={Mail} title="Email" content="joaotpiologo@hotmail.com" />
-            <ContactInfo icon={Phone} title="Phone" content="+55 (41) 99592-7885" />
-            
-            {/* On xl screens these live in the fixed SocialSidebar instead */}
-            <div className="flex gap-4 mt-4 xl:hidden">
-              <a href="https://github.com/jpiologo" className="p-3 bg-social-github text-background-base rounded-lg hover:opacity-80 transition-opacity">
-                <Github className="w-6 h-6" />
-              </a>
-              <a href="https://www.linkedin.com/in/jo%C3%A3o-piologo-85ba9a226/" className="p-3 bg-social-linkedin text-on-accent rounded-lg hover:opacity-80 transition-opacity">
-                <Linkedin className="w-6 h-6" />
-              </a>
-              <a href="mailto:joaotpiologo@hotmail.com" className="p-3 bg-social-email text-on-accent rounded-lg hover:opacity-80 transition-opacity">
-                <Mail className="w-6 h-6" />
-              </a>
-            </div>
+        <div className="max-w-2xl mx-auto">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mb-6 text-sm text-text-muted">
+            <span className="inline-flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-accent-secondary" />
+              Curitiba, PR - Brazil
+            </span>
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="inline-flex items-center gap-2 hover:text-accent-secondary transition-colors"
+            >
+              <Mail className="w-4 h-4 text-accent-secondary" />
+              {CONTACT_EMAIL}
+            </a>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -85,22 +61,10 @@ const Contact = () => {
               />
             </div>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-text-muted mb-1">Email</label>
-              <input
-                type="email"
-                id="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full px-4 py-2 bg-background-elevated border border-border-subtle rounded-lg focus:ring-2 focus:ring-accent-secondary focus:border-transparent text-text-primary placeholder:text-text-muted/50 outline-none transition-all"
-                placeholder="your@email.com"
-                required
-              />
-            </div>
-            <div>
               <label htmlFor="message" className="block text-sm font-medium text-text-muted mb-1">Message</label>
               <textarea
                 id="message"
-                rows={4}
+                rows={6}
                 value={formData.message}
                 onChange={handleChange}
                 className="w-full px-4 py-2 bg-background-elevated border border-border-subtle rounded-lg focus:ring-2 focus:ring-accent-secondary focus:border-transparent text-text-primary placeholder:text-text-muted/50 outline-none transition-all resize-none"
@@ -112,9 +76,23 @@ const Contact = () => {
               type="submit"
               className="btn-primary w-full"
             >
-              Send Message
+              Send
+              <Mail className="w-5 h-5" />
             </button>
           </form>
+
+          {/* On xl screens these live in the fixed SocialSidebar instead */}
+          <div className="flex justify-center gap-4 mt-8 xl:hidden">
+            <a href="https://github.com/jpiologo" className="p-3 bg-social-github text-background-base rounded-lg hover:opacity-80 transition-opacity">
+              <Github className="w-6 h-6" />
+            </a>
+            <a href="https://www.linkedin.com/in/jo%C3%A3o-piologo-85ba9a226/" className="p-3 bg-social-linkedin text-on-accent rounded-lg hover:opacity-80 transition-opacity">
+              <Linkedin className="w-6 h-6" />
+            </a>
+            <a href={`mailto:${CONTACT_EMAIL}`} className="p-3 bg-social-email text-on-accent rounded-lg hover:opacity-80 transition-opacity">
+              <Mail className="w-6 h-6" />
+            </a>
+          </div>
         </div>
       </div>
     </section>

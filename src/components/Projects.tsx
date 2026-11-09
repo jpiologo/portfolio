@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import ProjectCard from "./ProjectCard";
+import type { Project } from "../lib/types";
+import ProjectCarousel from "./ProjectCarousel";
 import fokusImage from "../assets/Fokus.png";
 import weatherImage from "../assets/weatherApp.png";
 import vocalVaultImage from "../assets/vocalVault.png";
@@ -8,7 +8,7 @@ import cleanUp from "../assets/CleanUpHome.png";
 import fluigLogo from "../assets/fluig-logo.png";
 import jenkinsLogo from "../assets/Jenkins.svg";
 
-const projects = [
+const projects: Project[] = [
 	{
 		title: "CleanUp",
 		subtitle: "Full-Stack Architecture",
@@ -16,6 +16,7 @@ const projects = [
 			"End-to-end service marketplace connecting homeowners with cleaning professionals — featuring real-time booking, role-based dashboards, and automated scheduling.",
 		image: cleanUp,
 		githubLink: "https://github.com/jpiologo/CleanUp---Frontend",
+		inDevelopment: true,
 		details: {
 			challenge:
 				"Design and ship a production-grade service marketplace with separate user and admin workflows, real-time booking slots, and secure authentication — from database schema to deployed frontend.",
@@ -324,30 +325,9 @@ const projects = [
 ];
 
 const Projects = () => {
-	const [visibleCount, setVisibleCount] = useState(4);
-	const [isMobile, setIsMobile] = useState(false);
-
-	useEffect(() => {
-		const checkMobile = () => {
-			const mobile = window.innerWidth < 768;
-			setIsMobile(mobile);
-			// Set initial visible count based on screen size on first load
-			if (visibleCount === 4 && mobile) {
-				setVisibleCount(2);
-			}
-		};
-
-		checkMobile();
-		window.addEventListener("resize", checkMobile);
-		return () => window.removeEventListener("resize", checkMobile);
-	}, []);
-
-	const visibleProjects = projects.slice(0, visibleCount);
-	const increment = isMobile ? 2 : 4;
-
 	return (
 		<>
-			<section id="projects" className="py-16 bg-background-base">
+			<section id="projects" className="py-16">
 				<div className="max-w-6xl mx-auto px-4">
 					<div className="text-center mb-14">
 						<h2 className="text-4xl md:text-5xl font-bold mb-6 text-text-primary tracking-tight">
@@ -356,24 +336,15 @@ const Projects = () => {
 						<p className="text-xl text-text-muted leading-relaxed font-light max-w-xl mx-auto">
 							Here you can find <b>just some</b> of the solutions that I've built end-to-end — from architecture decisions to deployed products.
 						</p>
+						<figure className="mt-6 text-text-muted">
+							<blockquote className="text-base md:text-lg italic font-light">
+								“Everything you can imagine is real.”
+							</blockquote>
+							<figcaption className="mt-1 text-sm opacity-70">— Pablo Picasso</figcaption>
+						</figure>
 					</div>
 
-					<div className="grid md:grid-cols-2 gap-8">
-						{visibleProjects.map((project) => (
-							<ProjectCard key={project.title} project={project} />
-						))}
-					</div>
-
-					{visibleCount < projects.length && (
-						<div className="mt-14 text-center">
-							<button
-								onClick={() => setVisibleCount((prev) => prev + increment)}
-								className="btn-secondary"
-							>
-								Load More Projects
-							</button>
-						</div>
-					)}
+					<ProjectCarousel projects={projects} />
 				</div>
 			</section>
 		</>
