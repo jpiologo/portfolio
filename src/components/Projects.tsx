@@ -1,7 +1,9 @@
 import type { Project } from "../lib/types";
 import { useI18n } from "../i18n/context";
 import type { ProjectId } from "../i18n/en";
-import ProjectCarousel from "./ProjectCarousel";
+import Carousel from "./Carousel";
+import ProjectCard from "./ProjectCard";
+import { useIsDesktop } from "../lib/useMediaQuery";
 import fokusImage from "../assets/Fokus.png";
 import weatherImage from "../assets/weatherApp.png";
 import vocalVaultImage from "../assets/vocalVault.png";
@@ -11,6 +13,9 @@ import realtimeChatImage from "../assets/Destroyed.png";
 import playoffsSimulatorImage from "../assets/4a0.png";
 import fluigLogo from "../assets/fluig-logo.png";
 import jenkinsLogo from "../assets/Jenkins.svg";
+
+const PER_PAGE_DESKTOP = 2;
+const PER_PAGE_MOBILE = 1;
 
 type ProjectMeta = Omit<Project, "title" | "subtitle" | "description" | "details"> & { id: ProjectId };
 
@@ -146,6 +151,7 @@ const PROJECTS: ProjectMeta[] = [
 
 const Projects = () => {
 	const t = useI18n();
+	const perPage = useIsDesktop() ? PER_PAGE_DESKTOP : PER_PAGE_MOBILE;
 	const projects: Project[] = PROJECTS.map(({ id, ...meta }) => ({ ...meta, ...t.projects.items[id] }));
 
 	return (
@@ -166,7 +172,25 @@ const Projects = () => {
 					</figure>
 				</div>
 
-				<ProjectCarousel projects={projects} />
+				<Carousel
+					items={projects}
+					perPage={perPage}
+					label={t.projects.carouselLabel}
+					getKey={(project) => project.title}
+					getName={(project) => project.title}
+					renderItem={(project) => <ProjectCard project={project} />}
+					renderPreview={(project) => (
+						<>
+							<img
+								src={project.image}
+								alt=""
+								loading="lazy"
+								className="aspect-video w-full rounded-md object-cover bg-background-surface"
+							/>
+							<p className="mt-1.5 truncate text-xs font-medium text-text-primary">{project.title}</p>
+						</>
+					)}
+				/>
 			</div>
 		</section>
 	);

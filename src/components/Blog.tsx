@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, PenLine } from "lucide-react";
 import PostCard from "./PostCard";
+import MobileCarousel from "./MobileCarousel";
 import { getPosts } from "../lib/posts";
 import { useI18n } from "../i18n/context";
 
@@ -41,11 +42,13 @@ const Blog = () => {
 						<p className="text-text-muted max-w-md text-lg font-light">{t.blog.emptyText}</p>
 					</div>
 				) : (
-					<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-						{latestPosts.map((post) => (
-							<PostCard key={post.slug} post={post} />
-						))}
-					</div>
+					<MobileCarousel
+						items={latestPosts}
+						label={t.blog.carouselLabel}
+						getKey={(post) => post.slug}
+						getName={(post) => post.title}
+						renderItem={(post) => <PostCard post={post} />}
+					/>
 				)}
 			</div>
 		</section>

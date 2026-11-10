@@ -2,16 +2,9 @@ import type React from 'react';
 import { useState } from 'react';
 import { Mail, MapPin } from 'lucide-react';
 import { buildContactMailto, CONTACT_EMAIL } from '../lib/profile';
-import { isExternalLink, type SocialLink, SOCIAL_LINKS } from '../lib/socialLinks';
+import { isExternalLink, SOCIAL_LINKS } from '../lib/socialLinks';
 import { useI18n } from '../i18n/context';
 import AsciiGlobe from './AsciiGlobe';
-
-const SOCIAL_BUTTON_COLORS: Record<SocialLink['id'], string> = {
-  github: 'bg-social-github text-background-base',
-  linkedin: 'bg-social-linkedin text-on-accent',
-  instagram: 'bg-social-instagram text-on-accent',
-  email: 'bg-social-email text-on-accent',
-};
 
 const Contact = () => {
   const t = useI18n();
@@ -101,7 +94,7 @@ const Contact = () => {
                 target={isExternalLink(href) ? '_blank' : undefined}
                 rel="noopener noreferrer"
                 aria-label={label}
-                className={`p-3 rounded-lg hover:opacity-80 transition-opacity ${SOCIAL_BUTTON_COLORS[id]}`}
+                className="p-3 rounded-lg border border-border-subtle bg-background-elevated text-text-muted shadow-sm transition-colors hover:text-accent-secondary hover:border-accent-secondary"
               >
                 <Icon className="w-6 h-6" />
               </a>

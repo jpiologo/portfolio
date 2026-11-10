@@ -40,10 +40,17 @@ export const pt: Messages = {
 		copy: "Copiar",
 		codeCopied: "Código copiado",
 		copied: "Copiado!",
+		carousel: {
+			previous: "Anterior",
+			next: "Próximo",
+			pageLabel: (page: number, names: string[]) => `Página ${page}: ${names.join(", ")}`,
+			pageOf: (page: number, total: number) => `Página ${page} de ${total}`,
+		},
 	},
 
 	header: {
 		nav: {
+			home: "Início",
 			about: "Sobre",
 			blog: "Blog",
 			projects: "Projetos",
@@ -85,6 +92,7 @@ export const pt: Messages = {
 
 	blog: {
 		heading: "Blog",
+		carouselLabel: "Posts recentes",
 		intro:
 			"Notas, tutoriais e lições aprendidas sobre engenharia de software, ferramentas e as tecnologias com que trabalho todos os dias.",
 		viewAll: "Ver todos os posts",
@@ -133,9 +141,6 @@ export const pt: Messages = {
 		quote: "Tudo o que você pode imaginar é real.",
 		quoteAuthor: "Pablo Picasso",
 		carouselLabel: "Projetos em destaque",
-		previous: "Projetos anteriores",
-		next: "Próximos projetos",
-		pageLabel: (page: number, titles: string[]) => `Página ${page}: ${titles.join(", ")}`,
 		inDevelopment: "Em Desenvolvimento",
 		viewCaseStudy: "Ver Estudo de Caso",
 		challenge: "O Desafio",
@@ -396,6 +401,7 @@ export const pt: Messages = {
 
 	testimonials: {
 		heading: "Depoimentos",
+		carouselLabel: "Depoimentos",
 		intro:
 			"Não precisa acreditar só na minha palavra. Veja o que dizem as pessoas que trabalharam comigo sobre o meu impacto, minhas habilidades e a nossa colaboração.",
 		leaveComment: "Deixe um comentário!",
@@ -429,7 +435,7 @@ export const pt: Messages = {
 
 	contact: {
 		heading: "Entre em Contato",
-		intro: "Estou sempre aberto a conversar sobre novos projetos, ideias criativas ou oportunidades de fazer parte da sua visão.",
+		intro: "Estou sempre aberto a conversar sobre novos projetos, ideias criativas ou oportunidades de fazer parte da sua visão, não importa em qual lugar do mundo você esteja. Vamos conversar!",
 		location: "Curitiba, PR - Brasil",
 		nameLabel: "Nome",
 		namePlaceholder: "Seu nome",

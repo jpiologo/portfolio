@@ -16,10 +16,17 @@ export const en = {
 		copy: "Copy",
 		codeCopied: "Code copied",
 		copied: "Copied!",
+		carousel: {
+			previous: "Previous",
+			next: "Next",
+			pageLabel: (page: number, names: string[]) => `Page ${page}: ${names.join(", ")}`,
+			pageOf: (page: number, total: number) => `Page ${page} of ${total}`,
+		},
 	},
 
 	header: {
 		nav: {
+			home: "Home",
 			about: "About",
 			blog: "Blog",
 			projects: "Projects",
@@ -62,6 +69,7 @@ export const en = {
 
 	blog: {
 		heading: "Blog",
+		carouselLabel: "Latest posts",
 		intro:
 			"Notes, tutorials and lessons learned about software engineering, tooling and the technologies I work with every day.",
 		viewAll: "View all posts",
@@ -110,9 +118,6 @@ export const en = {
 		quote: "Everything you can imagine is real.",
 		quoteAuthor: "Pablo Picasso",
 		carouselLabel: "Featured projects",
-		previous: "Previous projects",
-		next: "Next projects",
-		pageLabel: (page: number, titles: string[]) => `Page ${page}: ${titles.join(", ")}`,
 		inDevelopment: "In Development",
 		viewCaseStudy: "View Case Study",
 		challenge: "The Challenge",
@@ -373,6 +378,7 @@ export const en = {
 
 	testimonials: {
 		heading: "Testimonials",
+		carouselLabel: "Testimonials",
 		intro:
 			"Don't just take my word for it. Here is what people who have worked with me have to say about my impact, skills, and collaboration.",
 		leaveComment: "Leave a comment!",
@@ -406,7 +412,7 @@ export const en = {
 
 	contact: {
 		heading: "Get in Touch",
-		intro: "I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions, from anywhere in the world.",
+		intro: "I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions, no matter where in the world you are. Let's talk!",
 		location: "Curitiba, PR - Brazil",
 		nameLabel: "Name",
 		namePlaceholder: "Your Name",

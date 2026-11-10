@@ -24,9 +24,16 @@ export default {
           '0%, 49%': { opacity: '1' },
           '50%, 100%': { opacity: '0' },
         },
+        // Lazy drift used by the hero icons on phones; duration and delay are set per icon
+        float: {
+          '0%, 100%': { transform: 'translate(0, 0) rotate(0deg)' },
+          '33%': { transform: 'translate(4px, -7px) rotate(5deg)' },
+          '66%': { transform: 'translate(-4px, -3px) rotate(-4deg)' },
+        },
       },
       animation: {
         'caret-blink': 'caret-blink 1.06s step-end infinite',
+        float: 'float 6s ease-in-out infinite',
       },
       colors: {
         background: {
@@ -56,12 +63,6 @@ export default {
           'error-bg': 'rgba(239, 68, 68, 0.1)',
           success: '#22C55E',
           'success-bg': 'rgba(34, 197, 94, 0.1)',
-        },
-        social: {
-          github: themeColor('text-primary'),
-          linkedin: '#0E4D8A',
-          instagram: '#C13584',
-          email: '#DC2626',
         },
       },
     },

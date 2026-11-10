@@ -57,6 +57,9 @@ const Header = () => {
 		{ href: "/#contact", label: t.header.nav.contact },
 	];
 
+	// The drawer has no logo at the top to click, so it gets an explicit Home entry
+	const mobileNavLinks = [{ href: "/", label: t.header.nav.home }, ...navLinks];
+
 	return (
 		<>
 			<header
@@ -79,10 +82,11 @@ const Header = () => {
 							<Menu size={24} />
 						</button>
 
+						{/* On phones the logo lives at the bottom of the drawer instead */}
 						<Link
 							to="/"
 							aria-label={t.common.homeLabel}
-							className="text-text-primary hover:opacity-80 transition-opacity"
+							className="hidden md:block text-text-primary hover:opacity-80 transition-opacity"
 						>
 							<Logo className="w-10 h-10" />
 						</Link>
@@ -149,7 +153,7 @@ const Header = () => {
 					</button>
 				</div>
 				<div className="flex-1 py-6 px-4 flex flex-col gap-6 overflow-y-auto">
-					{navLinks.map((link) => (
+					{mobileNavLinks.map((link) => (
 						<Link
 							key={link.href}
 							to={link.href}
@@ -159,6 +163,16 @@ const Header = () => {
 							{link.label}
 						</Link>
 					))}
+				</div>
+				<div className="p-4 border-t border-border-subtle">
+					<Link
+						to="/"
+						onClick={closeMenu}
+						aria-label={t.common.homeLabel}
+						className="inline-block text-text-primary hover:opacity-80 transition-opacity"
+					>
+						<Logo className="w-10 h-10" />
+					</Link>
 				</div>
 			</div>
 		</>

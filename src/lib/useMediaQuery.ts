@@ -13,3 +13,8 @@ export const useMediaQuery = (query: string) => {
 
 	return matches;
 };
+
+/** Tailwind's `md` breakpoint: the layout switches from phone to tablet/desktop here. */
+export const DESKTOP_QUERY = "(min-width: 768px)";
+
+export const useIsDesktop = () => useMediaQuery(DESKTOP_QUERY);

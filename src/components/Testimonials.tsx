@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase';
 import type { Comment } from '../lib/types';
 import { MessageSquarePlus, Quote, Loader2, AlertCircle } from 'lucide-react';
 import CommentForm from './CommentForm';
+import MobileCarousel from './MobileCarousel';
 import { parallaxHandlers } from '../lib/parallax';
 import { useI18n } from '../i18n/context';
 
@@ -105,13 +106,15 @@ const Testimonials = () => {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {comments.map((comment, index) => (
-              <div 
-                key={comment.id}
+          <MobileCarousel
+            items={comments}
+            label={t.testimonials.carouselLabel}
+            getKey={(comment) => comment.id}
+            getName={(comment) => comment.user_name}
+            renderItem={(comment) => (
+              <div
                 {...parallaxHandlers}
                 className="parallax-card bg-background-elevated rounded-[2rem] p-8 md:p-10 border border-border-subtle shadow-sm hover:shadow-xl group flex flex-col h-full overflow-hidden"
-                style={{ animationDelay: `${index * 100}ms` }}
               >
                 {/* Decorative background glow that appears on hover */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-accent-primary/10 to-transparent rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none translate-x-1/2 -translate-y-1/2" />
@@ -153,8 +156,8 @@ const Testimonials = () => {
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            )}
+          />
         )}
 
       </div>
