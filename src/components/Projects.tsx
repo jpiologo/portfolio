@@ -7,6 +7,8 @@ import weatherImage from "../assets/weatherApp.png";
 import vocalVaultImage from "../assets/vocalVault.png";
 import caseCobra from "../assets/Home.png";
 import cleanUp from "../assets/CleanUpHome.png";
+import realtimeChatImage from "../assets/Destroyed.png";
+import playoffsSimulatorImage from "../assets/4a0.png";
 import fluigLogo from "../assets/fluig-logo.png";
 import jenkinsLogo from "../assets/Jenkins.svg";
 
@@ -27,6 +29,20 @@ const PROJECTS: ProjectMeta[] = [
 		techStack: ["typescript", "nextjs", "postgresql", "prisma", "stripe", "kinde", "uploadthing", "resend"],
 		demoLink: "https://casecobra-taupe.vercel.app/",
 		githubLink: "https://github.com/jpiologo/CaseCobra",
+	},
+	{
+		id: "realtimeChat",
+		image: realtimeChatImage,
+		techStack: ["typescript", "nextjs", "elysia", "upstash", "reactQuery", "zod", "tailwind"],
+		demoLink: "https://realtime-chat-iota-six.vercel.app/",
+		githubLink: "https://github.com/jpiologo/Realtime_Chat",
+	},
+	{
+		id: "playoffsSimulator",
+		image: playoffsSimulatorImage,
+		techStack: ["typescript", "nextjs", "zustand", "zod", "motion", "tailwind", "vitest"],
+		demoLink: "https://4a0-self.vercel.app/jogo",
+		githubLink: "https://github.com/jpiologo/4a0",
 	},
 	{
 		id: "inventoryCount",

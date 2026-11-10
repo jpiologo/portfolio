@@ -10,7 +10,7 @@ const About = () => {
   const yearsLabel = `${years}+`;
 
   return (
-    <section id="about" className="py-20 overflow-x-clip">
+    <section id="about" className="pt-32 md:pt-40 pb-20 overflow-x-clip">
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>

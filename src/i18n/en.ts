@@ -41,6 +41,7 @@ export const en = {
 	hero: {
 		titlePlain: "Full Stack ",
 		titleHighlight: "Developer;",
+		photoAlt: "Portrait of João Piologo",
 		subtitle: "Transforming ideas into",
 		subtitleHighlight: "code",
 		viewWork: "View My Work",
@@ -154,6 +155,44 @@ export const en = {
 						"Stripe payment integration",
 						"Automated email confirmations via Resend",
 						"Auth-protected checkout flow",
+					],
+				},
+			},
+			realtimeChat: {
+				title: "Private Chat",
+				subtitle: "Realtime Self-Destructing Rooms",
+				description:
+					"Anonymous, two-person chat rooms that live for 10 minutes and can be destroyed on demand — messages are delivered in real time and wiped from the server when the room ends.",
+				details: {
+					challenge:
+						"Build a private chat with no sign-up where only two people can join a room, messages arrive instantly, and nothing is left behind once the room expires or is destroyed — all running on serverless infrastructure without a long-lived WebSocket server.",
+					solution:
+						"Built on Next.js with an Elysia API mounted in a catch-all route and consumed through Eden's end-to-end typed client. Room metadata and messages live in Upstash Redis with a shared TTL, while Upstash Realtime pushes new messages and destroy events to both participants. A Next.js proxy issues an httpOnly token per participant and caps each room at two, and Zod validates every request and event.",
+					features: [
+						"Rooms limited to two participants with httpOnly token access",
+						"Real-time messaging via Upstash Realtime",
+						"10-minute auto-expiry with live countdown",
+						"One-click destroy that wipes all messages for both users",
+						"Anonymous generated identities, no sign-up",
+					],
+				},
+			},
+			playoffsSimulator: {
+				title: "4-0",
+				subtitle: "NBA Legends Playoffs Simulator",
+				description:
+					"Browser game where you build a team from 184 NBA legends, simulate an 82-game season against 36 historic squads and fight through four best-of-seven playoff rounds for the title.",
+				details: {
+					challenge:
+						"Design a replayable sports simulation that feels fair and readable: hundreds of tunable numbers had to produce realistic records, box scores and upsets, and a run had to survive a page refresh without letting the player re-roll their luck.",
+					solution:
+						"Wrote the game engine as pure TypeScript reducers driven by a seeded, serializable RNG, so every action resumes from the saved cursor and refreshing never changes the outcome. All balance constants live in a single module, checked by a script that plays hundreds of automated runs, and the engine is covered by Vitest tests. The run is persisted with Zustand and validated with Zod schemas plus versioned migrations, so corrupted or old saves never crash the app. Motion drives the slot-machine draws and live play-by-play.",
+					features: [
+						"Two modes: draft five real legends, or build a \"Frankenstein\" star inheriting one attribute from each drawn legend",
+						"Normal and Almanac difficulties (Almanac hides player ratings)",
+						"82-game season with seeding, then best-of-seven playoff series with live play-by-play",
+						"Buff and debuff cards after every playoff game, plus in-game events and injuries",
+						"S–F run grade with Wordle-style shareable result",
 					],
 				},
 			},
@@ -367,7 +406,7 @@ export const en = {
 
 	contact: {
 		heading: "Get in Touch",
-		intro: "I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.",
+		intro: "I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions, from anywhere in the world.",
 		location: "Curitiba, PR - Brazil",
 		nameLabel: "Name",
 		namePlaceholder: "Your Name",

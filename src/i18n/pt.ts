@@ -64,6 +64,7 @@ export const pt: Messages = {
 	hero: {
 		titlePlain: "Desenvolvedor ",
 		titleHighlight: "Full Stack;",
+		photoAlt: "Retrato de João Piologo",
 		subtitle: "Transformando ideias em",
 		subtitleHighlight: "código",
 		viewWork: "Ver Meus Projetos",
@@ -177,6 +178,44 @@ export const pt: Messages = {
 						"Integração de pagamentos com Stripe",
 						"Confirmações automáticas por e-mail via Resend",
 						"Checkout protegido por autenticação",
+					],
+				},
+			},
+			realtimeChat: {
+				title: "Private Chat",
+				subtitle: "Salas Autodestrutivas em Tempo Real",
+				description:
+					"Salas de chat anônimas para duas pessoas que duram 10 minutos e podem ser destruídas a qualquer momento — as mensagens chegam em tempo real e são apagadas do servidor quando a sala termina.",
+				details: {
+					challenge:
+						"Construir um chat privado sem cadastro, em que apenas duas pessoas entram em cada sala, as mensagens chegam na hora e nada fica para trás quando a sala expira ou é destruída — tudo em infraestrutura serverless, sem um servidor WebSocket sempre ativo.",
+					solution:
+						"Construído em Next.js com uma API Elysia montada em uma rota catch-all e consumida pelo cliente Eden, tipado de ponta a ponta. Os metadados das salas e as mensagens ficam no Upstash Redis com um TTL compartilhado, enquanto o Upstash Realtime envia novas mensagens e eventos de destruição aos dois participantes. Um proxy do Next.js emite um token httpOnly por participante e limita cada sala a dois, e o Zod valida cada requisição e evento.",
+					features: [
+						"Salas limitadas a dois participantes com acesso por token httpOnly",
+						"Mensagens em tempo real via Upstash Realtime",
+						"Expiração automática em 10 minutos com contagem regressiva",
+						"Botão de destruir que apaga todas as mensagens para os dois usuários",
+						"Identidades anônimas geradas, sem cadastro",
+					],
+				},
+			},
+			playoffsSimulator: {
+				title: "4-0",
+				subtitle: "Simulador de Playoffs com Lendas da NBA",
+				description:
+					"Jogo de navegador em que você monta um time com 184 lendas da NBA, simula uma temporada de 82 jogos contra 36 esquadrões históricos e enfrenta quatro séries melhor de sete nos playoffs em busca do título.",
+				details: {
+					challenge:
+						"Criar uma simulação esportiva rejogável que parecesse justa e fácil de acompanhar: centenas de números ajustáveis precisavam gerar campanhas, box scores e zebras realistas, e uma partida tinha que sobreviver a um refresh da página sem deixar o jogador sortear a sorte de novo.",
+					solution:
+						"Escrevi o motor do jogo como reducers puros em TypeScript guiados por um RNG com seed e estado serializável, então cada ação retoma do cursor salvo e o refresh nunca muda o resultado. Todas as constantes de balanceamento ficam em um único módulo, conferido por um script que joga centenas de partidas automáticas, e o motor é coberto por testes com Vitest. A partida é persistida com Zustand e validada com schemas Zod e migrações versionadas, de modo que saves antigos ou corrompidos nunca derrubam o app. O Motion anima os sorteios em roleta e o lance a lance ao vivo.",
+					features: [
+						"Dois modos: escalar cinco lendas reais ou montar uma estrela \"Frankenstein\" herdando um atributo de cada lenda sorteada",
+						"Dificuldades Normal e Almanaque (o Almanaque esconde o overall dos jogadores)",
+						"Temporada de 82 jogos com seeds e séries melhor de sete nos playoffs com lance a lance ao vivo",
+						"Cartas de buff e debuff após cada jogo de playoff, além de eventos e lesões durante as partidas",
+						"Nota da campanha de S a F com resultado compartilhável no estilo Wordle",
 					],
 				},
 			},
