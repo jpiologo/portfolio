@@ -161,6 +161,62 @@ html {
 }
 
 /* ================================================================== */
+/*  Home sections                                                      */
+/*  Full-page mode (large screens, see src/lib/useFullPage.ts): each   */
+/*  section fills exactly one screen, centered below the header, and   */
+/*  sizes scale with the screen height so everything fits. Tailwind's  */
+/*  `full-page:` variant does the same for one-off tweaks.             */
+/* ================================================================== */
+
+@layer components {
+  .section-heading {
+    @apply text-4xl md:text-5xl font-bold text-text-primary tracking-tight;
+  }
+
+  .section-intro {
+    @apply text-xl text-text-muted leading-relaxed font-light;
+  }
+}
+
+:root {
+  /* Fixed header once the page is scrolled: py-4 around the 40px logo (Header.tsx) */
+  --header-height: 4.5rem;
+}
+
+:root[data-full-page] .page-section {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: var(--header-height);
+  padding-bottom: 1vh;
+}
+
+:root[data-full-page] .section-heading {
+  font-size: clamp(2rem, 6vh, 3rem);
+}
+
+:root[data-full-page] .section-intro {
+  font-size: clamp(1rem, 2.4vh, 1.25rem);
+}
+
+:root[data-full-page] .proj-card-image-wrap {
+  height: clamp(5.5rem, 17vh, 220px);
+}
+
+:root[data-full-page] .proj-card-body {
+  padding: clamp(0.75rem, 2.5vh, 1.5rem);
+}
+
+/* Short screens: the full description is still one click away in the modal */
+@media (max-height: 700px) {
+  :root[data-full-page] .proj-card-desc {
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+  }
+}
+
+/* ================================================================== */
 /*  Project Cards                                                      */
 /* ================================================================== */
 

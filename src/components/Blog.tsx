@@ -13,16 +13,16 @@ const Blog = () => {
 	const latestPosts = posts.slice(0, LATEST_COUNT);
 
 	return (
-		<section id="blog" className="py-24 bg-background-surface/60 relative overflow-hidden">
+		<section id="blog" className="page-section py-24 relative overflow-hidden">
 			<div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-accent-primary/10 rounded-full blur-[120px] pointer-events-none transform -translate-x-1/3 translate-y-1/3" />
 
 			<div className="max-w-6xl mx-auto px-4 relative z-10">
-				<div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-14 gap-6">
+				<div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-14 full-page:mb-[4vh] gap-6">
 					<div className="max-w-2xl">
-						<h2 className="text-4xl md:text-5xl font-bold mb-6 text-text-primary tracking-tight">
+						<h2 className="section-heading mb-6 full-page:mb-[2vh]">
 							{t.blog.heading}
 						</h2>
-						<p className="text-xl text-text-muted leading-relaxed font-light">{t.blog.intro}</p>
+						<p className="section-intro">{t.blog.intro}</p>
 					</div>
 					{posts.length > 0 && (
 						<Link

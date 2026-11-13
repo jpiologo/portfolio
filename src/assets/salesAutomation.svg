@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="600" viewBox="0 0 1600 600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111318"/>
+      <stop offset="1" stop-color="#0E4D8A"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="600" fill="url(#bg)"/>
+  <circle cx="1420" cy="90" r="260" fill="#1E88E5" opacity="0.12"/>
+
+  <!-- Headline: before -> after -->
+  <g font-family="Fira Code, Courier New, monospace" font-weight="700">
+    <text x="135" y="200" font-size="34" fill="#9CA3AF">sales flow</text>
+    <text x="1465" y="200" font-size="40" fill="#E8EAF0" text-anchor="end">10–12h <tspan fill="#1E88E5">→</tspan> <tspan fill="#22C55E">1h</tspan></text>
+  </g>
+
+  <!-- Pipeline stages -->
+  <g font-family="Fira Code, Courier New, monospace" font-size="26" font-weight="700" fill="#E8EAF0" text-anchor="middle">
+    <rect x="135" y="250" width="180" height="100" rx="16" fill="#1C1F26" stroke="#2C3040" stroke-width="3"/>
+    <text x="225" y="295">docs</text>
+    <text x="225" y="327" font-size="18" font-weight="400" fill="#9CA3AF">PDF · JPEG</text>
+
+    <rect x="365" y="250" width="180" height="100" rx="16" fill="#1C1F26" stroke="#2C3040" stroke-width="3"/>
+    <text x="455" y="295">GCP</text>
+    <text x="455" y="327" font-size="18" font-weight="400" fill="#9CA3AF">bucket</text>
+
+    <rect x="595" y="250" width="180" height="100" rx="16" fill="#1C1F26" stroke="#2C3040" stroke-width="3"/>
+    <text x="685" y="295">.NET</text>
+    <text x="685" y="327" font-size="18" font-weight="400" fill="#9CA3AF">microservice</text>
+
+    <rect x="825" y="250" width="180" height="100" rx="16" fill="#1C1F26" stroke="#FF6600" stroke-width="3"/>
+    <text x="915" y="295">RabbitMQ</text>
+    <text x="915" y="327" font-size="18" font-weight="400" fill="#9CA3AF">queues</text>
+
+    <rect x="1055" y="250" width="180" height="100" rx="16" fill="#1C1F26" stroke="#1E88E5" stroke-width="3"/>
+    <text x="1145" y="295">LLM</text>
+    <text x="1145" y="327" font-size="18" font-weight="400" fill="#9CA3AF">validation</text>
+
+    <rect x="1285" y="250" width="180" height="100" rx="16" fill="#1C1F26" stroke="#22C55E" stroke-width="4"/>
+    <text x="1375" y="295" fill="#22C55E">invoice ✓</text>
+    <text x="1375" y="327" font-size="18" font-weight="400" fill="#9CA3AF">stock · branch</text>
+  </g>
+  <g stroke="#1E88E5" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M320 300 H358 M348 290 L360 300 L348 310"/>
+    <path d="M550 300 H588 M578 290 L590 300 L578 310"/>
+    <path d="M780 300 H818 M808 290 L820 300 L808 310"/>
+    <path d="M1010 300 H1048 M1038 290 L1050 300 L1038 310"/>
+    <path d="M1240 300 H1278 M1268 290 L1280 300 L1268 310"/>
+  </g>
+
+  <!-- Observability across the whole flow -->
+  <g font-family="Fira Code, Courier New, monospace">
+    <path d="M135 400 H1465" stroke="#F46800" stroke-width="3" stroke-dasharray="10 10" opacity="0.8"/>
+    <text x="800" y="440" font-size="22" fill="#9CA3AF" text-anchor="middle">observability · Grafana</text>
+  </g>
+</svg>

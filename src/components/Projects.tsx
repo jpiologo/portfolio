@@ -21,13 +21,12 @@ type ProjectMeta = Omit<Project, "title" | "subtitle" | "description" | "details
 
 // Language-independent data, in display order; the text of each project lives in src/i18n
 const PROJECTS: ProjectMeta[] = [
+	// Work projects first, led by the one with the biggest business impact; personal and study projects last
 	{
-		id: "caseCobra",
-		image: caseCobra,
-		mini: "/minis/CaseCobra.png",
-		techStack: ["typescript", "nextjs", "postgresql", "prisma", "stripe", "kinde", "uploadthing", "resend"],
-		demoLink: "https://casecobra-taupe.vercel.app/",
-		githubLink: "https://github.com/jpiologo/CaseCobra",
+		id: "salesAutomation",
+		image: fluigLogo,
+		mini: "/minis/salesAutomation.svg",
+		techStack: ["dotnet", "rabbitmq", "gcp", "llm", "microservices", "grafana", "restApi"],
 	},
 	{
 		id: "fluigPipeline",
@@ -43,22 +42,6 @@ const PROJECTS: ProjectMeta[] = [
 			"automation",
 			"devops",
 		],
-	},
-	{
-		id: "playoffsSimulator",
-		image: playoffsSimulatorImage,
-		mini: "/minis/icon.svg",
-		techStack: ["typescript", "nextjs", "zustand", "zod", "motion", "tailwind", "vitest"],
-		demoLink: "https://4a0-self.vercel.app/jogo",
-		githubLink: "https://github.com/jpiologo/4a0",
-	},
-	{
-		id: "realtimeChat",
-		image: realtimeChatImage,
-		mini: "/minis/terminal.svg",
-		techStack: ["typescript", "nextjs", "elysia", "upstash", "reactQuery", "zod", "tailwind"],
-		demoLink: "https://realtime-chat-iota-six.vercel.app/",
-		githubLink: "https://github.com/jpiologo/Realtime_Chat",
 	},
 	{
 		id: "inventoryCount",
@@ -128,9 +111,42 @@ const PROJECTS: ProjectMeta[] = [
 		],
 	},
 	{
+		id: "playoffsSimulator",
+		image: playoffsSimulatorImage,
+		mini: "/minis/icon.svg",
+		techStack: ["typescript", "nextjs", "zustand", "zod", "motion", "tailwind", "vitest"],
+		demoLink: "https://4a0-self.vercel.app/jogo",
+		githubLink: "https://github.com/jpiologo/4a0",
+	},
+	{
+		id: "cleanUp",
+		image: cleanUp,
+		mini: "/minis/clean-up-logo.png",
+		techStack: ["typescript", "nextjs", "nestjs", "postgresql", "prisma", "tailwind", "jwt"],
+		githubLink: "https://github.com/jpiologo/CleanUp---Frontend",
+		inDevelopment: true,
+	},
+	{
+		id: "caseCobra",
+		image: caseCobra,
+		mini: "/minis/CaseCobra.png",
+		techStack: ["typescript", "nextjs", "postgresql", "prisma", "stripe", "kinde", "uploadthing", "resend"],
+		demoLink: "https://casecobra-taupe.vercel.app/",
+		githubLink: "https://github.com/jpiologo/CaseCobra",
+	},
+	{
+		id: "realtimeChat",
+		image: realtimeChatImage,
+		mini: "/minis/terminal.svg",
+		techStack: ["typescript", "nextjs", "elysia", "upstash", "reactQuery", "zod", "tailwind"],
+		demoLink: "https://realtime-chat-iota-six.vercel.app/",
+		githubLink: "https://github.com/jpiologo/Realtime_Chat",
+	},
+	{
 		id: "taskManager",
 		image: fokusImage,
 		mini: "/minis/fokusLogo.png",
+		miniIsWhite: true,
 		techStack: ["javascript", "html", "css", "localStorage"],
 		demoLink: "https://fokus-mu-eight.vercel.app/",
 		githubLink: "https://github.com/jpiologo/fokusProject",
@@ -142,14 +158,6 @@ const PROJECTS: ProjectMeta[] = [
 		techStack: ["javascript", "openWeatherMap", "restApi", "json"],
 		demoLink: "https://weather-app-kappa-black.vercel.app/",
 		githubLink: "https://github.com/jpiologo/weatherApp",
-	},
-	{
-		id: "cleanUp",
-		image: cleanUp,
-		mini: "/minis/clean-up-logo.png",
-		techStack: ["typescript", "nextjs", "nestjs", "postgresql", "prisma", "tailwind", "jwt"],
-		githubLink: "https://github.com/jpiologo/CleanUp---Frontend",
-		inDevelopment: true,
 	},
 	{
 		id: "vocalVault",
@@ -167,21 +175,17 @@ const Projects = () => {
 	const projects: Project[] = PROJECTS.map(({ id, ...meta }) => ({ ...meta, ...t.projects.items[id] }));
 
 	return (
-		<section id="projects" className="py-16">
+		<section id="projects" className="page-section relative py-16">
 			<div className="max-w-6xl mx-auto px-4">
-				<div className="text-center mb-14">
-					<h2 className="text-4xl md:text-5xl font-bold mb-6 text-text-primary tracking-tight">
+				<div className="text-center mb-14 full-page:mb-[5vh]">
+					<h2 className="section-heading mb-6 full-page:mb-[2vh]">
 						{t.projects.heading}
 					</h2>
-					<p className="text-xl text-text-muted leading-relaxed font-light max-w-xl mx-auto">
+					<p className="section-intro max-w-xl mx-auto">
 						{t.projects.introBefore}
 						<b>{t.projects.introBold}</b>
 						{t.projects.introAfter}
 					</p>
-					<figure className="mt-6 text-text-muted">
-						<blockquote className="text-base md:text-lg italic font-light">“{t.projects.quote}”</blockquote>
-						<figcaption className="mt-1 text-sm opacity-70">— {t.projects.quoteAuthor}</figcaption>
-					</figure>
 				</div>
 
 				<Carousel
@@ -196,11 +200,19 @@ const Projects = () => {
 							src={project.mini}
 							alt=""
 							loading="lazy"
-							className="h-12 w-auto max-w-24 object-contain"
+							className={`h-12 w-auto max-w-24 object-contain ${
+								project.miniIsWhite ? "rounded-md bg-black p-1 dark:bg-transparent dark:p-0" : ""
+							}`}
 						/>
 					)}
 				/>
 			</div>
+
+			{/* Easter egg: tucked away in the corner */}
+			<figure className="absolute bottom-3 right-4 text-[0.8rem] italic font-light text-text-muted/50 select-none">
+				<blockquote className="inline">“{t.projects.quote}”</blockquote>
+				<figcaption className="inline not-italic"> — {t.projects.quoteAuthor}</figcaption>
+			</figure>
 		</section>
 	);
 };

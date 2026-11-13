@@ -1,4 +1,5 @@
 import typography from '@tailwindcss/typography';
+import plugin from 'tailwindcss/plugin';
 
 // Theme colors are RGB channels defined in src/index.css (light on :root, dark on .dark)
 const themeColor = (name) => `rgb(var(--c-${name}) / <alpha-value>)`;
@@ -22,11 +23,20 @@ export default {
         signature: ["'Momo Signature'", 'cursive'],
       },
       keyframes: {
+        // Two faces of a cube turning upwards (RotatingWord): the next word rolls in from below
+        'cube-in': {
+          '0%': { transform: 'rotateX(-90deg)', opacity: '0' },
+          '100%': { transform: 'rotateX(0deg)', opacity: '1' },
+        },
+        'cube-out': {
+          '0%': { transform: 'rotateX(0deg)', opacity: '1' },
+          '100%': { transform: 'rotateX(90deg)', opacity: '0' },
+        },
         'caret-blink': {
           '0%, 49%': { opacity: '1' },
           '50%, 100%': { opacity: '0' },
         },
-        // Lazy drift used by the hero icons on phones; duration and delay are set per icon
+        // Lazy drift used by the hero icons; duration and delay are set per icon
         float: {
           '0%, 100%': { transform: 'translate(0, 0) rotate(0deg)' },
           '33%': { transform: 'translate(4px, -7px) rotate(5deg)' },
@@ -35,6 +45,8 @@ export default {
       },
       animation: {
         'caret-blink': 'caret-blink 1.06s step-end infinite',
+        'cube-in': 'cube-in 0.6s cubic-bezier(0.3, 0.7, 0.3, 1) both',
+        'cube-out': 'cube-out 0.6s cubic-bezier(0.3, 0.7, 0.3, 1) forwards',
         float: 'float 6s ease-in-out infinite',
       },
       colors: {
@@ -69,5 +81,9 @@ export default {
       },
     },
   },
-  plugins: [typography],
+  plugins: [
+    typography,
+    // Full-page mode on large screens (attribute set by src/lib/useFullPage.ts)
+    plugin(({ addVariant }) => addVariant('full-page', ':root[data-full-page] &')),
+  ],
 };
