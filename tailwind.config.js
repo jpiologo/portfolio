@@ -18,6 +18,8 @@ export default {
         title: ['var(--font-title, system-ui, sans-serif)'],
         label: ['var(--font-label, system-ui, sans-serif)'],
         mono: ['var(--font-mono, ui-monospace, monospace)'],
+        // Handwritten accent (hero highlight); loaded in index.html, independent of the font preset
+        signature: ["'Momo Signature'", 'cursive'],
       },
       keyframes: {
         'caret-blink': {
