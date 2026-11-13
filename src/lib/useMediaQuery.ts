@@ -18,3 +18,6 @@ export const useMediaQuery = (query: string) => {
 export const DESKTOP_QUERY = "(min-width: 768px)";
 
 export const useIsDesktop = () => useMediaQuery(DESKTOP_QUERY);
+
+/** Tailwind's `lg` breakpoint. */
+export const LARGE_QUERY = "(min-width: 1024px)";

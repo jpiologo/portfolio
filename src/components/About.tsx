@@ -10,19 +10,19 @@ const About = () => {
   const yearsLabel = `${years}+`;
 
   return (
-    <section id="about" className="pt-32 md:pt-40 pb-20 overflow-x-clip">
+    <section id="about" className="page-section pt-32 md:pt-40 pb-20 overflow-x-clip">
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-text-primary tracking-tight">
+            <h2 className="section-heading mb-6 full-page:mb-[2vh]">
               {t.about.heading}
             </h2>
-            <div className="space-y-4">
-              <p className="text-xl text-text-muted leading-relaxed font-light">{t.about.intro(years)}</p>
-              <p className="text-xl text-text-muted leading-relaxed font-light">{t.about.story}</p>
+            <div className="space-y-4 full-page:space-y-[1.5vh]">
+              <p className="section-intro">{t.about.intro(years)}</p>
+              <p className="section-intro">{t.about.story}</p>
             </div>
 
-            <div className="mt-8 grid grid-cols-2 gap-4">
+            <div className="mt-8 full-page:mt-[4vh] grid grid-cols-2 gap-4">
               <div className="text-center">
                 <div className="text-3xl font-bold text-accent-secondary">{yearsLabel}</div>
                 <div className="text-sm font-medium text-text-muted mt-1">{t.about.yearsOfExperience}</div>
@@ -34,7 +34,7 @@ const About = () => {
             </div>
           </div>
 
-          <figure className="w-full max-w-sm mx-auto md:ml-auto md:mr-0">
+          <figure className="w-full max-w-sm full-page:max-w-[min(24rem,calc((100vh-13rem)*0.8))] mx-auto md:ml-auto md:mr-0">
             <div className="relative">
               {/* Offset accent frame behind the photo */}
               <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-2xl border-2 border-accent-secondary/40 pointer-events-none" />

@@ -52,6 +52,7 @@ export const pt: Messages = {
 		nav: {
 			home: "Início",
 			about: "Sobre",
+			whatIDo: "O que faço",
 			blog: "Blog",
 			projects: "Projetos",
 			testimonials: "Depoimentos",
@@ -69,11 +70,11 @@ export const pt: Messages = {
 	},
 
 	hero: {
-		titlePlain: "Desenvolvedor ",
-		titleHighlight: "Full Stack;",
+		titlePlain: "Engenheiro de ",
+		titleHighlight: "Software;",
 		photoAlt: "Retrato de João Piologo",
-		subtitle: "Transformando ideias em",
-		subtitleHighlight: "código",
+		subtitle: "Eu",
+		verbs: ["planejo", "programo", "implanto", "aprimoro", "sugiro", "transformo"],
 		viewWork: "Ver Meus Projetos",
 		getInTouch: "Entre em Contato",
 	},
@@ -85,9 +86,37 @@ export const pt: Messages = {
 		story:
 			"Minha trajetória na tecnologia começou como aprendiz, escrevendo VBA no Excel para automatizar processos manuais — e desde então me apaixonei por resolver problemas. Essa paixão inicial me levou à graduação em Engenharia de Software e a uma carreira arquitetando soluções corporativas complexas e escaláveis. Hoje, atuo como Consultor B2B e Engenheiro Sênior, apoiado em uma stack robusta e poliglota para construir softwares.",
 		yearsOfExperience: "Anos de Experiência",
-		projects: "Projetos",
+		projects: "Processos Entregues em Produção",
 		photoAlt: "João Piologo no Universo TOTVS 2026",
 		photoCaption: "Universo TOTVS 2026, São Paulo - Brasil",
+	},
+
+	whatIDo: {
+		heading: "O que eu faço",
+		intro: "Essas são as áreas em que eu atuo — do primeiro rascunho da arquitetura até mantê-la saudável em produção.",
+		areas: {
+			engineering: {
+				title: "Engenharia de Software",
+				description: "Backends, microsserviços e mensageria. Arquitetura feita para escalar.",
+			},
+			web: {
+				title: "Desenvolvimento Web Full Stack",
+				description: "Do MVP de fim de semana à produção, com React, Next.js e TypeScript. Este site incluso.",
+			},
+			automation: {
+				title: "Automação de Processos",
+				description: "Workflows no TOTVS Fluig, integrados ao Protheus e ao que mais a empresa usar.",
+			},
+			devops: {
+				title: "DevOps e Observabilidade",
+				description: "Pipelines de CI/CD, deploy na nuvem e painéis que mostram o que realmente acontece em produção.",
+			},
+			ai: {
+				title: "IA Aplicada",
+				description: "Integrando LLMs que validam documentos e tomando decisões em fluxos reais de negócio, não em demos.",
+			},
+		},
+		stackLabel: "Stack com que trabalho",
 	},
 
 	blog: {
@@ -131,6 +160,7 @@ export const pt: Messages = {
 		erpIntegration: "Integração com ERP",
 		aiDocumentAnalysis: "Análise de Documentos com IA",
 		automation: "Automação",
+		llm: "Modelos de Linguagem (LLM)",
 	},
 
 	projects: {
@@ -150,6 +180,27 @@ export const pt: Messages = {
 		liveDemo: "Ver Demo",
 		viewSource: "Ver Código",
 		items: {
+			salesAutomation: {
+				title: "Automação de Vendas Ponta a Ponta",
+				subtitle: "Microsserviços orientados a eventos com validação de documentos por LLM",
+				description:
+					"Automação de ponta a ponta do processo de venda, da validação de documentos à emissão da nota fiscal. Microsserviços em .NET Core, filas no RabbitMQ e um LLM interno substituíram as conferências manuais — reduzindo cada venda de 10~12h para cerca de 1h.",
+				details: {
+					challenge:
+						"Cada venda exigia que os documentos do cliente, armazenados em diferentes formatos (RG, CPF, Comprovantes, etc) fossem conferidos à mão antes da emissão da nota fiscal, seguidos das validações de estoque, depósitos, filial e trânsito. Uma venda levava de 10 a 12 horas, dependia da disponibilidade das pessoas e precisava continuar confiável com o aumento do volume.",
+					solution:
+						"Os documentos enviados pelos clientes eram armazenados em um bucket no GCP. Com o ID e o path gerados, um microsserviço em .NET Core publicava as informações em uma fila do RabbitMQ, consumida por um LLM interno que validava cada documento segundo as regras definidas. Quando todos os documentos eram aprovados, o processo seguia para outra fila, que orquestrava as etapas seguintes: emissão da nota fiscal e validações de estoque, filial e necessidade de trânsito, com observabilidade no Grafana. Atuei em todas as etapas, da criação dos microsserviços e integração com as filas à coordenação da equipe, muitas vezes tomando as decisões arquiteturais. É um dos projetos de que mais me orgulho.",
+					features: [
+						"Tempo de venda reduzido de 10~12h para cerca de 1h",
+						"Validação de PDFs e imagens por LLM segundo regras de negócio",
+						"Armazenamento de documentos em bucket no Google Cloud",
+						"Microsserviços em .NET Core publicando no RabbitMQ",
+						"Faturamento orquestrado por filas, com validações de estoque, filial e trânsito",
+						"Observabilidade ponta a ponta com Grafana",
+						"Decisões arquiteturais e coordenação da equipe",
+					],
+				},
+			},
 			cleanUp: {
 				title: "CleanUp",
 				subtitle: "Arquitetura Full-Stack",

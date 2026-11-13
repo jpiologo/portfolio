@@ -28,6 +28,7 @@ export const en = {
 		nav: {
 			home: "Home",
 			about: "About",
+			whatIDo: "What I Do",
 			blog: "Blog",
 			projects: "Projects",
 			testimonials: "Testimonials",
@@ -46,11 +47,11 @@ export const en = {
 	},
 
 	hero: {
-		titlePlain: "Full Stack ",
-		titleHighlight: "Developer;",
+		titlePlain: "Software ",
+		titleHighlight: "Engineer;",
 		photoAlt: "Portrait of João Piologo",
-		subtitle: "Transforming ideas into",
-		subtitleHighlight: "code",
+		subtitle: "I",
+		verbs: ["plan", "code", "deploy", "enhance", "suggest", "transform"],
 		viewWork: "View My Work",
 		getInTouch: "Get in Touch",
 	},
@@ -62,9 +63,37 @@ export const en = {
 		story:
 			"My journey in tech started as an apprentice, writing Excel VBA to automate manual processes — and I was hooked on problem-solving. That early passion led me to a degree in Software Engineering and a career architecting complex, scalable corporate solutions. Today, I act as a B2B Consultant and Senior Engineer, drawing on a robust, polyglot stack to build software that delivers real business value.",
 		yearsOfExperience: "Years of Experience",
-		projects: "Projects",
+		projects: "Processes Delivered to Production",
 		photoAlt: "João Piologo at Universo TOTVS 2026",
 		photoCaption: "Universo TOTVS 2026, São Paulo - Brazil",
+	},
+
+	whatIDo: {
+		heading: "What I Do",
+		intro: "These are the areas I work in — from the first sketch of the architecture to keeping it healthy in production.",
+		areas: {
+			engineering: {
+				title: "Software Engineering",
+				description: "Backends, microservices and messaging. Architecture built to scale.",
+			},
+			web: {
+				title: "Full-Stack Web Development",
+				description: "From a weekend MVP to production, with React, Next.js and TypeScript. This site included.",
+			},
+			automation: {
+				title: "Process Automation",
+				description: "Workflows on TOTVS Fluig, integrated with Protheus and whatever else the business runs on.",
+			},
+			devops: {
+				title: "DevOps & Observability",
+				description: "CI/CD pipelines, cloud deploys and dashboards that show what is really happening in production.",
+			},
+			ai: {
+				title: "Applied AI",
+				description: "Integrating LLMs that validate documents and make decisions in real business flows, not in demos.",
+			},
+		},
+		stackLabel: "Stack I work with",
 	},
 
 	blog: {
@@ -108,6 +137,7 @@ export const en = {
 		erpIntegration: "ERP Integration",
 		aiDocumentAnalysis: "AI Document Analysis",
 		automation: "Automation",
+		llm: "Large Language Models (LLM)",
 	} satisfies Record<GenericTechId, string>,
 
 	projects: {
@@ -127,6 +157,27 @@ export const en = {
 		liveDemo: "Live Demo",
 		viewSource: "View Source",
 		items: {
+			salesAutomation: {
+				title: "End-to-End Sales Automation",
+				subtitle: "Event-Driven Microservices with LLM Document Validation",
+				description:
+					"End-to-end automation of the sales process, from document validation to invoice issuance. .NET Core microservices, RabbitMQ queues and an internal LLM replaced manual checks — cutting each sale from 10–12 hours to about 1 hour.",
+				details: {
+					challenge:
+						"Every sale required the customer's documents, stored in different formats (ID card, CPF, proofs, etc.), to be checked by hand before the invoice could be issued, followed by stock, warehouse, branch and transit checks. Each sale took 10 to 12 hours, depended on people being available, and had to stay reliable as volume grew.",
+					solution:
+						"Documents sent by customers were stored in a GCP bucket. With the generated ID and path, a .NET Core microservice published the information to a RabbitMQ queue, consumed by an internal LLM that validated each document against the defined rules. Once every document was approved, the sale moved to another queue that orchestrated the next steps: invoice issuance and stock, branch and transit validations, all observed through Grafana. I worked on every stage, from building the microservices and integrating the queues to coordinating the team, often making the architectural decisions. It's one of the projects I'm proudest of.",
+					features: [
+						"Sales cycle cut from 10–12 hours to about 1 hour",
+						"LLM validation of PDFs and images against business rules",
+						"Document storage in a Google Cloud bucket",
+						".NET Core microservices publishing to RabbitMQ",
+						"Queue-orchestrated invoicing with stock, branch and transit checks",
+						"End-to-end observability with Grafana",
+						"Architectural decisions and team coordination",
+					],
+				},
+			},
 			cleanUp: {
 				title: "CleanUp",
 				subtitle: "Full-Stack Architecture",

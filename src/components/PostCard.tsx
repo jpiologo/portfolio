@@ -15,7 +15,7 @@ const PostCard = ({ post }: { post: Post }) => {
 			className="parallax-card group flex flex-col h-full bg-background-elevated rounded-2xl border border-border-subtle overflow-hidden shadow-sm hover:shadow-xl hover:border-accent-secondary/60"
 		>
 			{/* Cover */}
-			<div className="aspect-[16/9] overflow-hidden bg-background-surface">
+			<div className="aspect-[16/9] full-page:aspect-auto full-page:h-[clamp(5rem,15vh,11rem)] overflow-hidden bg-background-surface">
 				{post.cover ? (
 					<img
 						src={post.cover}

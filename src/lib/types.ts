@@ -32,6 +32,8 @@ export interface Project {
   image: string;
   /** Small logo shown in the carousel hover preview. */
   mini: string;
+  /** The mini is white, so it gets a dark backdrop in light mode. */
+  miniIsWhite?: boolean;
   demoLink?: string;
   githubLink?: string;
   inDevelopment?: boolean;

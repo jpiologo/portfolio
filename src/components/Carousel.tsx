@@ -85,7 +85,7 @@ const Carousel = <T,>({ items, perPage, label, getKey, getName, renderItem, rend
 			</div>
 
 			{pages.length > 1 && (
-				<div className="mt-10 flex items-center justify-center gap-4">
+				<div className="mt-10 full-page:mt-[2vh] flex items-center justify-center gap-4">
 					<button
 						type="button"
 						onClick={() => goTo(page - 1)}

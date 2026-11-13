@@ -2,11 +2,11 @@ import { useI18n } from "../i18n/context";
 import { TECH, type TechId, techLabel } from "../lib/techCatalog";
 
 /** Technology icons; the name shows in a tooltip on hover and is read out by screen readers. */
-const TechStack = ({ ids }: { ids: TechId[] }) => {
+const TechStack = ({ ids, className = "" }: { ids: TechId[]; className?: string }) => {
 	const t = useI18n();
 
 	return (
-		<ul className="flex flex-wrap gap-2.5">
+		<ul className={`flex flex-wrap gap-2.5 ${className}`}>
 			{ids.map((id) => {
 				const Icon = TECH[id].icon;
 				const label = techLabel(id, t.techNames);

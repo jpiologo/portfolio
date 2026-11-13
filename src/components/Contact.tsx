@@ -28,13 +28,13 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20 overflow-x-clip">
+    <section id="contact" className="page-section py-20 overflow-x-clip">
       {/* Two columns on large screens: the existing content on the left, the globe on the right */}
       <div className="max-w-6xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
         <div className="max-w-2xl w-full mx-auto">
-          <div className="text-center lg:text-left mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-text-primary tracking-tight">{t.contact.heading}</h2>
-            <p className="text-xl text-text-muted leading-relaxed font-light max-w-2xl mx-auto lg:mx-0">{t.contact.intro}</p>
+          <div className="text-center lg:text-left mb-12 full-page:mb-[3vh]">
+            <h2 className="section-heading mb-4 full-page:mb-[1.5vh]">{t.contact.heading}</h2>
+            <p className="section-intro max-w-2xl mx-auto lg:mx-0">{t.contact.intro}</p>
           </div>
 
           <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-2 mb-6 text-sm text-text-muted">
@@ -71,7 +71,7 @@ const Contact = () => {
                 rows={6}
                 value={formData.message}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-background-elevated border border-border-subtle rounded-lg focus:ring-2 focus:ring-accent-secondary focus:border-transparent text-text-primary placeholder:text-text-muted/50 outline-none transition-all resize-none"
+                className="full-page:h-[clamp(3.5rem,13vh,9.5rem)] w-full px-4 py-2 bg-background-elevated border border-border-subtle rounded-lg focus:ring-2 focus:ring-accent-secondary focus:border-transparent text-text-primary placeholder:text-text-muted/50 outline-none transition-all resize-none"
                 placeholder={t.contact.messagePlaceholder}
                 required
               />
@@ -86,7 +86,7 @@ const Contact = () => {
           </form>
 
           {/* On xl screens these live in the fixed SocialSidebar instead */}
-          <div className="flex justify-center lg:justify-start gap-4 mt-8 xl:hidden">
+          <div className="flex justify-center lg:justify-start gap-4 mt-8 full-page:mt-[3vh] xl:hidden">
             {SOCIAL_LINKS.map(({ id, label, href, icon: Icon }) => (
               <a
                 key={id}
