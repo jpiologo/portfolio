@@ -12,9 +12,19 @@ import {
 	Lightbulb,
 	Layers,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import type { Project } from "../lib/types";
 import { useI18n } from "../i18n/context";
 import TechStack from "./TechStack";
+
+const SectionHeading = ({ icon: Icon, title }: { icon: LucideIcon; title: string }) => (
+	<div className="proj-modal-section-heading">
+		<div className="proj-modal-section-icon">
+			<Icon className="w-4 h-4 text-accent-secondary" />
+		</div>
+		<h4 className="proj-modal-section-title">{title}</h4>
+	</div>
+);
 
 const ProjectCard = ({ project }: { project: Project }) => {
 	const t = useI18n();
@@ -75,8 +85,8 @@ const ProjectCard = ({ project }: { project: Project }) => {
 
 				{/* Content */}
 				<div className="proj-card-body">
-					<span className="proj-card-subtitle">{project.subtitle}</span>
 					<h3 className="proj-card-title">{project.title}</h3>
+					<span className="proj-card-subtitle">{project.subtitle}</span>
 					<p className="proj-card-desc">{project.description}</p>
 
 					<div className="proj-card-cta">
@@ -104,10 +114,10 @@ const ProjectCard = ({ project }: { project: Project }) => {
 						{/* Modal Header */}
 						<div className="proj-modal-header">
 							<div>
+								<h3 className="proj-modal-title">{project.title}</h3>
 								<span className="proj-modal-subtitle">
 									{project.subtitle}
 								</span>
-								<h3 className="proj-modal-title">{project.title}</h3>
 							</div>
 							<button
 								type="button"
@@ -130,23 +140,13 @@ const ProjectCard = ({ project }: { project: Project }) => {
 							{/* Two-column: Challenge + Solution */}
 							<div className="proj-modal-grid">
 								<div className="proj-modal-section">
-									<div className="proj-modal-section-icon">
-										<Lightbulb className="w-4 h-4 text-accent-secondary" />
-									</div>
-									<h4 className="proj-modal-section-title">
-										{t.projects.challenge}
-									</h4>
+									<SectionHeading icon={Lightbulb} title={t.projects.challenge} />
 									<p className="proj-modal-section-text">
 										{project.details.challenge}
 									</p>
 								</div>
 								<div className="proj-modal-section">
-									<div className="proj-modal-section-icon">
-										<Rocket className="w-4 h-4 text-accent-secondary" />
-									</div>
-									<h4 className="proj-modal-section-title">
-										{t.projects.solution}
-									</h4>
+									<SectionHeading icon={Rocket} title={t.projects.solution} />
 									<p className="proj-modal-section-text">
 										{project.details.solution}
 									</p>
@@ -156,21 +156,11 @@ const ProjectCard = ({ project }: { project: Project }) => {
 							{/* Stack + Features side by side */}
 							<div className="proj-modal-grid">
 								<div className="proj-modal-section">
-									<div className="proj-modal-section-icon">
-										<Layers className="w-4 h-4 text-accent-secondary" />
-									</div>
-									<h4 className="proj-modal-section-title">
-										{t.projects.techStack}
-									</h4>
+									<SectionHeading icon={Layers} title={t.projects.techStack} />
 									<TechStack ids={project.techStack} />
 								</div>
 								<div className="proj-modal-section">
-									<div className="proj-modal-section-icon">
-										<Code2 className="w-4 h-4 text-accent-secondary" />
-									</div>
-									<h4 className="proj-modal-section-title">
-										{t.projects.deliverables}
-									</h4>
+									<SectionHeading icon={Code2} title={t.projects.deliverables} />
 									<ul className="proj-modal-deliverables">
 										{project.details.features.map((f) => (
 											<li key={f}>{f}</li>

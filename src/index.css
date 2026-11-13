@@ -408,6 +408,13 @@ html {
   border: 1px solid var(--color-border);
 }
 
+.proj-modal-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
 .proj-modal-section-icon {
   width: 32px;
   height: 32px;
@@ -416,14 +423,13 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
+  flex-shrink: 0;
 }
 
 .proj-modal-section-title {
   font-size: 0.8rem;
   font-weight: 700;
   color: var(--color-ink);
-  margin-bottom: 6px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }

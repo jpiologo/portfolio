@@ -132,11 +132,9 @@ const Carousel = <T,>({ items, perPage, label, getKey, getName, renderItem, rend
 												aria-hidden="true"
 												className="hidden [@media(hover:hover)]:block pointer-events-none absolute bottom-full left-1/2 z-20 mb-3 -translate-x-1/2 translate-y-1 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-has-[:focus-visible]:translate-y-0 group-has-[:focus-visible]:opacity-100"
 											>
-												<div className="flex gap-2 rounded-xl border border-border-subtle bg-background-elevated p-2 shadow-xl">
+												<div className="flex items-center gap-3 rounded-xl border border-border-subtle bg-background-elevated p-2 shadow-xl">
 													{pageItems.map((item) => (
-														<div key={getKey(item)} className="w-36">
-															{renderPreview(item)}
-														</div>
+														<Fragment key={getKey(item)}>{renderPreview(item)}</Fragment>
 													))}
 												</div>
 											</div>
