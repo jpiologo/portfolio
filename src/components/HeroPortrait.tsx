@@ -177,6 +177,7 @@ const HeroPortrait = ({ alt, className = "" }: { alt: string; className?: string
 				alt={alt}
 				width={PORTRAIT_WIDTH}
 				height={PORTRAIT_HEIGHT}
+				draggable={false}
 				className="w-full h-auto grayscale select-none pointer-events-none [mask-image:linear-gradient(to_right,transparent,black_14%,black_86%,transparent)]"
 			/>
 			{/* Decorative icons around the head and shoulders */}

@@ -30,6 +30,8 @@ export interface Project {
   subtitle: string;
   description: string;
   image: string;
+  /** Small logo shown in the carousel hover preview. */
+  mini: string;
   demoLink?: string;
   githubLink?: string;
   inDevelopment?: boolean;

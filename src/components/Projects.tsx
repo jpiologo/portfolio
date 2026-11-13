@@ -22,36 +22,48 @@ type ProjectMeta = Omit<Project, "title" | "subtitle" | "description" | "details
 // Language-independent data, in display order; the text of each project lives in src/i18n
 const PROJECTS: ProjectMeta[] = [
 	{
-		id: "cleanUp",
-		image: cleanUp,
-		techStack: ["typescript", "nextjs", "nestjs", "postgresql", "prisma", "tailwind", "jwt"],
-		githubLink: "https://github.com/jpiologo/CleanUp---Frontend",
-		inDevelopment: true,
-	},
-	{
 		id: "caseCobra",
 		image: caseCobra,
+		mini: "/minis/CaseCobra.png",
 		techStack: ["typescript", "nextjs", "postgresql", "prisma", "stripe", "kinde", "uploadthing", "resend"],
 		demoLink: "https://casecobra-taupe.vercel.app/",
 		githubLink: "https://github.com/jpiologo/CaseCobra",
 	},
 	{
-		id: "realtimeChat",
-		image: realtimeChatImage,
-		techStack: ["typescript", "nextjs", "elysia", "upstash", "reactQuery", "zod", "tailwind"],
-		demoLink: "https://realtime-chat-iota-six.vercel.app/",
-		githubLink: "https://github.com/jpiologo/Realtime_Chat",
+		id: "fluigPipeline",
+		image: jenkinsLogo,
+		mini: "/minis/Jenkins.png",
+		techStack: [
+			"jenkins",
+			"groovy",
+			"fluig",
+			"cicd",
+			"restApi",
+			"git",
+			"automation",
+			"devops",
+		],
 	},
 	{
 		id: "playoffsSimulator",
 		image: playoffsSimulatorImage,
+		mini: "/minis/icon.svg",
 		techStack: ["typescript", "nextjs", "zustand", "zod", "motion", "tailwind", "vitest"],
 		demoLink: "https://4a0-self.vercel.app/jogo",
 		githubLink: "https://github.com/jpiologo/4a0",
 	},
 	{
+		id: "realtimeChat",
+		image: realtimeChatImage,
+		mini: "/minis/terminal.svg",
+		techStack: ["typescript", "nextjs", "elysia", "upstash", "reactQuery", "zod", "tailwind"],
+		demoLink: "https://realtime-chat-iota-six.vercel.app/",
+		githubLink: "https://github.com/jpiologo/Realtime_Chat",
+	},
+	{
 		id: "inventoryCount",
 		image: fluigLogo,
+		mini: "/minis/fluig.png",
 		techStack: [
 			"javascript",
 			"html",
@@ -67,6 +79,7 @@ const PROJECTS: ProjectMeta[] = [
 	{
 		id: "purchasingFlow",
 		image: fluigLogo,
+		mini: "/minis/fluig.png",
 		techStack: [
 			"javascript",
 			"html",
@@ -83,6 +96,7 @@ const PROJECTS: ProjectMeta[] = [
 	{
 		id: "vehicleSales",
 		image: fluigLogo,
+		mini: "/minis/fluig.png",
 		techStack: [
 			"javascript",
 			"html",
@@ -99,6 +113,7 @@ const PROJECTS: ProjectMeta[] = [
 	{
 		id: "hrWorkflows",
 		image: fluigLogo,
+		mini: "/minis/fluig.png",
 		techStack: [
 			"javascript",
 			"html",
@@ -113,22 +128,9 @@ const PROJECTS: ProjectMeta[] = [
 		],
 	},
 	{
-		id: "fluigPipeline",
-		image: jenkinsLogo,
-		techStack: [
-			"jenkins",
-			"groovy",
-			"fluig",
-			"cicd",
-			"restApi",
-			"git",
-			"automation",
-			"devops",
-		],
-	},
-	{
 		id: "taskManager",
 		image: fokusImage,
+		mini: "/minis/fokusLogo.png",
 		techStack: ["javascript", "html", "css", "localStorage"],
 		demoLink: "https://fokus-mu-eight.vercel.app/",
 		githubLink: "https://github.com/jpiologo/fokusProject",
@@ -136,13 +138,23 @@ const PROJECTS: ProjectMeta[] = [
 	{
 		id: "weatherApp",
 		image: weatherImage,
+		mini: "/minis/weatherApp.png",
 		techStack: ["javascript", "openWeatherMap", "restApi", "json"],
 		demoLink: "https://weather-app-kappa-black.vercel.app/",
 		githubLink: "https://github.com/jpiologo/weatherApp",
 	},
 	{
+		id: "cleanUp",
+		image: cleanUp,
+		mini: "/minis/clean-up-logo.png",
+		techStack: ["typescript", "nextjs", "nestjs", "postgresql", "prisma", "tailwind", "jwt"],
+		githubLink: "https://github.com/jpiologo/CleanUp---Frontend",
+		inDevelopment: true,
+	},
+	{
 		id: "vocalVault",
 		image: vocalVaultImage,
+		mini: "/minis/vault.svg",
 		techStack: ["javascript", "webSpeech", "html", "css"],
 		demoLink: "https://vocalvault-c5qkg3u7e-joao-piologos-projects.vercel.app/",
 		githubLink: "https://github.com/jpiologo/voiceCommandApp",
@@ -180,15 +192,12 @@ const Projects = () => {
 					getName={(project) => project.title}
 					renderItem={(project) => <ProjectCard project={project} />}
 					renderPreview={(project) => (
-						<>
-							<img
-								src={project.image}
-								alt=""
-								loading="lazy"
-								className="aspect-video w-full rounded-md object-cover bg-background-surface"
-							/>
-							<p className="mt-1.5 truncate text-xs font-medium text-text-primary">{project.title}</p>
-						</>
+						<img
+							src={project.mini}
+							alt=""
+							loading="lazy"
+							className="h-12 w-auto max-w-24 object-contain"
+						/>
 					)}
 				/>
 			</div>

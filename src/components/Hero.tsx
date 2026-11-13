@@ -2,6 +2,7 @@ import { ArrowDown } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useI18n } from "../i18n/context";
 import { useHeroSlide } from "../lib/useHeroSlide";
+import { useScrollFade } from "../lib/useScrollFade";
 import HeroPortrait from "./HeroPortrait";
 
 const TYPING_INTERVAL_MS = 100;
@@ -17,6 +18,8 @@ const Hero = () => {
 
 	// Scrolling in or out of the hero jumps a whole screen, so the photo's cut-off bottom edge never shows
 	useHeroSlide(sectionRef);
+	// Fading while it slides away also hides where the photo is cut at the chest
+	useScrollFade(sectionRef);
 
 	// Typing effect for the title; restarts when the language changes
 	useEffect(() => {
@@ -70,7 +73,7 @@ const Hero = () => {
 				</h1>
 				<p className="select-none text-lg md:text-2xl text-text-muted mb-5 md:mb-6 max-w-2xl mx-auto leading-relaxed tracking-wide flex items-center justify-center flex-wrap">
 					<span>{t.hero.subtitle}</span>
-					<span className="ml-2 font-['Momo_Signature',cursive] text-accent-secondary">
+					<span className="ml-2 font-signature text-accent-secondary">
 						{t.hero.subtitleHighlight}
 					</span>
 				</p>
