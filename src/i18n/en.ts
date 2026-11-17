@@ -49,9 +49,8 @@ export const en = {
 	hero: {
 		titlePlain: "Software ",
 		titleHighlight: "Engineer;",
-		photoAlt: "Portrait of João Piologo",
-		subtitle: "I",
-		verbs: ["plan", "code", "deploy", "enhance", "suggest", "transform"],
+		subtitle: "I build software that",
+		outcomes: ["automates", "integrates", "scales", "results", "resolves", "delivers", "transforms"],
 		viewWork: "View My Work",
 		getInTouch: "Get in Touch",
 	},

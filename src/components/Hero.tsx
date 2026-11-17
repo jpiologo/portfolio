@@ -1,8 +1,8 @@
 import { ArrowDown } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useI18n } from "../i18n/context";
-import { ALWAYS_FADE_ATTRIBUTE } from "../lib/useSectionFades";
-import HeroPortrait from "./HeroPortrait";
+import { NO_FADE_ATTRIBUTE } from "../lib/useSectionFades";
+import HeroIcons from "./HeroIcons";
 import RotatingWord from "./RotatingWord";
 
 const TYPING_INTERVAL_MS = 100;
@@ -59,13 +59,13 @@ const Hero = () => {
 
 	return (
 		<section
-			// Fades on phones too, so where the photo is cut at the chest never shows
-			{...{ [ALWAYS_FADE_ATTRIBUTE]: "" }}
-			className="relative h-screen supports-[height:100svh]:h-[100svh] min-h-[560px] overflow-hidden text-text-primary flex flex-col md:block"
+			{...{ [NO_FADE_ATTRIBUTE]: "" }}
+			className="relative h-screen supports-[height:100svh]:h-[100svh] min-h-[560px] overflow-hidden text-text-primary flex flex-col"
 		>
-			{/* Hero Content, on top of the portrait; on phones it is centered in the space above the portrait */}
-			<div className="relative z-10 flex-1 w-full max-w-6xl mx-auto px-4 pt-20 pb-4 md:pt-32 md:pb-0 flex flex-col justify-center md:justify-start items-center text-center font-display pointer-events-none">
-				<div className="flex flex-col items-center mb-5 md:mb-7">
+			<div className="relative z-10 flex-1 w-full max-w-6xl mx-auto px-4 pt-20 pb-12 flex flex-col justify-center items-center text-center font-display pointer-events-none">
+				{/* The icons float around this box, so they follow the title and subtitle on every screen size */}
+				<div className="relative flex flex-col items-center mb-5 md:mb-7">
+					<HeroIcons />
 					<h1 className="select-none font-display text-[clamp(2.25rem,11.5vw,3rem)] md:text-6xl xl:text-7xl font-extrabold mb-3 md:mb-4 leading-tight md:leading-tight tracking-tight">
 						{/* The full title, invisible, holds its final size, so nothing around it moves while it's typed */}
 						<span className="inline-grid">
@@ -79,16 +79,17 @@ const Hero = () => {
 							</span>
 						</span>
 					</h1>
-					<p className="select-none text-base md:text-xl text-text-muted leading-relaxed tracking-wide flex items-baseline justify-center">
-						<span className="sr-only">{`${t.hero.subtitle} ${t.hero.verbs.join(", ")}`}</span>
+					{/* Wraps the rotating outcome onto its own line when both don't fit, as on phones, where it is centered */}
+					<p className="select-none text-base md:text-xl text-text-muted leading-relaxed tracking-wide flex flex-wrap items-baseline justify-center gap-x-2">
+						<span className="sr-only">{`${t.hero.subtitle} ${t.hero.outcomes.join(", ")}`}</span>
 						<span aria-hidden="true">{t.hero.subtitle}</span>
-						<RotatingWord words={t.hero.verbs} className="ml-2 font-signature text-accent-secondary" />
+						<RotatingWord words={t.hero.outcomes} className="font-signature text-accent-secondary max-md:justify-items-center" />
 					</p>
 				</div>
 				{/* Smaller buttons on phones keep both on one row */}
 				<div className="flex flex-wrap gap-3 md:gap-4 justify-center font-sans pointer-events-auto">
 					<a
-						href="#projects"
+						href="#what-i-do"
 						className={`btn-primary ${HERO_BUTTON_SIZE}`}
 					>
 						{t.hero.viewWork}
@@ -102,21 +103,7 @@ const Hero = () => {
 				</div>
 			</div>
 
-			{/*
-			  Phones: the portrait sits below the text and never overlaps it. It is as wide as the screen (its
-			  icons are laid out inside it there, see HeroPortrait); on short screens this box gives up height
-			  to the text and the portrait shrinks with it (cqh = % of its height).
-			  md+: it spans the whole hero, anchored to the bottom, behind the text.
-			*/}
-			<div className="relative shrink min-h-0 [--portrait-w:100vw] h-[calc(var(--portrait-w)*0.85)] md:absolute md:inset-0 md:h-auto [container-type:size]">
-				<HeroPortrait
-					alt={t.hero.photoAlt}
-					className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-[6%] w-[min(var(--portrait-w),120cqh)] md:w-[min(108vw,64svh)]"
-				/>
-			</div>
-
-			{/* Down Arrow: sits on the dark shirt, so it stays light in both themes */}
-			<div className="absolute z-10 bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce text-white/80 drop-shadow">
+			<div className="absolute z-10 bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce text-text-muted">
 				<ArrowDown className="w-6 h-6" />
 			</div>
 		</section>

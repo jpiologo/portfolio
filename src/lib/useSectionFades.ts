@@ -4,8 +4,8 @@ import { pageSections, pageTop } from "./pageSections";
 /** Share of the viewport height a section can move away from its resting place before it is fully transparent. */
 const FADE_END_RATIO = 0.6;
 
-/** Sections marked with this attribute fade on every screen size, not only when `fadeAll` is on. */
-export const ALWAYS_FADE_ATTRIBUTE = "data-always-fade";
+/** Sections marked with this attribute never fade, even when `fadeAll` is on. */
+export const NO_FADE_ATTRIBUTE = "data-no-fade";
 
 /** Opacity for a section `distance` px away from its resting place; eased so most of the fade happens early. */
 const opacityAt = (distance: number, viewportHeight: number) => {
@@ -23,7 +23,7 @@ export const useSectionFades = (containerRef: RefObject<HTMLElement>, fadeAll: b
 		if (!container) return;
 
 		const sections = pageSections(container);
-		const fading = sections.filter((section) => fadeAll || section.hasAttribute(ALWAYS_FADE_ATTRIBUTE));
+		const fading = fadeAll ? sections.filter((section) => !section.hasAttribute(NO_FADE_ATTRIBUTE)) : [];
 		const lastSection = sections[sections.length - 1];
 
 		const update = () => {

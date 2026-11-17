@@ -14,61 +14,56 @@ import {
 	Star,
 	Terminal,
 } from "lucide-react";
-import portrait from "../assets/joaoPiologo-cutout.webp";
 import { useMediaQuery } from "../lib/useMediaQuery";
 
-// Intrinsic size of the cutout, so the browser reserves its space before it loads
-const PORTRAIT_WIDTH = 1000;
-const PORTRAIT_HEIGHT = 905;
-
-// Icons on each side of the head, listed from the shoulder up
+// Icons on each side of the text, listed from the bottom up
 const LEFT_ICONS: LucideIcon[] = [Coffee, Bug, Laptop, Braces, Star, Lightbulb];
 const RIGHT_ICONS: LucideIcon[] = [Cpu, Database, GitBranch, Terminal, Rocket, Keyboard];
 
 type Point = { x: number; y: number };
 
 /*
- * The icons are scattered by hand around the head and shoulders, at uneven distances so they read
- * as floating around the photo rather than lined up behind it, and each one drifts on its own.
- * Same order as LEFT_ICONS / RIGHT_ICONS, in % of the portrait box; the head spans roughly x 30–70%.
+ * The icons are scattered by hand around the title and subtitle, at uneven distances so they read
+ * as floating around the text rather than lined up, and each one drifts on its own.
+ * Same order as LEFT_ICONS / RIGHT_ICONS, in % of the box holding the title and subtitle.
  */
 const LAYOUTS: Record<"phone" | "desktop", { left: Point[]; right: Point[] }> = {
-	// Kept inside the box, since the portrait is as wide as the screen there
+	// The text fills the screen width there, so the icons go above it and below the buttons
 	phone: {
 		left: [
-			{ x: 9, y: 58 },
-			{ x: 21, y: 45 },
-			{ x: 7, y: 33 },
-			{ x: 18, y: 21 },
-			{ x: 10, y: 10 },
-			{ x: 27, y: 4 },
+			{ x: 8, y: 208 },
+			{ x: 26, y: 186 },
+			{ x: 5, y: -28 },
+			{ x: 21, y: -48 },
+			{ x: 7, y: -70 },
+			{ x: 36, y: -64 },
 		],
 		right: [
-			{ x: 91, y: 61 },
-			{ x: 80, y: 48 },
-			{ x: 93, y: 37 },
-			{ x: 84, y: 25 },
-			{ x: 91, y: 12 },
-			{ x: 72, y: 3 },
+			{ x: 93, y: 205 },
+			{ x: 75, y: 189 },
+			{ x: 95, y: -30 },
+			{ x: 81, y: -52 },
+			{ x: 94, y: -74 },
+			{ x: 64, y: -60 },
 		],
 	},
-	// Free to spill past the sides of the box; the upper ones stay out wide, clear of the hero buttons on short screens
+	// Around all sides; the lower ones stay out wide, clear of the buttons under the subtitle
 	desktop: {
 		left: [
-			{ x: -10, y: 70 },
-			{ x: 8, y: 53 },
-			{ x: -17, y: 41 },
-			{ x: 13, y: 33 },
-			{ x: -4, y: 22 },
-			{ x: -14, y: 7 },
+			{ x: -9, y: 135 },
+			{ x: -20, y: 88 },
+			{ x: -13, y: 38 },
+			{ x: -19, y: -18 },
+			{ x: 0, y: -62 },
+			{ x: 22, y: -98 },
 		],
 		right: [
-			{ x: 104, y: 65 },
-			{ x: 90, y: 48 },
-			{ x: 115, y: 38 },
-			{ x: 97, y: 27 },
-			{ x: 118, y: 15 },
-			{ x: 106, y: 9 },
+			{ x: 108, y: 138 },
+			{ x: 119, y: 92 },
+			{ x: 112, y: 42 },
+			{ x: 120, y: -12 },
+			{ x: 100, y: -66 },
+			{ x: 78, y: -100 },
 		],
 	},
 };
@@ -154,39 +149,27 @@ const SketchFilter = ({ boil }: { boil: boolean }) => (
 	</svg>
 );
 
-/** `className` sizes and positions the portrait; the arc of icons scales with it. */
-const HeroPortrait = ({ alt, className = "" }: { alt: string; className?: string }) => {
+/** Decorative icons floating around the box it is placed in; that box needs `position: relative`. */
+const HeroIcons = () => {
 	const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
 
 	return (
-		<div className={`-rotate-3 ${className}`}>
+		<div aria-hidden="true" className="absolute inset-0 font-sans">
 			<SketchFilter boil={!reducedMotion} />
-			{/* The photo is cropped at the sides of the shoulders, so those edges fade out */}
-			<img
-				src={portrait}
-				alt={alt}
-				width={PORTRAIT_WIDTH}
-				height={PORTRAIT_HEIGHT}
-				draggable={false}
-				className="w-full h-auto grayscale select-none pointer-events-none [mask-image:linear-gradient(to_right,transparent,black_14%,black_86%,transparent)]"
-			/>
-			{/* Decorative icons around the head and shoulders */}
-			<div aria-hidden="true">
-				{ICONS.map((icon) => (
-					<span
-						key={`${icon.desktop.x},${icon.desktop.y}`}
-						style={positionStyle(icon)}
-						className="absolute left-[var(--phone-x)] top-[var(--phone-y)] md:left-[var(--desktop-x)] md:top-[var(--desktop-y)] -translate-x-1/2 -translate-y-1/2 p-1.5 cursor-pointer text-text-muted/70 transition duration-300 hover:text-accent-secondary hover:scale-125"
-					>
-						{/* Its own element, because the float animation would override the centering transform above */}
-						<span style={floatStyle(icon)} className="block motion-safe:animate-float">
-							<icon.Icon className="w-5 h-5 md:w-7 md:h-7" strokeWidth={1.5} />
-						</span>
+			{ICONS.map((icon) => (
+				<span
+					key={`${icon.desktop.x},${icon.desktop.y}`}
+					style={positionStyle(icon)}
+					className="absolute left-[var(--phone-x)] top-[var(--phone-y)] md:left-[var(--desktop-x)] md:top-[var(--desktop-y)] -translate-x-1/2 -translate-y-1/2 p-1.5 cursor-pointer pointer-events-auto text-text-muted/70 transition duration-300 hover:text-accent-secondary hover:scale-125"
+				>
+					{/* Its own element, because the float animation would override the centering transform above */}
+					<span style={floatStyle(icon)} className="block motion-safe:animate-float">
+						<icon.Icon className="w-5 h-5 md:w-7 md:h-7" strokeWidth={1.5} />
 					</span>
-				))}
-			</div>
+				</span>
+			))}
 		</div>
 	);
 };
 
-export default HeroPortrait;
+export default HeroIcons;

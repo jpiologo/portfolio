@@ -72,9 +72,8 @@ export const pt: Messages = {
 	hero: {
 		titlePlain: "Engenheiro de ",
 		titleHighlight: "Software;",
-		photoAlt: "Retrato de João Piologo",
-		subtitle: "Eu",
-		verbs: ["planejo", "programo", "implanto", "aprimoro", "sugiro", "transformo"],
+		subtitle: "Construo software que",
+		outcomes: ["automatiza", "integra", "escala", "resulta", "resolve", "entrega", "transforma"],
 		viewWork: "Ver Meus Projetos",
 		getInTouch: "Entre em Contato",
 	},
