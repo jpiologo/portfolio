@@ -1,7 +1,7 @@
 import type React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Languages, Menu, Moon, Sun, X } from "lucide-react";
+import { Languages, Menu, MessageCircle, Moon, Sun, X } from "lucide-react";
 import { useI18n, useLanguageControl } from "../i18n/context";
 import { useTheme } from "../lib/theme";
 import Logo from "./Logo";
@@ -58,8 +58,8 @@ const Header = () => {
 		{ href: "/#contact", label: t.header.nav.contact },
 	];
 
-	// The drawer has no logo at the top to click, so it gets an explicit Home entry
 	const mobileNavLinks = [{ href: "/", label: t.header.nav.home }, ...navLinks];
+	const ThemeIcon = theme === "dark" ? Sun : Moon;
 
 	return (
 		<>
@@ -70,24 +70,10 @@ const Header = () => {
 			>
 				<nav className="max-w-7xl mx-auto px-4">
 					<div className="flex justify-between items-center">
-						{/* Mobile Menu Button  (hidden on md+) */}
-						<button
-							onClick={toggleMenu}
-							className={`md:hidden p-2 rounded-lg transition-colors ${
-								isScrolled
-									? "text-text-muted hover:bg-background-surface"
-									: "text-text-primary hover:bg-text-primary/10"
-							}`}
-							aria-label={t.header.toggleMenu}
-						>
-							<Menu size={24} />
-						</button>
-
-						{/* On phones the logo lives at the bottom of the drawer instead */}
 						<Link
 							to="/"
 							aria-label={t.common.homeLabel}
-							className="hidden md:block text-text-primary hover:opacity-80 transition-opacity"
+							className="text-text-primary hover:opacity-80 transition-opacity"
 						>
 							<Logo className="w-10 h-10" />
 						</Link>
@@ -120,7 +106,21 @@ const Header = () => {
 									aria-label={theme === "dark" ? t.header.switchToLight : t.header.switchToDark}
 									title={theme === "dark" ? t.header.lightMode : t.header.darkMode}
 								>
-									{theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+									<ThemeIcon size={18} />
+								</button>
+
+								{/* Mobile Menu Button (hidden on md+) */}
+								<button
+									onClick={toggleMenu}
+									className={`md:hidden p-2 rounded-lg transition-colors ${
+										isScrolled
+											? "text-text-muted hover:bg-background-surface"
+											: "text-text-primary hover:bg-text-primary/10"
+									}`}
+									aria-label={t.header.toggleMenu}
+									aria-expanded={isMobileMenuOpen}
+								>
+									<Menu size={24} />
 								</button>
 							</div>
 						</div>
@@ -137,14 +137,26 @@ const Header = () => {
 				/>
 			)}
 
-			{/* Mobile Navigation Drawer Panel */}
+			{/* Mobile Navigation Drawer Panel: slides in from the right, next to the menu button */}
 			<div
-				className={`fixed top-0 left-0 bottom-0 w-[280px] bg-background-elevated border-r border-border-subtle shadow-2xl z-50 md:hidden flex flex-col transition-transform duration-300 ease-in-out ${
-					isMobileMenuOpen ? "translate-x-0 cursor-auto" : "-translate-x-full pointer-events-none"
+				// Closed drawer must not stay reachable by keyboard
+				ref={(el) => el?.toggleAttribute("inert", !isMobileMenuOpen)}
+				role="dialog"
+				aria-modal="true"
+				aria-label={t.header.menu}
+				className={`fixed top-0 right-0 bottom-0 w-[300px] max-w-[85vw] bg-background-elevated border-l border-border-subtle shadow-2xl z-50 md:hidden flex flex-col transition-transform duration-300 ease-in-out motion-reduce:transition-none ${
+					isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
 				}`}
 			>
-				<div className="p-4 flex justify-between items-center border-b border-border-subtle">
-					<span className="text-xl font-bold text-text-primary">{t.header.menu}</span>
+				<div className="px-5 py-4 flex justify-between items-center border-b border-border-subtle">
+					<Link
+						to="/"
+						onClick={closeMenu}
+						aria-label={t.common.homeLabel}
+						className="text-text-primary hover:opacity-80 transition-opacity"
+					>
+						<Logo className="w-10 h-10" />
+					</Link>
 					<button
 						onClick={closeMenu}
 						className="p-2 text-text-muted hover:text-text-primary transition-colors rounded-lg hover:bg-background-surface"
@@ -153,27 +165,32 @@ const Header = () => {
 						<X size={24} />
 					</button>
 				</div>
-				<div className="flex-1 py-6 px-4 flex flex-col gap-6 overflow-y-auto">
-					{mobileNavLinks.map((link) => (
-						<Link
-							key={link.href}
-							to={link.href}
-							onClick={closeMenu}
-							className="text-text-muted hover:text-accent-secondary text-lg font-medium transition-colors"
-						>
-							{link.label}
-						</Link>
-					))}
-				</div>
-				<div className="p-4 border-t border-border-subtle">
-					<Link
-						to="/"
-						onClick={closeMenu}
-						aria-label={t.common.homeLabel}
-						className="inline-block text-text-primary hover:opacity-80 transition-opacity"
-					>
-						<Logo className="w-10 h-10" />
+
+				<nav className="flex-1 px-5 overflow-y-auto">
+					<ul className="divide-y divide-border-subtle">
+						{mobileNavLinks.map((link) => (
+							<li key={link.href}>
+								<Link
+									to={link.href}
+									onClick={closeMenu}
+									className="block py-4 text-xl font-medium text-text-primary hover:text-accent-secondary transition-colors"
+								>
+									{link.label}
+								</Link>
+							</li>
+						))}
+					</ul>
+				</nav>
+
+				<div className="p-5 flex flex-col gap-3 border-t border-border-subtle">
+					<Link to="/#contact" onClick={closeMenu} className="btn-primary w-full">
+						<MessageCircle className="w-5 h-5" />
+						{t.header.talkToMe}
 					</Link>
+					<button type="button" onClick={toggleTheme} className="btn-secondary w-full">
+						<ThemeIcon className="w-5 h-5" />
+						{t.header.changeTheme}
+					</button>
 				</div>
 			</div>
 		</>

@@ -4,6 +4,7 @@ import PostCard from "./PostCard";
 import MobileCarousel from "./MobileCarousel";
 import { getPosts } from "../lib/posts";
 import { useI18n } from "../i18n/context";
+import Reveal from "./Reveal";
 
 const LATEST_COUNT = 3;
 
@@ -13,13 +14,13 @@ const Blog = () => {
 	const latestPosts = posts.slice(0, LATEST_COUNT);
 
 	return (
-		<section id="blog" className="page-section py-24 relative overflow-hidden">
+		<section id="blog" className="py-24 relative overflow-hidden">
 			<div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-accent-primary/10 rounded-full blur-[120px] pointer-events-none transform -translate-x-1/3 translate-y-1/3" />
 
 			<div className="max-w-6xl mx-auto px-4 relative z-10">
-				<div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-14 full-page:mb-[4vh] gap-6">
+				<Reveal className="flex flex-col md:flex-row justify-between items-start md:items-end mb-14 gap-6">
 					<div className="max-w-2xl">
-						<h2 className="section-heading mb-6 full-page:mb-[2vh]">
+						<h2 className="section-heading mb-6">
 							{t.blog.heading}
 						</h2>
 						<p className="section-intro">{t.blog.intro}</p>
@@ -33,7 +34,7 @@ const Blog = () => {
 							<ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
 						</Link>
 					)}
-				</div>
+				</Reveal>
 
 				{latestPosts.length === 0 ? (
 					<div className="flex flex-col items-center justify-center py-20 px-4 bg-background-elevated rounded-[2rem] border border-border-subtle text-center">

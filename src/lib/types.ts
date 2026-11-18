@@ -25,15 +25,22 @@ export interface Post {
   content: string;
 }
 
+/** Illustrated covers, drawn in src/components/ProjectArt.tsx. */
+export type ProjectArtId = "sales" | "freight" | "pipeline" | "inventory" | "purchasing" | "vehicleSales" | "hr";
+
+/**
+ * Work projects get an illustration (their code is private), which also serves as their thumbnail.
+ * Personal ones get a screenshot plus their logo as thumbnail; `logoIsWhite` gives it a dark backdrop in light mode.
+ */
+export type ProjectCover =
+  | { kind: "art"; id: ProjectArtId }
+  | { kind: "screenshot"; src: string; logo: string; logoIsWhite?: boolean };
+
 export interface Project {
   title: string;
   subtitle: string;
   description: string;
-  image: string;
-  /** Small logo shown in the carousel hover preview. */
-  mini: string;
-  /** The mini is white, so it gets a dark backdrop in light mode. */
-  miniIsWhite?: boolean;
+  cover: ProjectCover;
   demoLink?: string;
   githubLink?: string;
   inDevelopment?: boolean;

@@ -61,6 +61,8 @@ export const pt: Messages = {
 		toggleMenu: "Abrir menu",
 		menu: "Menu",
 		closeMenu: "Fechar menu",
+		talkToMe: "Falar comigo",
+		changeTheme: "Alterar tema",
 		switchToLight: "Mudar para o modo claro",
 		switchToDark: "Mudar para o modo escuro",
 		lightMode: "Modo claro",
@@ -76,6 +78,21 @@ export const pt: Messages = {
 		outcomes: ["automatiza", "integra", "escala", "resulta", "resolve", "entrega", "transforma"],
 		viewWork: "Ver Meus Projetos",
 		getInTouch: "Entre em Contato",
+		badge: "Especialista em TOTVS Fluig e automação de processos",
+		greeting: "Olá, eu sou João Piologo",
+		pitch:
+			"Transformo processos manuais, feitos no papel e na planilha, em sistemas confiáveis — workflows no Fluig, microsserviços em .NET e integrações com ERP rodando em produção para milhares de solicitações.",
+		stats: {
+			years: "Anos de experiência",
+			processes: "Processos em produção",
+			faster: "Processos mais rápidos",
+		},
+		chips: {
+			// Faturamento (83 mil) + Roteirização de fretes (2,3 mil) desde 19/12/2025, contados no Fluig de produção
+			requests: { value: "85 mil+", label: "solicitações processadas em produção" },
+			tests: { value: "99 ✓", label: "testes automatizados a cada deploy" },
+			integrations: { value: "ERP + APIs", label: "integrados de ponta a ponta" },
+		},
 	},
 
 	about: {
@@ -84,8 +101,6 @@ export const pt: Messages = {
 			`Com mais de ${toWordsPt(years)} anos de experiência prática em desenvolvimento full-stack e formado em Engenharia de Software, minha atuação abrange desenvolvimento web, backend e pipelines de CI/CD. Também sou especialista na plataforma TOTVS Fluig.`,
 		story:
 			"Minha trajetória na tecnologia começou como aprendiz, escrevendo VBA no Excel para automatizar processos manuais — e desde então me apaixonei por resolver problemas. Essa paixão inicial me levou à graduação em Engenharia de Software e a uma carreira arquitetando soluções corporativas complexas e escaláveis. Hoje, atuo como Consultor B2B e Engenheiro Sênior, apoiado em uma stack robusta e poliglota para construir softwares.",
-		yearsOfExperience: "Anos de Experiência",
-		projects: "Processos Entregues em Produção",
 		photoAlt: "João Piologo no Universo TOTVS 2026",
 		photoCaption: "Universo TOTVS 2026, São Paulo - Brasil",
 	},
@@ -197,6 +212,29 @@ export const pt: Messages = {
 						"Faturamento orquestrado por filas, com validações de estoque, filial e trânsito",
 						"Observabilidade ponta a ponta com Grafana",
 						"Decisões arquiteturais e coordenação da equipe",
+					],
+				},
+			},
+			freightRouting: {
+				title: "Roteirização de Fretes",
+				subtitle: "Consolidando fretes de veículos em rotas, dentro do piso mínimo da ANTT",
+				description:
+					"Quando a ANTT mudou o piso mínimo de frete, enviar um veículo de cada vez entre cidades ficou caro e fora da norma. Construí um painel no Fluig em que a logística agrupa várias solicitações em uma rota, vê distância e pedágios calculados na hora, recebe as transportadoras da mais barata para a mais cara e, com um clique, envia todas as solicitações da rota ao financeiro já preenchidas. Mais de 2.300 solicitações passaram pela roteirização nos dois primeiros meses em produção.",
+				details: {
+					challenge:
+						"As solicitações de frete entre cidades seguiam isoladas, sem nenhuma consolidação. Com a nova regra da ANTT, cada rota precisava ser montada, precificada e validada antes do pagamento, em até 48 horas, sem tirar o time do Fluig e sem redigitar dados em dezenas de solicitações.",
+					solution:
+						"Criei no processo a etapa \"Aguardando Roteirização\", que fretes dentro da mesma cidade pulam automaticamente. No painel, o roteirizador escolhe as solicitações pendentes e monta a rota: distância, pedágios e tabela de frete vêm da API da NDD Cargo, e as cotações das transportadoras vêm de um endpoint em .NET, já ordenadas pela mais barata e conferidas contra o frete mínimo. A rota é salva em um microsserviço .NET com MongoDB, e uma integração com a API do Fluig move todas as solicitações de uma vez, gravando os dados da rota em cada formulário. O código é coberto por 99 testes automatizados que rodam em cerca de 330 ms e viraram referência para o time.",
+					features: [
+						"Mais de 2.300 solicitações roteirizadas nos dois primeiros meses em produção",
+						"Etapa de roteirização com SLA de 48h e desvio automático para fretes na mesma cidade",
+						"Distância, pedágios e tabela de frete calculados pela API da NDD Cargo",
+						"Transportadoras listadas da mais barata para a mais cara",
+						"Validação do valor contra o piso mínimo de frete da ANTT",
+						"Um clique movimenta todas as solicitações da rota, já preenchidas",
+						"Histórico de rotas, comentários, anexos e cancelamento bloqueado após o financeiro",
+						"Microsserviço .NET com MongoDB, paginação e busca por rota ou solicitação",
+						"99 testes automatizados, proteção contra XSS e renovação automática de token",
 					],
 				},
 			},
@@ -372,18 +410,21 @@ export const pt: Messages = {
 				title: "Pipeline de Deploy do Fluig",
 				subtitle: "Automatizando Deploys do Fluig com Jenkins e Entrega Baseada em Branches",
 				description:
-					"Desenvolvi um pipeline de deploy automatizado com Jenkins para publicar formulários, datasets, workflows e widgets na plataforma Fluig. O pipeline monitorava merges em branches predefinidas e disparava o deploy automaticamente, reduzindo a intervenção manual e acelerando significativamente o tempo de entrega. Isso trouxe mais consistência, confiabilidade e velocidade ao processo de release dos projetos Fluig.",
+					"Desenvolvi um pipeline de deploy automatizado com Jenkins para publicar formulários, datasets, workflows e widgets na plataforma Fluig. O pipeline monitorava merges em branches predefinidas e disparava o deploy automaticamente, reduzindo a intervenção manual e acelerando significativamente o tempo de entrega. Depois, adicionei um stage de testes automatizados que roda antes de qualquer deploy: se um teste falha, nada vai para produção. Isso trouxe mais consistência, confiabilidade e velocidade ao processo de release dos projetos Fluig.",
 				details: {
 					challenge:
 						"O principal desafio foi criar um pipeline de deploy confiável, capaz de identificar e publicar automaticamente diferentes artefatos do Fluig, como formulários, datasets, workflows e widgets, a partir de merges em branches específicas. A solução precisava reduzir o tempo de deploy, minimizar erros manuais e tornar o processo de release mais consistente e escalável.",
 					solution:
-						"Projetei e implementei um pipeline automatizado no Jenkins, responsável por publicar os artefatos do Fluig sempre que ocorriam merges em branches predefinidas. O pipeline cuidava da publicação de formulários, datasets, workflows e widgets, tornando a entrega mais rápida, segura e muito menos dependente de execução manual. Como resultado, o tempo de deploy caiu drasticamente e o fluxo de release ficou mais eficiente e padronizado.",
+						"Projetei e implementei um pipeline automatizado no Jenkins, responsável por publicar os artefatos do Fluig sempre que ocorriam merges em branches predefinidas. O pipeline cuidava da publicação de formulários, datasets, workflows e widgets, tornando a entrega mais rápida, segura e muito menos dependente de execução manual. Como resultado, o tempo de deploy caiu drasticamente e o fluxo de release ficou mais eficiente e padronizado. Em seguida, criei o stage de testes: ele encontra sozinho os testes de qualquer processo, dataset ou widget do repositório, roda a suíte inteira com o runner nativo do Node, sem dependências npm, e bloqueia o deploy se algo falhar. Quando um commit altera código sem mexer em teste, o build exibe um alerta de cobertura, incentivando o time a testar sem travar a entrega.",
 					features: [
 						"Deploy automático disparado por merges em branches",
 						"Publicação de formulários do Fluig",
 						"Publicação de datasets",
 						"Publicação de workflows",
 						"Publicação de widgets",
+						"Stage de testes automatizados que bloqueia o deploy quando algum teste falha",
+						"Descoberta automática de testes em qualquer projeto do repositório",
+						"Alerta de cobertura para código alterado sem teste",
 						"Menos esforço manual nos deploys",
 						"Ciclo de release mais rápido e consistente",
 						"Estratégia de deploy baseada em branches",

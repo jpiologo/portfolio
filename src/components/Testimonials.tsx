@@ -8,6 +8,7 @@ import Carousel from './Carousel';
 import { parallaxHandlers } from '../lib/parallax';
 import { LARGE_QUERY, useIsDesktop, useMediaQuery } from '../lib/useMediaQuery';
 import { useI18n } from '../i18n/context';
+import Reveal from "./Reveal";
 
 // One row of cards per page, so any number of comments keeps the section one screen tall
 const PER_PAGE_LARGE = 3;
@@ -55,15 +56,15 @@ const Testimonials = () => {
   };
 
   return (
-    <section id="testimonials" className="page-section py-24 bg-background-surface/60 relative overflow-hidden">
+    <section id="testimonials" className="py-24 bg-background-surface/60 relative overflow-hidden">
       {/* Subtle decorative background elements */}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-accent-primary/10 rounded-full blur-[120px] pointer-events-none transform translate-x-1/3 -translate-y-1/3" />
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-accent-primary/5 rounded-full blur-[100px] pointer-events-none transform -translate-x-1/3 translate-y-1/3" />
       
       <div className="max-w-7xl mx-auto px-4 relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 full-page:mb-[4vh] gap-6">
+        <Reveal className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-2xl">
-            <h2 className="section-heading mb-6 full-page:mb-[2vh]">
+            <h2 className="section-heading mb-6">
               {t.testimonials.heading}
             </h2>
             <p className="section-intro">
@@ -77,7 +78,7 @@ const Testimonials = () => {
             <MessageSquarePlus className="w-5 h-5 group-hover:scale-110 transition-transform" />
             <span>{t.testimonials.leaveComment}</span>
           </button>
-        </div>
+        </Reveal>
 
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-24 px-4 bg-background-elevated/50 backdrop-blur-sm rounded-[2rem] border border-border-subtle shadow-sm">
@@ -124,7 +125,7 @@ const Testimonials = () => {
             renderItem={(comment) => (
               <div
                 {...parallaxHandlers}
-                className="parallax-card bg-background-elevated rounded-[2rem] p-8 md:p-10 full-page:p-[3.5vh] border border-border-subtle shadow-sm hover:shadow-xl group flex flex-col h-full overflow-hidden"
+                className="parallax-card bg-background-elevated rounded-[2rem] p-8 md:p-10 border border-border-subtle shadow-sm hover:shadow-xl group flex flex-col h-full overflow-hidden"
               >
                 {/* Decorative background glow that appears on hover */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-accent-primary/10 to-transparent rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none translate-x-1/2 -translate-y-1/2" />
@@ -135,14 +136,14 @@ const Testimonials = () => {
                 </div>
                 
                 {/* Commentary */}
-                <div className="relative z-10 flex-grow mb-10 full-page:mb-[3vh] full-page:max-h-[24vh] full-page:overflow-y-auto">
+                <div className="relative z-10 flex-grow mb-10">
                   <p className="text-text-muted leading-wider font-light text-[1.1rem]">
                     "{comment.commentary}"
                   </p>
                 </div>
 
                 {/* Author Info */}
-                <div className="relative z-10 mt-auto pt-8 full-page:pt-[2.5vh] border-t border-border-subtle flex items-center gap-5">
+                <div className="relative z-10 mt-auto pt-8 border-t border-border-subtle flex items-center gap-5">
                   <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-accent-primary/30 to-accent-secondary/15 flex items-center justify-center shrink-0 border border-border-subtle shadow-sm ring-2 ring-background-surface group-hover:ring-accent-primary/20 transition-all">
                     <span className="text-accent-secondary font-extrabold text-xl">
                       {comment.user_name.charAt(0).toUpperCase()}

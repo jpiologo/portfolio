@@ -37,6 +37,8 @@ export const en = {
 		toggleMenu: "Toggle menu",
 		menu: "Menu",
 		closeMenu: "Close menu",
+		talkToMe: "Talk to me",
+		changeTheme: "Change theme",
 		switchToLight: "Switch to light mode",
 		switchToDark: "Switch to dark mode",
 		lightMode: "Light mode",
@@ -53,6 +55,21 @@ export const en = {
 		outcomes: ["automates", "integrates", "scales", "results", "resolves", "delivers", "transforms"],
 		viewWork: "View My Work",
 		getInTouch: "Get in Touch",
+		badge: "TOTVS Fluig & process automation specialist",
+		greeting: "Hi, I'm João Piologo",
+		pitch:
+			"I turn manual, paper-and-spreadsheet processes into reliable systems — Fluig workflows, .NET microservices and ERP integrations running in production for thousands of requests.",
+		stats: {
+			years: "Years of experience",
+			processes: "Processes in production",
+			faster: "Faster vehicle sales",
+		},
+		chips: {
+			// Billing (83k) + freight routing (2.3k) requests since 2025-12-19, counted in Fluig production
+			requests: { value: "85k+", label: "requests processed in production" },
+			tests: { value: "99 ✓", label: "automated tests on every deploy" },
+			integrations: { value: "ERP + APIs", label: "integrated end to end" },
+		},
 	},
 
 	about: {
@@ -61,8 +78,6 @@ export const en = {
 			`With over ${toWords(years)} years of hands-on experience in full-stack development and graduated in Software Engineering, my expertise spans across web development, backend development and CI/CD pipelines. I'm also a specialist in the TOTVS Fluig platform.`,
 		story:
 			"My journey in tech started as an apprentice, writing Excel VBA to automate manual processes — and I was hooked on problem-solving. That early passion led me to a degree in Software Engineering and a career architecting complex, scalable corporate solutions. Today, I act as a B2B Consultant and Senior Engineer, drawing on a robust, polyglot stack to build software that delivers real business value.",
-		yearsOfExperience: "Years of Experience",
-		projects: "Processes Delivered to Production",
 		photoAlt: "João Piologo at Universo TOTVS 2026",
 		photoCaption: "Universo TOTVS 2026, São Paulo - Brazil",
 	},
@@ -174,6 +189,29 @@ export const en = {
 						"Queue-orchestrated invoicing with stock, branch and transit checks",
 						"End-to-end observability with Grafana",
 						"Architectural decisions and team coordination",
+					],
+				},
+			},
+			freightRouting: {
+				title: "Freight Routing",
+				subtitle: "Consolidating vehicle shipments into routes under Brazil's minimum freight rate",
+				description:
+					"When Brazil's transport agency (ANTT) changed the minimum freight rate, shipping one vehicle at a time between cities became expensive and non-compliant. I built a Fluig panel where the logistics team groups several requests into a single route, sees distance and tolls calculated on the spot, gets carriers sorted from cheapest to most expensive and, in one click, sends every request in the route to finance already filled in. More than 2,300 requests went through routing in the first two months in production.",
+				details: {
+					challenge:
+						"Intercity freight requests moved on their own, with no consolidation at all. Under the new ANTT rule, every route had to be built, priced and validated before payment within 48 hours, without taking the team out of Fluig or retyping data across dozens of requests.",
+					solution:
+						"I added an \"Awaiting Routing\" step to the process, which same-city shipments skip automatically. In the panel, the router picks pending requests and builds the route: distance, tolls and freight table come from the NDD Cargo API, and carrier quotes come from a .NET endpoint, already sorted by price and checked against the minimum rate. The route is stored in a .NET microservice backed by MongoDB, and an integration with the Fluig API moves every request at once, writing the route data into each form. The code is covered by 99 automated tests that run in about 330 ms and became the team's reference.",
+					features: [
+						"More than 2,300 requests routed in the first two months in production",
+						"Routing step with a 48h SLA and automatic bypass for same-city shipments",
+						"Distance, tolls and freight table calculated by the NDD Cargo API",
+						"Carriers listed from cheapest to most expensive",
+						"Freight value validated against the ANTT minimum rate",
+						"One click moves every request in the route, already filled in",
+						"Route history, comments, attachments and cancellation locked once finance takes over",
+						".NET microservice with MongoDB, pagination and search by route or request",
+						"99 automated tests, XSS protection and automatic token renewal",
 					],
 				},
 			},
@@ -349,18 +387,21 @@ export const en = {
 				title: "Fluig Deployment Pipeline",
 				subtitle: "Automating Fluig Deployments with Jenkins and Branch-Based Delivery",
 				description:
-					"I developed an automated deployment pipeline using Jenkins to publish forms, datasets, workflows, and widgets to the Fluig platform. The pipeline monitored merges from predefined branches and triggered the deployment process automatically, reducing manual intervention and significantly accelerating delivery time. This brought more consistency, reliability, and speed to the release process across Fluig projects.",
+					"I developed an automated deployment pipeline using Jenkins to publish forms, datasets, workflows, and widgets to the Fluig platform. The pipeline monitored merges from predefined branches and triggered the deployment process automatically, reducing manual intervention and significantly accelerating delivery time. I later added an automated test stage that runs before every deployment: if a test fails, nothing reaches production. This brought more consistency, reliability, and speed to the release process across Fluig projects.",
 				details: {
 					challenge:
 						"The main challenge was creating a reliable deployment pipeline capable of automatically identifying and publishing different Fluig artifacts, such as forms, datasets, workflows, and widgets, based on merges from specific branches. The solution needed to reduce deployment time, minimize manual errors, and make the release process more consistent and scalable.",
 					solution:
-						"I designed and implemented an automated Jenkins pipeline responsible for deploying Fluig artifacts whenever merges occurred on predefined branches. The pipeline handled the publication of forms, datasets, workflows, and widgets, making the delivery process faster, safer, and far less dependent on manual execution. As a result, deployment time was drastically reduced and the overall release flow became more efficient and standardized.",
+						"I designed and implemented an automated Jenkins pipeline responsible for deploying Fluig artifacts whenever merges occurred on predefined branches. The pipeline handled the publication of forms, datasets, workflows, and widgets, making the delivery process faster, safer, and far less dependent on manual execution. As a result, deployment time was drastically reduced and the overall release flow became more efficient and standardized. I then built the test stage: it finds the tests of any process, dataset or widget in the repository on its own, runs the whole suite with Node's native test runner and no npm dependencies, and blocks the deployment if anything fails. When a commit changes code without touching a test, the build shows a coverage warning, nudging the team to test without holding up delivery.",
 					features: [
 						"Automatic deployment triggered by branch merges",
 						"Publication of Fluig forms",
 						"Publication of datasets",
 						"Publication of workflows",
 						"Publication of widgets",
+						"Automated test stage that blocks deployment when a test fails",
+						"Automatic test discovery across every project in the repository",
+						"Coverage warning for code changed without tests",
 						"Reduced manual deployment effort",
 						"Faster and more consistent release cycle",
 						"Branch-based deployment strategy",

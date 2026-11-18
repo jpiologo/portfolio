@@ -1,5 +1,4 @@
 import typography from '@tailwindcss/typography';
-import plugin from 'tailwindcss/plugin';
 
 // Theme colors are RGB channels defined in src/index.css (light on :root, dark on .dark)
 const themeColor = (name) => `rgb(var(--c-${name}) / <alpha-value>)`;
@@ -42,12 +41,32 @@ export default {
           '33%': { transform: 'translate(4px, -7px) rotate(5deg)' },
           '66%': { transform: 'translate(-4px, -3px) rotate(-4deg)' },
         },
+        // Gentle bob for cards with text, which must stay level (HeroVisual)
+        bob: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-8px)' },
+        },
+        // Slow full turn of the hero orbits (HeroVisual)
+        orbit: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+        // Wheel of the hero scroll hint rolling down
+        'scroll-wheel': {
+          '0%': { transform: 'translateY(0)', opacity: '1' },
+          '70%': { transform: 'translateY(10px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '0' },
+        },
       },
       animation: {
         'caret-blink': 'caret-blink 1.06s step-end infinite',
         'cube-in': 'cube-in 0.6s cubic-bezier(0.3, 0.7, 0.3, 1) both',
         'cube-out': 'cube-out 0.6s cubic-bezier(0.3, 0.7, 0.3, 1) forwards',
         float: 'float 6s ease-in-out infinite',
+        bob: 'bob 6s ease-in-out infinite',
+        orbit: 'orbit 60s linear infinite',
+        'orbit-reverse': 'orbit 60s linear infinite reverse',
+        'scroll-wheel': 'scroll-wheel 1.6s ease-in-out infinite',
       },
       colors: {
         background: {
@@ -81,9 +100,5 @@ export default {
       },
     },
   },
-  plugins: [
-    typography,
-    // Full-page mode on large screens (attribute set by src/lib/useFullPage.ts)
-    plugin(({ addVariant }) => addVariant('full-page', ':root[data-full-page] &')),
-  ],
+  plugins: [typography],
 };

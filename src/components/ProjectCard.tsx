@@ -15,6 +15,7 @@ import {
 import type { LucideIcon } from "lucide-react";
 import type { Project } from "../lib/types";
 import { useI18n } from "../i18n/context";
+import ProjectCover from "./ProjectCover";
 import TechStack from "./TechStack";
 
 const SectionHeading = ({ icon: Icon, title }: { icon: LucideIcon; title: string }) => (
@@ -43,11 +44,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
 			>
 				{/* Image */}
 				<div className="proj-card-image-wrap">
-					<img
-						src={project.image}
-						alt={project.title}
-						className="proj-card-image parallax-media"
-					/>
+					<ProjectCover project={project} className="parallax-media" />
 					<div className="proj-card-image-overlay">
 						{(project.demoLink || project.githubLink || project.inDevelopment) && (
 							<div className="proj-card-image-actions">
@@ -130,12 +127,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
 
 						{/* Modal Content */}
 						<div className="proj-modal-content">
-							{/* Hero image */}
-							<img
-								src={project.image}
-								alt={project.title}
-								className="proj-modal-image"
-							/>
+							<ProjectCover project={project} className="proj-modal-image" />
 
 							{/* Two-column: Challenge + Solution */}
 							<div className="proj-modal-grid">

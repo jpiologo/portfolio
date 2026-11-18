@@ -162,10 +162,6 @@ html {
 
 /* ================================================================== */
 /*  Home sections                                                      */
-/*  Full-page mode (large screens, see src/lib/useFullPage.ts): each   */
-/*  section fills exactly one screen, centered below the header, and   */
-/*  sizes scale with the screen height so everything fits. Tailwind's  */
-/*  `full-page:` variant does the same for one-off tweaks.             */
 /* ================================================================== */
 
 @layer components {
@@ -176,43 +172,239 @@ html {
   .section-intro {
     @apply text-xl text-text-muted leading-relaxed font-light;
   }
+
+  /* Small uppercase label above a heading */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 font-label text-xs font-semibold uppercase tracking-[0.2em] text-accent-secondary;
+  }
 }
 
-:root {
-  /* Fixed header once the page is scrolled: py-4 around the 40px logo (Header.tsx) */
-  --header-height: 4.5rem;
+/* ================================================================== */
+/*  Hero (src/components/Hero.tsx, HeroVisual.tsx)                     */
+/*  .hero-enter        : blocks fade up on load, staggered by          */
+/*                       --enter-delay                                  */
+/*  .hero-log-line     : deploy log lines typed in and out on a loop,  */
+/*                       one after another by their index (--i)         */
+/*  .hero-log-progress : bar that fills while the log runs             */
+/* ================================================================== */
+
+.hero-enter {
+  animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--enter-delay, 0ms);
 }
 
-:root[data-full-page] .page-section {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-top: var(--header-height);
-  padding-bottom: 1vh;
+.hero-log-line {
+  animation: hero-log-line 9s ease-out infinite both;
+  animation-delay: calc(var(--i) * 0.7s);
 }
 
-:root[data-full-page] .section-heading {
-  font-size: clamp(2rem, 6vh, 3rem);
+@keyframes hero-log-line {
+  0% {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  5%,
+  80% {
+    opacity: 1;
+    transform: none;
+  }
+  90%,
+  100% {
+    opacity: 0;
+  }
 }
 
-:root[data-full-page] .section-intro {
-  font-size: clamp(1rem, 2.4vh, 1.25rem);
+.hero-log-progress {
+  transform-origin: left;
+  animation: hero-log-progress 9s cubic-bezier(0.65, 0, 0.35, 1) infinite;
 }
 
-:root[data-full-page] .proj-card-image-wrap {
-  height: clamp(5.5rem, 17vh, 220px);
+@keyframes hero-log-progress {
+  0% {
+    transform: scaleX(0);
+    opacity: 1;
+  }
+  45%,
+  85% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
 }
 
-:root[data-full-page] .proj-card-body {
-  padding: clamp(0.75rem, 2.5vh, 1.5rem);
+@media (prefers-reduced-motion: reduce) {
+  .hero-enter,
+  .hero-log-line,
+  .hero-log-progress {
+    animation: none;
+  }
 }
 
-/* Short screens: the full description is still one click away in the modal */
-@media (max-height: 700px) {
-  :root[data-full-page] .proj-card-desc {
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
+/* ================================================================== */
+/*  Project illustrations (src/components/ProjectArt.tsx)              */
+/*  .art-flow    : dashes flowing along a connector                    */
+/*  .art-draw    : path drawn from start to end (needs pathLength=1)   */
+/*  .art-pop     : element popping in, held, then fading out           */
+/*  .art-pulse   : ring expanding and fading                           */
+/*  .art-twinkle : gentle breathing scale                              */
+/*  .art-scan    : bar sweeping down by --scan and back                */
+/*  .art-moving  : SVG <animateMotion> travellers                      */
+/*  Everything loops; --delay offsets an element inside its loop.      */
+/* ================================================================== */
+
+.art-pop,
+.art-pulse,
+.art-twinkle {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.art-flow {
+  stroke-dasharray: 5 7;
+  animation: art-flow 1.2s linear infinite;
+}
+
+@keyframes art-flow {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+.art-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: art-draw 6s ease-in-out infinite;
+}
+
+@keyframes art-draw {
+  0% {
+    stroke-dashoffset: 1;
+    opacity: 1;
+  }
+  45%,
+  85% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+.art-pop {
+  animation: art-pop 6s ease-out infinite both;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes art-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  6% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+  10%,
+  80% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  90%,
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+.art-pulse {
+  animation: art-pulse 2.4s ease-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes art-pulse {
+  from {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(2.4);
+  }
+}
+
+.art-twinkle {
+  animation: art-twinkle 2.4s ease-in-out infinite;
+}
+
+@keyframes art-twinkle {
+  0%,
+  100% {
+    transform: scale(0.85) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(12deg);
+  }
+}
+
+.art-scan {
+  animation: art-scan 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes art-scan {
+  to {
+    transform: translateY(var(--scan, 40px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .art-flow,
+  .art-draw,
+  .art-pop,
+  .art-pulse,
+  .art-twinkle,
+  .art-scan {
+    animation: none;
+  }
+
+  .art-draw {
+    stroke-dashoffset: 0;
+  }
+
+  .art-moving {
+    display: none;
+  }
+}
+
+/* ================================================================== */
+/*  Scroll reveal (src/components/Reveal.tsx)                          */
+/*  Content rises and fades in the first time it enters the screen;    */
+/*  --reveal-delay staggers siblings.                                  */
+/* ================================================================== */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
 
@@ -240,16 +432,11 @@ html {
   border-color: rgb(var(--c-accent-secondary) / 0.3);
 }
 
+/* Same proportions as the 400×220 project illustrations (ProjectArt.tsx), so nothing is cropped */
 .proj-card-image-wrap {
   position: relative;
   overflow: hidden;
-  height: 220px;
-}
-
-.proj-card-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  aspect-ratio: 40 / 22;
 }
 
 .proj-card-image-overlay {
@@ -444,9 +631,9 @@ html {
 }
 
 .proj-modal-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
+  aspect-ratio: 40 / 22;
+  max-height: 320px;
+  overflow: hidden;
   border-radius: 12px;
   border: 1px solid var(--color-border);
 }
@@ -526,10 +713,6 @@ html {
 /* ================================================================== */
 
 @media (max-width: 768px) {
-  .proj-card-image-wrap {
-    height: 180px;
-  }
-
   .proj-card-body {
     padding: 18px;
   }
@@ -540,10 +723,6 @@ html {
 
   .proj-modal-grid {
     grid-template-columns: 1fr;
-  }
-
-  .proj-modal-image {
-    height: 160px;
   }
 
   .proj-modal-content {
@@ -561,10 +740,6 @@ html {
 }
 
 @media (max-width: 480px) {
-  .proj-card-image-wrap {
-    height: 160px;
-  }
-
   .proj-modal-actions {
     flex-direction: column;
   }

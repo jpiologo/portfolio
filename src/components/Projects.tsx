@@ -3,6 +3,7 @@ import { useI18n } from "../i18n/context";
 import type { ProjectId } from "../i18n/en";
 import Carousel from "./Carousel";
 import ProjectCard from "./ProjectCard";
+import { ProjectThumbnail } from "./ProjectCover";
 import { useIsDesktop } from "../lib/useMediaQuery";
 import fokusImage from "../assets/Fokus.png";
 import weatherImage from "../assets/weatherApp.png";
@@ -11,8 +12,7 @@ import caseCobra from "../assets/Home.png";
 import cleanUp from "../assets/CleanUpHome.png";
 import realtimeChatImage from "../assets/Destroyed.png";
 import playoffsSimulatorImage from "../assets/4a0.png";
-import fluigLogo from "../assets/fluig-logo.png";
-import jenkinsLogo from "../assets/Jenkins.svg";
+import Reveal from "./Reveal";
 
 const PER_PAGE_DESKTOP = 2;
 const PER_PAGE_MOBILE = 1;
@@ -24,18 +24,32 @@ const PROJECTS: ProjectMeta[] = [
 	// Work projects first, led by the one with the biggest business impact; personal and study projects last
 	{
 		id: "salesAutomation",
-		image: fluigLogo,
-		mini: "/minis/salesAutomation.svg",
+		cover: { kind: "art", id: "sales" },
 		techStack: ["dotnet", "rabbitmq", "gcp", "llm", "microservices", "grafana", "restApi"],
 	},
 	{
+		id: "freightRouting",
+		cover: { kind: "art", id: "freight" },
+		techStack: [
+			"javascript",
+			"fluig",
+			"dotnet",
+			"mongodb",
+			"microservices",
+			"restApi",
+			"datasets",
+			"workflowEngine",
+			"nodejs",
+		],
+	},
+	{
 		id: "fluigPipeline",
-		image: jenkinsLogo,
-		mini: "/minis/Jenkins.png",
+		cover: { kind: "art", id: "pipeline" },
 		techStack: [
 			"jenkins",
 			"groovy",
 			"fluig",
+			"nodejs",
 			"cicd",
 			"restApi",
 			"git",
@@ -45,8 +59,7 @@ const PROJECTS: ProjectMeta[] = [
 	},
 	{
 		id: "inventoryCount",
-		image: fluigLogo,
-		mini: "/minis/fluig.png",
+		cover: { kind: "art", id: "inventory" },
 		techStack: [
 			"javascript",
 			"html",
@@ -61,8 +74,7 @@ const PROJECTS: ProjectMeta[] = [
 	},
 	{
 		id: "purchasingFlow",
-		image: fluigLogo,
-		mini: "/minis/fluig.png",
+		cover: { kind: "art", id: "purchasing" },
 		techStack: [
 			"javascript",
 			"html",
@@ -78,8 +90,7 @@ const PROJECTS: ProjectMeta[] = [
 	},
 	{
 		id: "vehicleSales",
-		image: fluigLogo,
-		mini: "/minis/fluig.png",
+		cover: { kind: "art", id: "vehicleSales" },
 		techStack: [
 			"javascript",
 			"html",
@@ -95,8 +106,7 @@ const PROJECTS: ProjectMeta[] = [
 	},
 	{
 		id: "hrWorkflows",
-		image: fluigLogo,
-		mini: "/minis/fluig.png",
+		cover: { kind: "art", id: "hr" },
 		techStack: [
 			"javascript",
 			"html",
@@ -112,57 +122,49 @@ const PROJECTS: ProjectMeta[] = [
 	},
 	{
 		id: "playoffsSimulator",
-		image: playoffsSimulatorImage,
-		mini: "/minis/icon.svg",
+		cover: { kind: "screenshot", src: playoffsSimulatorImage, logo: "/minis/icon.svg" },
 		techStack: ["typescript", "nextjs", "zustand", "zod", "motion", "tailwind", "vitest"],
 		demoLink: "https://4a0-self.vercel.app/jogo",
 		githubLink: "https://github.com/jpiologo/4a0",
 	},
 	{
 		id: "cleanUp",
-		image: cleanUp,
-		mini: "/minis/clean-up-logo.png",
+		cover: { kind: "screenshot", src: cleanUp, logo: "/minis/clean-up-logo.png" },
 		techStack: ["typescript", "nextjs", "nestjs", "postgresql", "prisma", "tailwind", "jwt"],
 		githubLink: "https://github.com/jpiologo/CleanUp---Frontend",
 		inDevelopment: true,
 	},
 	{
 		id: "caseCobra",
-		image: caseCobra,
-		mini: "/minis/CaseCobra.png",
+		cover: { kind: "screenshot", src: caseCobra, logo: "/minis/CaseCobra.png" },
 		techStack: ["typescript", "nextjs", "postgresql", "prisma", "stripe", "kinde", "uploadthing", "resend"],
 		demoLink: "https://casecobra-taupe.vercel.app/",
 		githubLink: "https://github.com/jpiologo/CaseCobra",
 	},
 	{
 		id: "realtimeChat",
-		image: realtimeChatImage,
-		mini: "/minis/terminal.svg",
+		cover: { kind: "screenshot", src: realtimeChatImage, logo: "/minis/terminal.svg" },
 		techStack: ["typescript", "nextjs", "elysia", "upstash", "reactQuery", "zod", "tailwind"],
 		demoLink: "https://realtime-chat-iota-six.vercel.app/",
 		githubLink: "https://github.com/jpiologo/Realtime_Chat",
 	},
 	{
 		id: "taskManager",
-		image: fokusImage,
-		mini: "/minis/fokusLogo.png",
-		miniIsWhite: true,
+		cover: { kind: "screenshot", src: fokusImage, logo: "/minis/fokusLogo.png", logoIsWhite: true },
 		techStack: ["javascript", "html", "css", "localStorage"],
 		demoLink: "https://fokus-mu-eight.vercel.app/",
 		githubLink: "https://github.com/jpiologo/fokusProject",
 	},
 	{
 		id: "weatherApp",
-		image: weatherImage,
-		mini: "/minis/weatherApp.png",
+		cover: { kind: "screenshot", src: weatherImage, logo: "/minis/weatherApp.png" },
 		techStack: ["javascript", "openWeatherMap", "restApi", "json"],
 		demoLink: "https://weather-app-kappa-black.vercel.app/",
 		githubLink: "https://github.com/jpiologo/weatherApp",
 	},
 	{
 		id: "vocalVault",
-		image: vocalVaultImage,
-		mini: "/minis/vault.svg",
+		cover: { kind: "screenshot", src: vocalVaultImage, logo: "/minis/vault.svg" },
 		techStack: ["javascript", "webSpeech", "html", "css"],
 		demoLink: "https://vocalvault-c5qkg3u7e-joao-piologos-projects.vercel.app/",
 		githubLink: "https://github.com/jpiologo/voiceCommandApp",
@@ -175,10 +177,10 @@ const Projects = () => {
 	const projects: Project[] = PROJECTS.map(({ id, ...meta }) => ({ ...meta, ...t.projects.items[id] }));
 
 	return (
-		<section id="projects" className="page-section relative py-16">
+		<section id="projects" className="relative py-16">
 			<div className="max-w-6xl mx-auto px-4">
-				<div className="text-center mb-14 full-page:mb-[5vh]">
-					<h2 className="section-heading mb-6 full-page:mb-[2vh]">
+				<Reveal className="text-center mb-14">
+					<h2 className="section-heading mb-6">
 						{t.projects.heading}
 					</h2>
 					<p className="section-intro max-w-xl mx-auto">
@@ -186,8 +188,9 @@ const Projects = () => {
 						<b>{t.projects.introBold}</b>
 						{t.projects.introAfter}
 					</p>
-				</div>
+				</Reveal>
 
+				<Reveal delay={150}>
 				<Carousel
 					items={projects}
 					perPage={perPage}
@@ -195,17 +198,9 @@ const Projects = () => {
 					getKey={(project) => project.title}
 					getName={(project) => project.title}
 					renderItem={(project) => <ProjectCard project={project} />}
-					renderPreview={(project) => (
-						<img
-							src={project.mini}
-							alt=""
-							loading="lazy"
-							className={`h-12 w-auto max-w-24 object-contain ${
-								project.miniIsWhite ? "rounded-md bg-black p-1 dark:bg-transparent dark:p-0" : ""
-							}`}
-						/>
-					)}
+					renderPreview={(project) => <ProjectThumbnail project={project} />}
 				/>
+				</Reveal>
 			</div>
 
 			{/* Easter egg: tucked away in the corner */}
