@@ -361,6 +361,10 @@ html {
   }
 }
 
+.art-paused * {
+  animation-play-state: paused !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .art-flow,
   .art-draw,

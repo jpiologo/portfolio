@@ -76,16 +76,16 @@ export const pt: Messages = {
 		titleHighlight: "Software;",
 		subtitle: "Construo software que",
 		outcomes: ["automatiza", "integra", "escala", "resulta", "resolve", "entrega", "transforma"],
-		viewWork: "Ver Meus Projetos",
-		getInTouch: "Entre em Contato",
+		viewWork: "Ver meus cases",
+		getInTouch: "Entrar em Contato",
 		badge: "Especialista em TOTVS Fluig e automação de processos",
 		greeting: "Olá, eu sou João Piologo",
 		pitch:
-			"Transformo processos manuais, feitos no papel e na planilha, em sistemas confiáveis — workflows no Fluig, microsserviços em .NET e integrações com ERP rodando em produção para milhares de solicitações.",
+			"Workflows no Fluig, microsserviços, integrações com ERP para milhares de requisições e o que mais a sua empresa precisar.",
 		stats: {
 			years: "Anos de experiência",
-			processes: "Processos em produção",
-			faster: "Processos mais rápidos",
+			processes: "Processos lançados",
+			faster: "Mais rápidos",
 		},
 		chips: {
 			// Faturamento (83 mil) + Roteirização de fretes (2,3 mil) desde 19/12/2025, contados no Fluig de produção

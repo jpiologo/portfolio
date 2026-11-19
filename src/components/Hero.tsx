@@ -7,7 +7,7 @@ import CountUp from "./CountUp";
 import HeroVisual from "./HeroVisual";
 import RotatingWord from "./RotatingWord";
 
-const TYPING_INTERVAL_MS = 100;
+const TYPING_INTERVAL_MS = 50;
 /** Gap between the hero blocks as they fade in on load. */
 const ENTER_STAGGER_MS = 120;
 /** Vehicle sales went from 10~12h to about 1h (see the salesAutomation project). */
@@ -124,7 +124,7 @@ const Hero = () => {
 						{t.hero.pitch}
 					</p>
 
-					<div style={enterDelay(4)} className="hero-enter mt-8 flex flex-wrap gap-3 md:gap-4 justify-center lg:justify-start">
+					<div style={enterDelay(4)} className="hero-enter mt-8 flex flex-wrap gap-4 justify-center lg:justify-start">
 						<a href="#projects" className="group btn-primary px-5 py-2.5 text-sm md:px-7 md:py-3 md:text-base">
 							{t.hero.viewWork}
 							<ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -140,8 +140,8 @@ const Hero = () => {
 					>
 						{stats.map(({ value, suffix, label }) => (
 							<div key={label} className="flex flex-col gap-1">
-								<dt className="order-2 text-xs md:text-sm text-text-muted leading-snug">{label}</dt>
-								<dd className="order-1 flex justify-start font-heading text-3xl md:text-4xl font-bold text-text-primary">
+								<dt className="order-2 justify-end text-xs md:text-sm text-text-muted leading-snug">{label}</dt>
+								<dd className="order-1 font-heading text-3xl md:text-4xl font-bold text-text-primary">
 									<CountUp to={value} suffix={suffix} />
 								</dd>
 							</div>
@@ -151,11 +151,6 @@ const Hero = () => {
 
 				<HeroVisual className="hidden lg:block hero-enter [--enter-delay:300ms]" />
 			</div>
-
-			{/* Scroll hint: a mouse whose wheel keeps rolling down */}
-			{/* <div aria-hidden="true" className="absolute z-10 bottom-8 left-1/2 -translate-x-1/2 hidden md:flex h-10 w-6 justify-center rounded-full border-2 border-text-muted/40 pt-2">
-				<span className="h-2 w-1 rounded-full bg-text-muted/70 motion-safe:animate-scroll-wheel" />
-			</div> */}
 		</section>
 	);
 };

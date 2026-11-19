@@ -3,7 +3,9 @@ import { BrainCircuit, Gauge, Globe, Server, Workflow } from "lucide-react";
 import { useI18n } from "../i18n/context";
 import type { Messages } from "../i18n/en";
 import { parallaxHandlers } from "../lib/parallax";
+import { useIsDesktop } from "../lib/useMediaQuery";
 import type { TechId } from "../lib/techCatalog";
+import TechMarquee from "./TechMarquee";
 import TechStack from "./TechStack";
 import Reveal from "./Reveal";
 
@@ -55,6 +57,7 @@ const STACK: TechId[] = [
 
 const WhatIDo = () => {
 	const t = useI18n();
+	const isDesktop = useIsDesktop();
 
 	return (
 		<section id="what-i-do" className="py-24 bg-background-surface/60">
@@ -87,7 +90,7 @@ const WhatIDo = () => {
 
 				<Reveal delay={250} className="mt-12 flex flex-col items-center gap-4">
 					<p className="font-label text-xs uppercase tracking-widest text-text-muted">{t.whatIDo.stackLabel}</p>
-					<TechStack ids={STACK} className="justify-center" />
+					{isDesktop ? <TechStack ids={STACK} className="justify-center" /> : <TechMarquee ids={STACK} />}
 				</Reveal>
 			</div>
 		</section>

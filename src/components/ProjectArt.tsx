@@ -1,5 +1,5 @@
 import type React from "react";
-import { type ComponentType, type ReactNode, useId } from "react";
+import { type ComponentType, createContext, type ReactNode, useContext, useEffect, useId, useRef } from "react";
 import type { ProjectArtId } from "../lib/types";
 
 /*
@@ -13,26 +13,95 @@ const H = 220;
 
 type Point = [number, number];
 
+/*
+ * Liquid ("gooey") blending: shapes inside a <Goo> layer are blurred and their transparency is
+ * cut back to a hard edge, so shapes that come close melt into one blob, like drops of water.
+ */
+const GOO_BLUR = 4;
+const GOO_ALPHA_MATRIX = "1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 24 -10";
+/** Big enough to survive the blur; smaller dots would fade away. */
+const DROP_RADIUS = 6.5;
+
+/** Id of the scene's goo filter, so layers can reference it without prop drilling. */
+const GooFilter = createContext("");
+
 const delay = (seconds: number) => ({ "--delay": `${seconds}s` }) as React.CSSProperties;
+
+/**
+ * Pauses the scene while it is off screen (other carousel pages, hidden previews), so only the
+ * covers in view spend CPU: CSS animations via `.art-paused`, SMIL travellers via pauseAnimations().
+ */
+const usePauseWhenHidden = () => {
+	const ref = useRef<SVGSVGElement>(null);
+
+	useEffect(() => {
+		const svg = ref.current;
+		if (!svg) return;
+		const observer = new IntersectionObserver(([entry]) => {
+			svg.classList.toggle("art-paused", !entry.isIntersecting);
+			if (entry.isIntersecting) svg.unpauseAnimations();
+			else svg.pauseAnimations();
+		});
+		observer.observe(svg);
+		return () => observer.disconnect();
+	}, []);
+
+	return ref;
+};
 
 const Scene = ({ accent, children }: { accent: string; children: ReactNode }) => {
 	const id = useId().replace(/:/g, "");
+	const ref = usePauseWhenHidden();
+	const gooId = `goo-${id}`;
 	return (
-		<svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" className="h-full w-full" aria-hidden="true">
-			<defs>
-				<pattern id={`dots-${id}`} width="16" height="16" patternUnits="userSpaceOnUse">
-					<circle cx="2" cy="2" r="1.1" className="fill-text-muted/25" />
-				</pattern>
-				<radialGradient id={`glow-${id}`}>
-					<stop offset="0" stopColor={accent} stopOpacity="0.28" />
-					<stop offset="1" stopColor={accent} stopOpacity="0" />
-				</radialGradient>
-			</defs>
-			<rect width={W} height={H} className="fill-background-surface" />
-			<rect width={W} height={H} fill={`url(#dots-${id})`} />
-			<ellipse cx={W / 2} cy={H / 2} rx={230} ry={150} fill={`url(#glow-${id})`} />
-			{children}
-		</svg>
+		<GooFilter.Provider value={gooId}>
+			<svg ref={ref} viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" className="h-full w-full" aria-hidden="true">
+				<defs>
+					<pattern id={`dots-${id}`} width="16" height="16" patternUnits="userSpaceOnUse">
+						<circle cx="2" cy="2" r="1.1" className="fill-text-muted/25" />
+					</pattern>
+					<radialGradient id={`glow-${id}`}>
+						<stop offset="0" stopColor={accent} stopOpacity="0.28" />
+						<stop offset="1" stopColor={accent} stopOpacity="0" />
+					</radialGradient>
+					<filter id={gooId} filterUnits="userSpaceOnUse" x={0} y={0} width={W} height={H} colorInterpolationFilters="sRGB">
+						<feGaussianBlur in="SourceGraphic" stdDeviation={GOO_BLUR} />
+						<feColorMatrix values={GOO_ALPHA_MATRIX} />
+					</filter>
+				</defs>
+				<rect width={W} height={H} className="fill-background-surface" />
+				<rect width={W} height={H} fill={`url(#dots-${id})`} />
+				<ellipse cx={W / 2} cy={H / 2} rx={230} ry={150} fill={`url(#glow-${id})`} />
+				{children}
+			</svg>
+		</GooFilter.Provider>
+	);
+};
+
+/**
+ * A drop travelling along `path` that melts into the cards it reaches and pulls free on the other side.
+ * `targets` are the card outlines it passes through; they are drawn as solid blobs that the cards,
+ * drawn on top afterwards, hide, so only the liquid necks between drop and card show.
+ */
+const LiquidTraveller = ({
+	path,
+	accent,
+	seconds,
+	targets,
+}: {
+	path: string;
+	accent: string;
+	seconds: number;
+	targets: ReactNode;
+}) => {
+	const filterId = useContext(GooFilter);
+	return (
+		<g filter={`url(#${filterId})`} fill={accent}>
+			{targets}
+			<circle r={DROP_RADIUS} className="art-moving">
+				<animateMotion path={path} dur={`${seconds}s`} repeatCount="indefinite" />
+			</circle>
+		</g>
 	);
 };
 
@@ -67,13 +136,6 @@ const CheckBadge = ({ cx, cy, r = 8, accent, at }: { cx: number; cy: number; r?:
 /** Dashed connector whose dashes flow toward the end of the path. */
 const Flow = ({ d, accent }: { d: string; accent: string }) => (
 	<path d={d} fill="none" stroke={accent} strokeOpacity={0.55} strokeWidth={2} strokeLinecap="round" className="art-flow" />
-);
-
-/** Dot travelling along a path on a loop. */
-const Traveller = ({ path, accent, seconds, r = 4 }: { path: string; accent: string; seconds: number; r?: number }) => (
-	<circle r={r} fill={accent} className="art-moving">
-		<animateMotion path={path} dur={`${seconds}s`} repeatCount="indefinite" />
-	</circle>
 );
 
 const Pill = ({ x, y, w, text, accent }: { x: number; y: number; w: number; text: string; accent: string }) => (
@@ -115,6 +177,25 @@ const SalesArt = () => {
 	];
 	return (
 		<Scene accent={accent}>
+			<Flow d="M86 52 C110 52 108 109 130 109" accent={accent} />
+			<Flow d="M86 110 L130 110" accent={accent} />
+			<Flow d="M86 168 C110 168 108 111 130 111" accent={accent} />
+			<Flow d="M212 110 L246 110" accent={accent} />
+			<Flow d="M296 110 L330 110" accent={accent} />
+			<LiquidTraveller
+				path="M55 110 L355 110"
+				accent={accent}
+				seconds={4}
+				targets={
+					<>
+						<rect x={24} y={92} width={62} height={36} rx={8} />
+						<rect x={130} y={92} width={82} height={36} rx={8} />
+						<rect x={246} y={85} width={50} height={50} rx={12} />
+						<rect x={330} y={70} width={50} height={80} rx={8} />
+					</>
+				}
+			/>
+
 			{docs.map(({ y, tag }, i) => (
 				<g key={tag}>
 					<Card x={24} y={y} w={62} h={36} />
@@ -125,9 +206,6 @@ const SalesArt = () => {
 					<CheckBadge cx={84} cy={y + 2} accent={accent} at={0.4 + i * 0.6} />
 				</g>
 			))}
-			<Flow d="M86 52 C110 52 108 109 130 109" accent={accent} />
-			<Flow d="M86 110 L130 110" accent={accent} />
-			<Flow d="M86 168 C110 168 108 111 130 111" accent={accent} />
 
 			<Card x={130} y={92} w={82} h={36} />
 			{[140, 162, 184].map((x, i) => (
@@ -137,7 +215,6 @@ const SalesArt = () => {
 				queue
 			</text>
 
-			<Flow d="M212 110 L246 110" accent={accent} />
 			<circle cx={271} cy={110} r={26} fill="none" stroke={accent} strokeWidth={2} className="art-pulse" />
 			<rect x={246} y={85} width={50} height={50} rx={12} strokeWidth={2} stroke={accent} className="fill-background-elevated" />
 			<path
@@ -149,12 +226,10 @@ const SalesArt = () => {
 				LLM
 			</text>
 
-			<Flow d="M296 110 L330 110" accent={accent} />
 			<Card x={330} y={70} w={50} h={80} />
 			<Lines x={338} y={82} widths={[34, 26, 30]} />
 			<CheckBadge cx={355} cy={128} r={11} accent={accent} at={2.4} />
 
-			<Traveller path="M86 110 L130 110 L212 110 L246 110 L296 110 L330 110" accent={accent} seconds={3} />
 			<Pill x={268} y={18} w={112} text="12h → 1h" accent={accent} />
 		</Scene>
 	);
@@ -232,6 +307,14 @@ const PipelineArt = () => {
 		<Scene accent={accent}>
 			<path d={line} strokeWidth={4} strokeLinecap="round" className="stroke-border-subtle" />
 			<path d={line} pathLength={1} stroke={accent} strokeWidth={4} strokeLinecap="round" className="art-draw" />
+			<LiquidTraveller
+				path={line}
+				accent={accent}
+				seconds={4.5}
+				targets={xs.map((x) => (
+					<circle key={x} cx={x} cy={104} r={20} />
+				))}
+			/>
 			{stages.map((stage, i) => (
 				<g key={stage}>
 					<circle cx={xs[i]} cy={104} r={20} strokeWidth={2} className="fill-background-elevated stroke-border-subtle" />
@@ -244,7 +327,6 @@ const PipelineArt = () => {
 					</text>
 				</g>
 			))}
-			<Traveller path={line} accent={accent} seconds={3.6} />
 			<Pill x={128} y={24} w={144} text="✓ 99 tests · 0.33s" accent={accent} />
 			<text x={W / 2} y={190} textAnchor="middle" className="fill-text-muted font-mono text-[10px]">
 				main → fluig-prod
@@ -309,6 +391,14 @@ const PurchasingArt = () => {
 	return (
 		<Scene accent={accent}>
 			<Flow d={path} accent={accent} />
+			<LiquidTraveller
+				path={path}
+				accent={accent}
+				seconds={6}
+				targets={nodes.map(([cx, cy]) => (
+					<rect key={cx} x={cx - 30} y={cy - 18} width={60} height={36} rx={8} />
+				))}
+			/>
 			{nodes.map(([cx, cy], i) => (
 				<g key={cx}>
 					<Card x={cx - 30} y={cy - 18} w={60} h={36} />
@@ -330,7 +420,6 @@ const PurchasingArt = () => {
 					/>
 				</g>
 			))}
-			<Traveller path={path} accent={accent} seconds={5} />
 			<Pill x={150} y={176} w={100} text="SLA ✓ ERP ✓" accent={accent} />
 		</Scene>
 	);

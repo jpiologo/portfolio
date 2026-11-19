@@ -46,6 +46,11 @@ export default {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-8px)' },
         },
+        // Endless sideways scroll; the track holds its items twice (TechMarquee)
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
         // Slow full turn of the hero orbits (HeroVisual)
         orbit: {
           '0%': { transform: 'rotate(0deg)' },
@@ -66,6 +71,8 @@ export default {
         bob: 'bob 6s ease-in-out infinite',
         orbit: 'orbit 60s linear infinite',
         'orbit-reverse': 'orbit 60s linear infinite reverse',
+        marquee: 'marquee 40s linear infinite',
+        'marquee-reverse': 'marquee 40s linear infinite reverse',
         'scroll-wheel': 'scroll-wheel 1.6s ease-in-out infinite',
       },
       colors: {

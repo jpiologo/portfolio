@@ -1,5 +1,5 @@
 import { MapPin } from "lucide-react";
-import profileImage from "../assets/eutotvs.jpeg";
+import profileImage from "../assets/eutotvs.webp";
 import { useI18n } from "../i18n/context";
 import { yearsOfExperience } from "../lib/profile";
 import Reveal from "./Reveal";
@@ -10,7 +10,7 @@ const About = () => {
   return (
     <section id="about" className="pt-32 md:pt-40 pb-20 overflow-x-clip">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-12 items-center text-start">
           <Reveal>
             <h2 className="section-heading mb-6">
               {t.about.heading}
@@ -32,6 +32,10 @@ const About = () => {
                   <img
                     src={profileImage}
                     alt={t.about.photoAlt}
+                    loading="lazy"
+                    decoding="async"
+                    width={768}
+                    height={1024}
                     className="w-full h-full object-cover object-[center_25%] group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background-base/90 to-transparent pointer-events-none" />

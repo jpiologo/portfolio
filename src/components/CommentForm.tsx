@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { X, CheckCircle2, AlertCircle, Send } from 'lucide-react';
-import { supabase } from '../lib/supabase';
+import { getSupabase } from '../lib/supabase';
 import type { CommentInsert } from '../lib/types';
 import { useI18n } from '../i18n/context';
 
@@ -48,6 +48,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ isOpen, onClose }) => {
 
       // Insert into Supabase
       // Note: RLS forces `approved` = false on insertion by default if the policy is configured properly
+      const supabase = await getSupabase();
       const { error } = await supabase.from('comments').insert([
         {
           user_name: formData.user_name.trim(),

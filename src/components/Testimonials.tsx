@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { getSupabase } from '../lib/supabase';
 import type { Comment } from '../lib/types';
 import { MessageSquarePlus, Quote, Loader2, AlertCircle } from 'lucide-react';
 import CommentForm from './CommentForm';
@@ -30,6 +30,7 @@ const Testimonials = () => {
     setHasError(false);
     try {
       // The Supabase RLS policy strictly controls returning only approved=true
+      const supabase = await getSupabase();
       const { data, error: fetchError } = await supabase
         .from('comments')
         .select('id, created_at, user_name, company, commentary')

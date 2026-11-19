@@ -5,13 +5,13 @@ import Carousel from "./Carousel";
 import ProjectCard from "./ProjectCard";
 import { ProjectThumbnail } from "./ProjectCover";
 import { useIsDesktop } from "../lib/useMediaQuery";
-import fokusImage from "../assets/Fokus.png";
-import weatherImage from "../assets/weatherApp.png";
-import vocalVaultImage from "../assets/vocalVault.png";
-import caseCobra from "../assets/Home.png";
-import cleanUp from "../assets/CleanUpHome.png";
-import realtimeChatImage from "../assets/Destroyed.png";
-import playoffsSimulatorImage from "../assets/4a0.png";
+import fokusImage from "../assets/Fokus.webp";
+import weatherImage from "../assets/weatherApp.webp";
+import vocalVaultImage from "../assets/vocalVault.webp";
+import caseCobra from "../assets/Home.webp";
+import cleanUp from "../assets/CleanUpHome.webp";
+import realtimeChatImage from "../assets/Destroyed.webp";
+import playoffsSimulatorImage from "../assets/4a0.webp";
 import Reveal from "./Reveal";
 
 const PER_PAGE_DESKTOP = 2;
@@ -129,14 +129,14 @@ const PROJECTS: ProjectMeta[] = [
 	},
 	{
 		id: "cleanUp",
-		cover: { kind: "screenshot", src: cleanUp, logo: "/minis/clean-up-logo.png" },
+		cover: { kind: "screenshot", src: cleanUp, logo: "/minis/clean-up-logo.webp" },
 		techStack: ["typescript", "nextjs", "nestjs", "postgresql", "prisma", "tailwind", "jwt"],
 		githubLink: "https://github.com/jpiologo/CleanUp---Frontend",
 		inDevelopment: true,
 	},
 	{
 		id: "caseCobra",
-		cover: { kind: "screenshot", src: caseCobra, logo: "/minis/CaseCobra.png" },
+		cover: { kind: "screenshot", src: caseCobra, logo: "/minis/CaseCobra.webp" },
 		techStack: ["typescript", "nextjs", "postgresql", "prisma", "stripe", "kinde", "uploadthing", "resend"],
 		demoLink: "https://casecobra-taupe.vercel.app/",
 		githubLink: "https://github.com/jpiologo/CaseCobra",
@@ -157,7 +157,7 @@ const PROJECTS: ProjectMeta[] = [
 	},
 	{
 		id: "weatherApp",
-		cover: { kind: "screenshot", src: weatherImage, logo: "/minis/weatherApp.png" },
+		cover: { kind: "screenshot", src: weatherImage, logo: "/minis/weatherApp.webp" },
 		techStack: ["javascript", "openWeatherMap", "restApi", "json"],
 		demoLink: "https://weather-app-kappa-black.vercel.app/",
 		githubLink: "https://github.com/jpiologo/weatherApp",

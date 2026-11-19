@@ -58,11 +58,11 @@ export const en = {
 		badge: "TOTVS Fluig & process automation specialist",
 		greeting: "Hi, I'm João Piologo",
 		pitch:
-			"I turn manual, paper-and-spreadsheet processes into reliable systems — Fluig workflows, .NET microservices and ERP integrations running in production for thousands of requests.",
+			"Fluig workflows, microservices, ERP integrations for thousands of requests and whatever else your company might need.",
 		stats: {
 			years: "Years of experience",
-			processes: "Processes in production",
-			faster: "Faster vehicle sales",
+			processes: "Deployed processes",
+			faster: "Faster",
 		},
 		chips: {
 			// Billing (83k) + freight routing (2.3k) requests since 2025-12-19, counted in Fluig production
