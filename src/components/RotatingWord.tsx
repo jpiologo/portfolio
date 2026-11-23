@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useReducedMotion } from "../lib/useMediaQuery";
 
 const ROTATE_INTERVAL_MS = 2200;
 
@@ -12,14 +13,17 @@ type Rotation = { current: number; previous: number | null };
 const RotatingWord = ({ words, className = "" }: { words: string[]; className?: string }) => {
 	const [rotation, setRotation] = useState<Rotation>({ current: 0, previous: null });
 
+	const reducedMotion = useReducedMotion();
+
 	useEffect(() => {
 		setRotation({ current: 0, previous: null });
+		if (reducedMotion) return;
 		const interval = setInterval(
 			() => setRotation(({ current }) => ({ current: (current + 1) % words.length, previous: current })),
 			ROTATE_INTERVAL_MS,
 		);
 		return () => clearInterval(interval);
-	}, [words]);
+	}, [words, reducedMotion]);
 
 	const faceClass = (index: number) => {
 		if (index === rotation.current) return rotation.previous === null ? "" : "motion-safe:animate-cube-in";

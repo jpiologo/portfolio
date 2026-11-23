@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { buildMesh, highlightAt, type Mesh, type Vertex } from "../lib/triangleMesh";
+import { prefersReducedMotion } from "../lib/useMediaQuery";
 
 const CELL_SIZE = 110;
 const PARALLAX_PX = 36;
@@ -43,7 +44,7 @@ const TriangleMesh = () => {
 		const ctx = canvas?.getContext("2d");
 		if (!canvas || !ctx) return;
 
-		const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+		const reducedMotion = prefersReducedMotion();
 		const parallax = reducedMotion ? 0 : PARALLAX_PX;
 		const easing = reducedMotion ? 1 : EASING;
 

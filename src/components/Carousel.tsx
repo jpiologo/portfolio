@@ -28,7 +28,7 @@ const chunk = <T,>(items: T[], size: number): T[][] => {
 };
 
 const arrowClass =
-	"p-2 rounded-full border border-border-subtle bg-background-elevated text-text-muted shadow-sm transition-colors hover:text-accent-secondary hover:border-accent-secondary disabled:opacity-40 disabled:pointer-events-none";
+	"tap-target p-2 rounded-control border border-border-subtle bg-background-elevated text-text-muted shadow-sm transition-colors hover:text-accent-secondary hover:border-accent-secondary disabled:opacity-40 disabled:pointer-events-none";
 
 const Carousel = <T,>({ items, perPage, label, getKey, getName, renderItem, renderPreview }: CarouselProps<T>) => {
 	const t = useI18n();
@@ -85,7 +85,7 @@ const Carousel = <T,>({ items, perPage, label, getKey, getName, renderItem, rend
 			</div>
 
 			{pages.length > 1 && (
-				<div className="mt-10 flex items-center justify-center gap-4">
+				<div className="mt-8 flex items-center justify-center gap-4">
 					<button
 						type="button"
 						onClick={() => goTo(page - 1)}
@@ -105,7 +105,7 @@ const Carousel = <T,>({ items, perPage, label, getKey, getName, renderItem, rend
 							<span className="text-accent-secondary">{page + 1}</span> / {pages.length}
 						</p>
 					) : (
-						<ul className="flex items-center gap-2">
+						<ul className="flex items-center">
 							{pages.map((pageItems, index) => {
 								const isActive = index === page;
 								return (
@@ -115,10 +115,10 @@ const Carousel = <T,>({ items, perPage, label, getKey, getName, renderItem, rend
 											onClick={() => goTo(index)}
 											aria-label={pageLabel(index)}
 											aria-current={isActive ? "true" : undefined}
-											className="p-1.5 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary"
+											className="px-2 md:px-2.5 py-4 rounded-control focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary"
 										>
 											<span
-												className={`block h-2.5 rounded-full transition-all duration-300 ${
+												className={`block h-2.5 rounded-full transition-[width,background-color] duration-300 ${
 													isActive
 														? "w-8 bg-accent-secondary"
 														: "w-2.5 bg-text-muted/40 group-hover:bg-text-muted/70"
@@ -130,9 +130,9 @@ const Carousel = <T,>({ items, perPage, label, getKey, getName, renderItem, rend
 										{renderPreview && !isActive && (
 											<div
 												aria-hidden="true"
-												className="hidden [@media(hover:hover)]:block pointer-events-none absolute bottom-full left-1/2 z-20 mb-3 -translate-x-1/2 translate-y-1 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-has-[:focus-visible]:translate-y-0 group-has-[:focus-visible]:opacity-100"
+												className="hidden [@media(hover:hover)]:block pointer-events-none absolute bottom-full left-1/2 z-20 mb-0 -translate-x-1/2 translate-y-1 opacity-0 transition-[opacity,transform] duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-has-[:focus-visible]:translate-y-0 group-has-[:focus-visible]:opacity-100"
 											>
-												<div className="flex items-center gap-3 rounded-xl border border-border-subtle bg-background-elevated p-2 shadow-xl">
+												<div className="flex items-center gap-3 rounded-card border border-border-subtle bg-background-elevated p-2 shadow-xl">
 													{pageItems.map((item) => (
 														<Fragment key={getKey(item)}>{renderPreview(item)}</Fragment>
 													))}

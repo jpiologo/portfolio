@@ -35,6 +35,8 @@ export const pt: Messages = {
 		siteTitle: "João Piologo - Engenheiro de Software",
 		homeLabel: "João Piologo – início",
 		minRead: (minutes: number) => `${minutes} min de leitura`,
+		close: "Fechar",
+		skipToContent: "Pular para o conteúdo",
 		backToTop: "Voltar ao topo",
 		copyCode: "Copiar código",
 		copy: "Copiar",
@@ -75,39 +77,36 @@ export const pt: Messages = {
 		titlePlain: "Engenheiro de ",
 		titleHighlight: "Software;",
 		subtitle: "Construo software que",
-		outcomes: ["automatiza", "integra", "escala", "resulta", "resolve", "entrega", "transforma"],
+		outcomes: ["automatiza", "integra", "escala", "resolve", "entrega", "transforma"],
 		viewWork: "Ver meus cases",
 		getInTouch: "Entrar em Contato",
-		badge: "Especialista em TOTVS Fluig e automação de processos",
 		greeting: "Olá, eu sou João Piologo",
 		pitch:
 			"Workflows no Fluig, microsserviços, integrações com ERP para milhares de requisições e o que mais a sua empresa precisar.",
 		stats: {
 			years: "Anos de experiência",
 			processes: "Processos lançados",
-			faster: "Mais rápidos",
 		},
 		chips: {
-			// Faturamento (83 mil) + Roteirização de fretes (2,3 mil) desde 19/12/2025, contados no Fluig de produção
-			requests: { value: "85 mil+", label: "solicitações processadas em produção" },
-			tests: { value: "99 ✓", label: "testes automatizados a cada deploy" },
-			integrations: { value: "ERP + APIs", label: "integrados de ponta a ponta" },
+			requests: { value: (thousands: number) => `${thousands} mil+`, label: "solicitações processadas em produção" },
+			tests: { label: "testes automatizados a cada deploy" },
+			integrations: { label: "integrados de ponta a ponta" },
 		},
 	},
 
 	about: {
 		heading: "Sobre Mim",
 		intro: (years: number) =>
-			`Com mais de ${toWordsPt(years)} anos de experiência prática em desenvolvimento full-stack e formado em Engenharia de Software, minha atuação abrange desenvolvimento web, backend e pipelines de CI/CD. Também sou especialista na plataforma TOTVS Fluig.`,
+			`Agora, com mais de ${toWordsPt(years)} anos de experiência prática em desenvolvimento full-stack e formado em Engenharia de Software, atuo como Consultor B2B e Engenheiro Sênior, apoiado em uma stack poliglota para desenvolvimento web, backend e pipelines de CI/CD. Também sou especialista na plataforma TOTVS Fluig.`,
 		story:
-			"Minha trajetória na tecnologia começou como aprendiz, escrevendo VBA no Excel para automatizar processos manuais — e desde então me apaixonei por resolver problemas. Essa paixão inicial me levou à graduação em Engenharia de Software e a uma carreira arquitetando soluções corporativas complexas e escaláveis. Hoje, atuo como Consultor B2B e Engenheiro Sênior, apoiado em uma stack robusta e poliglota para construir softwares.",
+			"Minha trajetória na tecnologia começou como aprendiz, escrevendo VBA no Excel para automatizar processos manuais, e desde então me apaixonei por resolver problemas. Essa paixão inicial me levou à graduação em Engenharia de Software e a uma carreira arquitetando soluções corporativas complexas e escaláveis.",
 		photoAlt: "João Piologo no Universo TOTVS 2026",
 		photoCaption: "Universo TOTVS 2026, São Paulo - Brasil",
 	},
 
 	whatIDo: {
 		heading: "O que eu faço",
-		intro: "Essas são as áreas em que eu atuo — do primeiro rascunho da arquitetura até mantê-la saudável em produção.",
+		intro: "Essas são as áreas em que eu atuo, do primeiro rascunho da arquitetura até mantê-la saudável em produção.",
 		areas: {
 			engineering: {
 				title: "Engenharia de Software",
@@ -131,6 +130,16 @@ export const pt: Messages = {
 			},
 		},
 		stackLabel: "Stack com que trabalho",
+		stackFilterLabel: "Filtrar por área",
+		stackAll: "Todas",
+		stackGroups: {
+			languages: "Linguagens",
+			frontend: "Frontend",
+			backend: "Backend",
+			data: "Dados",
+			cloud: "Nuvem e ferramentas",
+			totvs: "TOTVS",
+		},
 	},
 
 	blog: {
@@ -147,7 +156,7 @@ export const pt: Messages = {
 		documentTitle: "Blog | João Piologo",
 		backHome: "Voltar ao início",
 		intro: "Todos os posts que escrevi sobre engenharia de software e tecnologia.",
-		searchPlaceholder: "Busque posts por título ou conteúdo...",
+		searchPlaceholder: "Busque posts por título ou conteúdo…",
 		searchLabel: "Buscar posts",
 		clearSearch: "Limpar busca",
 		results: (count: number, query: string) =>
@@ -156,12 +165,25 @@ export const pt: Messages = {
 		noResultsText: "Tente outras palavras-chave ou limpe a busca para ver todos os posts.",
 	},
 
+	seo: {
+		homeDescription:
+			"João Piologo é engenheiro de software full stack. Projetos, experiência e posts sobre Fluig, CI/CD com Jenkins e desenvolvimento web.",
+	},
+
+	notFound: {
+		documentTitle: "Página não encontrada | João Piologo",
+		title: "Página não encontrada",
+		text: "Esta página não existe ou mudou de endereço.",
+		backHome: "Voltar ao início",
+	},
+
 	blogPost: {
 		notFoundDocumentTitle: "Post não encontrado | João Piologo",
 		notFoundTitle: "Post não encontrado",
 		notFoundText: "Este post não existe ou foi removido.",
 		backToBlog: "Voltar ao blog",
 		allPosts: "Todos os posts",
+		nextPost: "Próximo post",
 	},
 
 	techNames: {
@@ -181,11 +203,14 @@ export const pt: Messages = {
 		heading: "Projetos em Destaque",
 		introBefore: "Aqui você encontra ",
 		introBold: "apenas algumas",
-		introAfter: " das soluções que construí de ponta a ponta — das decisões de arquitetura aos produtos em produção.",
+		introAfter: " das soluções que construí de ponta a ponta, das decisões de arquitetura aos produtos em produção.",
 		quote: "Tudo o que você pode imaginar é real.",
 		quoteAuthor: "Pablo Picasso",
 		carouselLabel: "Projetos em destaque",
 		inDevelopment: "Em Desenvolvimento",
+		studyProject: "Projeto de estudo",
+		allProjects: "Todos os projetos",
+		nextProject: "Próximo projeto",
 		viewCaseStudy: "Ver Estudo de Caso",
 		challenge: "O Desafio",
 		solution: "A Solução",
@@ -198,7 +223,7 @@ export const pt: Messages = {
 				title: "Automação de Vendas Ponta a Ponta",
 				subtitle: "Microsserviços orientados a eventos com validação de documentos por LLM",
 				description:
-					"Automação de ponta a ponta do processo de venda, da validação de documentos à emissão da nota fiscal. Microsserviços em .NET Core, filas no RabbitMQ e um LLM interno substituíram as conferências manuais — reduzindo cada venda de 10~12h para cerca de 1h.",
+					"Automação de ponta a ponta do processo de venda, da validação de documentos à emissão da nota fiscal. Microsserviços em .NET Core, filas no RabbitMQ e um LLM interno substituíram as conferências manuais e reduziram cada venda de 10~12h para cerca de 1h.",
 				details: {
 					challenge:
 						"Cada venda exigia que os documentos do cliente, armazenados em diferentes formatos (RG, CPF, Comprovantes, etc) fossem conferidos à mão antes da emissão da nota fiscal, seguidos das validações de estoque, depósitos, filial e trânsito. Uma venda levava de 10 a 12 horas, dependia da disponibilidade das pessoas e precisava continuar confiável com o aumento do volume.",
@@ -242,10 +267,10 @@ export const pt: Messages = {
 				title: "CleanUp",
 				subtitle: "Arquitetura Full-Stack",
 				description:
-					"Marketplace de serviços de ponta a ponta que conecta moradores a profissionais de limpeza — com agendamento em tempo real, painéis por perfil de acesso e agendamento automatizado.",
+					"Marketplace de serviços de ponta a ponta que conecta moradores a profissionais de limpeza, com agendamento em tempo real, painéis por perfil de acesso e agendamento automatizado.",
 				details: {
 					challenge:
-						"Projetar e entregar um marketplace de serviços pronto para produção, com fluxos separados para usuários e administradores, horários de agendamento em tempo real e autenticação segura — do schema do banco de dados ao frontend publicado.",
+						"Projetar um marketplace de serviços com fluxos separados para usuários e administradores, horários de agendamento em tempo real e autenticação segura, do schema do banco de dados ao frontend.",
 					solution:
 						"Construí uma arquitetura desacoplada, com o Next.js cuidando do SSR e das interações no cliente e o Nest.js fornecendo uma API REST modular baseada em decorators. O Prisma ORM mapeou os relacionamentos complexos de agendamento para o PostgreSQL, enquanto guards JWT garantem o controle de acesso por perfil em toda a plataforma.",
 					features: [
@@ -258,12 +283,12 @@ export const pt: Messages = {
 			},
 			caseCobra: {
 				title: "CaseCobra",
-				subtitle: "SaaS de E-Commerce",
+				subtitle: "E-Commerce",
 				description:
-					"Criador de capas de iPhone personalizadas com pré-visualização ao vivo, checkout com Stripe e confirmação automática de pedidos — publicado como um SaaS totalmente operacional na Vercel.",
+					"Criador de capas de iPhone personalizadas com pré-visualização ao vivo, checkout com Stripe e confirmação automática de pedidos. Publicado na Vercel.",
 				details: {
 					challenge:
-						"Construir um produto SaaS voltado ao consumidor que permita enviar imagens, pré-visualizar capas personalizadas em tempo real e concluir a compra por um fluxo de pagamento seguro — tudo em uma experiência visualmente refinada.",
+						"Construir uma loja que permita enviar imagens, pré-visualizar capas personalizadas em tempo real e concluir a compra por um fluxo de pagamento seguro.",
 					solution:
 						"Implementei um configurador de capas interativo com pré-visualização ao vivo em estilo 3D usando Next.js. Integrei o Stripe para pagamentos em conformidade com o PCI, o Uploadthing para gestão de arquivos, o Kinde para autenticação e o Resend para confirmações automáticas de pedidos. Publicado na Vercel com SSR otimizado na edge.",
 					features: [
@@ -278,10 +303,10 @@ export const pt: Messages = {
 				title: "Private Chat",
 				subtitle: "Salas Autodestrutivas em Tempo Real",
 				description:
-					"Salas de chat anônimas para duas pessoas que duram 10 minutos e podem ser destruídas a qualquer momento — as mensagens chegam em tempo real e são apagadas do servidor quando a sala termina.",
+					"Salas de chat anônimas para duas pessoas que duram 10 minutos e podem ser destruídas a qualquer momento. As mensagens chegam em tempo real e são apagadas do servidor quando a sala termina.",
 				details: {
 					challenge:
-						"Construir um chat privado sem cadastro, em que apenas duas pessoas entram em cada sala, as mensagens chegam na hora e nada fica para trás quando a sala expira ou é destruída — tudo em infraestrutura serverless, sem um servidor WebSocket sempre ativo.",
+						"Construir um chat privado sem cadastro, em que apenas duas pessoas entram em cada sala, as mensagens chegam na hora e nada fica para trás quando a sala expira ou é destruída, tudo em infraestrutura serverless, sem um servidor WebSocket sempre ativo.",
 					solution:
 						"Construído em Next.js com uma API Elysia montada em uma rota catch-all e consumida pelo cliente Eden, tipado de ponta a ponta. Os metadados das salas e as mensagens ficam no Upstash Redis com um TTL compartilhado, enquanto o Upstash Realtime envia novas mensagens e eventos de destruição aos dois participantes. Um proxy do Next.js emite um token httpOnly por participante e limita cada sala a dois, e o Zod valida cada requisição e evento.",
 					features: [
@@ -319,7 +344,7 @@ export const pt: Messages = {
 					"O cliente tinha pouca confiança na precisão dos seus dados de inventário, que representavam milhões de reais em estoque. O processo de inventário era totalmente manual, feito com papel e caneta. Depois que o departamento de suprimentos concluía a contagem, centenas de páginas escritas à mão eram enviadas à contabilidade, onde os dados eram digitados manualmente no ERP.",
 				details: {
 					challenge:
-						"O principal desafio foi substituir um processo de inventário altamente manual e em papel por um fluxo digital que os colaboradores pudessem adotar com facilidade, garantindo uma integração confiável e transparente com o ERP TOTVS Protheus da empresa. A solução também precisava reduzir erros, aumentar a confiança nos dados de inventário e eliminar os gargalos operacionais causados pelas passagens manuais entre departamentos.",
+						"O principal desafio foi substituir um processo de inventário altamente manual e em papel por um fluxo digital que os colaboradores pudessem adotar com facilidade, com uma integração confiável com o ERP TOTVS Protheus da empresa. A solução também precisava reduzir erros, aumentar a confiança nos dados de inventário e eliminar os gargalos operacionais causados pelas passagens manuais entre departamentos.",
 					solution:
 						"Desenvolvi um processo mobile na plataforma TOTVS Fluig, totalmente integrado ao ERP TOTVS Protheus da empresa, permitindo que o departamento de suprimentos realizasse as contagens de inventário de forma mais confiável e integrada. Isso eliminou o trabalho manual antes necessário entre os departamentos.",
 					features: [
@@ -336,10 +361,10 @@ export const pt: Messages = {
 				title: "Fluxo de Compras",
 				subtitle: "Um Fluxo de Compras de Ponta a Ponta Integrado ao TOTVS Protheus",
 				description:
-					"O projeto cobriu todo o fluxo de compras da empresa, incluindo solicitações de compra, pedidos de compra, conferência de recebimento, lançamento de notas fiscais de entrada e classificação de estoque. Cada etapa exigia aprovações estruturadas, prazos definidos, responsabilidades por perfil e comunicação fluida entre os departamentos. O processo também demandava integração completa com o TOTVS Protheus, com tratamento robusto de erros, logs de integração e mecanismos de contingência para garantir a continuidade operacional.",
+					"O projeto cobriu todo o fluxo de compras da empresa, incluindo solicitações de compra, pedidos de compra, conferência de recebimento, lançamento de notas fiscais de entrada e classificação de estoque. Cada etapa exigia aprovações estruturadas, prazos definidos, responsabilidades por perfil e comunicação clara entre os departamentos. O processo também demandava integração completa com o TOTVS Protheus, com tratamento de erros, logs de integração e mecanismos de contingência para garantir a continuidade operacional.",
 				details: {
 					challenge:
-						"O principal desafio foi projetar e implementar um fluxo de compras de ponta a ponta confiável, capaz de suportar diversas etapas críticas para o negócio, aprovações hierárquicas, prazos rigorosos e responsabilidades por perfil. Ao mesmo tempo, a solução precisava garantir uma integração transparente com o TOTVS Protheus, dar visibilidade aos eventos de integração por meio de logs e se manter resiliente com estratégias de contingência em caso de falhas de comunicação ou processamento.",
+						"O principal desafio foi projetar e implementar um fluxo de compras de ponta a ponta confiável, capaz de suportar diversas etapas críticas para o negócio, aprovações hierárquicas, prazos rigorosos e responsabilidades por perfil. Ao mesmo tempo, a solução precisava se integrar por completo ao TOTVS Protheus, dar visibilidade aos eventos de integração por meio de logs e se manter resiliente com estratégias de contingência em caso de falhas de comunicação ou processamento.",
 					solution:
 						"Projetei e implementei um fluxo de compras completo na plataforma TOTVS Fluig, totalmente integrado ao TOTVS Protheus. A solução cobriu todo o ciclo de compras, da solicitação à classificação de estoque, com formulários personalizados para cada etapa, fluxos de aprovação hierárquicos, notificações automáticas, alertas por e-mail, atribuição de responsáveis por perfil, logs de integração e mecanismos de contingência para tratar erros de integração com o ERP de forma segura e eficiente.",
 					features: [
@@ -437,7 +462,7 @@ export const pt: Messages = {
 				title: "Sistema de Gestão de Tarefas",
 				subtitle: "Ferramenta de Produtividade",
 				description:
-					"Gerenciador de tarefas baseado na técnica Pomodoro, com armazenamento local persistente — ajudando a organizar sessões de trabalho focado e acompanhar o progresso sem a necessidade de criar conta.",
+					"Gerenciador de tarefas baseado na técnica Pomodoro, com armazenamento local persistente. Ajuda a organizar sessões de trabalho focado e acompanhar o progresso sem a necessidade de criar conta.",
 				details: {
 					challenge:
 						"Criar uma ferramenta de produtividade sem atritos, que combine gestão de tarefas com a técnica Pomodoro e armazene todos os dados no navegador, sem exigir contas de usuário.",
@@ -455,7 +480,7 @@ export const pt: Messages = {
 				title: "App de Previsão do Tempo",
 				subtitle: "Integração com API",
 				description:
-					"Painel de clima em tempo real que consome a API do OpenWeatherMap — demonstrando padrões limpos de integração com APIs e visualização de dados responsiva.",
+					"Painel de clima em tempo real que consome a API do OpenWeatherMap, com padrões limpos de integração com APIs e visualização de dados responsiva.",
 				details: {
 					challenge:
 						"Construir um app de clima limpo e responsivo, que busque dados em tempo real de uma API externa e apresente informações meteorológicas complexas em um layout intuitivo e fácil de ler.",
@@ -473,10 +498,10 @@ export const pt: Messages = {
 				title: "Vocal Vault",
 				subtitle: "Interface por Voz",
 				description:
-					"Jogo no navegador controlado inteiramente por voz — explorando a Web Speech API para criar interações acessíveis e sem uso das mãos.",
+					"Jogo no navegador controlado inteiramente por voz, explorando a Web Speech API para criar interações acessíveis e sem uso das mãos.",
 				details: {
 					challenge:
-						"Explorar os recursos de reconhecimento de fala nativos do navegador para criar uma experiência interativa totalmente controlada por voz — indo além das interfaces tradicionais baseadas em cliques.",
+						"Explorar os recursos de reconhecimento de fala nativos do navegador para criar uma experiência interativa totalmente controlada por voz, indo além das interfaces tradicionais baseadas em cliques.",
 					solution:
 						"Usei a API webkitSpeechRecognition para capturar e interpretar a voz em tempo real. Construí um jogo de adivinhação de números com retorno claro por voz, mostrando como interfaces de fala podem criar experiências envolventes e acessíveis sem nenhuma entrada manual.",
 					features: [
@@ -496,7 +521,7 @@ export const pt: Messages = {
 		intro:
 			"Não precisa acreditar só na minha palavra. Veja o que dizem as pessoas que trabalharam comigo sobre o meu impacto, minhas habilidades e a nossa colaboração.",
 		leaveComment: "Deixe um comentário!",
-		loading: "Carregando comentários incríveis...",
+		loading: "Carregando comentários incríveis…",
 		errorTitle: "Ops! Algo deu errado",
 		errorText: "Não foi possível carregar os depoimentos agora. Tente novamente mais tarde.",
 		tryAgain: "Tentar novamente",
@@ -507,7 +532,6 @@ export const pt: Messages = {
 
 	commentForm: {
 		title: "Deixe um depoimento",
-		close: "Fechar",
 		successTitle: "Obrigado!",
 		successText: "Seu comentário foi enviado com sucesso e aparecerá publicamente após a revisão.",
 		closeWindow: "Fechar janela",
@@ -519,6 +543,7 @@ export const pt: Messages = {
 		commentPlaceholder: "Conte como foi trabalhar comigo. Como enfrentamos juntos os desafios e projetos?",
 		cancel: "Cancelar",
 		submit: "Enviar",
+		submitting: "Enviando…",
 		reviewNotice: "Os comentários são enviados com segurança e revisados manualmente antes de serem exibidos.",
 		requiredError: "Nome e comentário são campos obrigatórios.",
 		genericError: "Ocorreu um erro inesperado ao enviar. Tente novamente.",
@@ -531,14 +556,14 @@ export const pt: Messages = {
 		nameLabel: "Nome",
 		namePlaceholder: "Seu nome",
 		messageLabel: "Mensagem",
-		messagePlaceholder: "Sua mensagem...",
+		messagePlaceholder: "Sua mensagem…",
 		send: "Enviar",
 		mailSubject: (name: string) => `Contato pelo portfólio - ${name}`,
 	},
 
 	footer: {
 		social: "Redes Sociais",
-		rights: "All rights reserved.",
+		rights: "Todos os direitos reservados.",
 		downloads: "Downloads",
 		resumes: {
 			en: "Currículo (Inglês)",

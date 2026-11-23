@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useI18n } from "../i18n/context";
 import { PROCESSES_IN_PRODUCTION, yearsOfExperience } from "../lib/profile";
+import { useReducedMotion } from "../lib/useMediaQuery";
 import CountUp from "./CountUp";
 import HeroVisual from "./HeroVisual";
 import RotatingWord from "./RotatingWord";
@@ -10,13 +11,12 @@ import RotatingWord from "./RotatingWord";
 const TYPING_INTERVAL_MS = 50;
 /** Gap between the hero blocks as they fade in on load. */
 const ENTER_STAGGER_MS = 120;
-/** Vehicle sales went from 10~12h to about 1h (see the salesAutomation project). */
-const SALES_SPEEDUP = 10;
 
 const enterDelay = (step: number) => ({ "--enter-delay": `${step * ENTER_STAGGER_MS}ms` }) as React.CSSProperties;
 
 const Hero = () => {
 	const t = useI18n();
+	const reducedMotion = useReducedMotion();
 	const { titlePlain, titleHighlight } = t.hero;
 	const textToType = titlePlain + titleHighlight;
 	const [typedText, setTypedText] = useState("");
@@ -24,6 +24,11 @@ const Hero = () => {
 
 	// Typing effect for the title; restarts when the language changes
 	useEffect(() => {
+		if (reducedMotion) {
+			setTypedText(textToType);
+			setIsTypingDone(true);
+			return;
+		}
 		let i = 0;
 		setIsTypingDone(false);
 		const typingInterval = setInterval(() => {
@@ -36,14 +41,14 @@ const Hero = () => {
 			}
 		}, TYPING_INTERVAL_MS);
 		return () => clearInterval(typingInterval);
-	}, [textToType]);
+	}, [textToType, reducedMotion]);
 
 	// Insert cursor: solid while typing, blinks like a terminal once done
 	const caret = (
 		<span
 			aria-hidden="true"
 			className={`inline-block w-[4px] h-[1.1em] bg-text-primary ml-2 align-middle mb-1 md:mb-2 rounded-full ${
-				isTypingDone ? "animate-caret-blink" : ""
+				isTypingDone ? "motion-safe:animate-caret-blink" : ""
 			}`}
 		></span>
 	);
@@ -72,7 +77,6 @@ const Hero = () => {
 	const stats = [
 		{ value: yearsOfExperience(), suffix: "+", label: t.hero.stats.years },
 		{ value: PROCESSES_IN_PRODUCTION, suffix: "+", label: t.hero.stats.processes },
-		{ value: SALES_SPEEDUP, suffix: "x", label: t.hero.stats.faster },
 	];
 
 	return (
@@ -82,27 +86,17 @@ const Hero = () => {
 				className="pointer-events-none absolute -top-48 -right-40 h-[640px] w-[640px] rounded-full bg-accent-secondary/10 blur-[120px]"
 			/>
 
-			<div className="relative z-10 w-full max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-16 items-center">
+			<div className="relative z-10 w-full page-container grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-16 items-center">
 				<div className="min-w-0 flex flex-col items-center text-center lg:items-start lg:text-left">
-					{/* <span
-						style={enterDelay(0)}
-						className="hero-enter inline-flex items-center gap-2 rounded-full border border-border-subtle bg-background-elevated/80 px-4 py-1.5 text-xs font-semibold text-text-primary shadow-sm backdrop-blur"
-					>
-						<span className="relative flex h-2 w-2">
-							<span className="absolute inline-flex h-full w-full rounded-full bg-accent-secondary opacity-75 motion-safe:animate-ping" />
-							<span className="relative inline-flex h-2 w-2 rounded-full bg-accent-secondary" />
-						</span>
-						{t.hero.badge}
-					</span> */}
-
 					<p style={enterDelay(1)} className="hero-enter mt-6 text-base md:text-lg font-medium text-text-muted">
 						{t.hero.greeting}
 					</p>
 
 					<h1 className="select-none font-display text-[clamp(2.25rem,11vw,3rem)] md:text-6xl lg:text-[3.5rem] xl:text-6xl font-extrabold mt-2 mb-4 leading-tight md:leading-tight tracking-tight">
+						<span className="sr-only">{textToType}</span>
 						{/* The full title, invisible, holds its final size, so nothing around it moves while it's typed */}
-						<span className="inline-grid">
-							<span aria-hidden="true" className="invisible col-start-1 row-start-1">
+						<span aria-hidden="true" className="inline-grid">
+							<span className="invisible col-start-1 row-start-1">
 								{renderTitle(textToType)}
 							</span>
 							<span className="col-start-1 row-start-1 lg:text-left">
@@ -120,7 +114,7 @@ const Hero = () => {
 						<RotatingWord words={t.hero.outcomes} className="font-signature text-accent-secondary max-lg:justify-items-center" />
 					</p>
 
-					<p style={enterDelay(3)} className="hero-enter mt-5 max-w-xl text-base md:text-lg font-light leading-relaxed text-text-muted">
+					<p style={enterDelay(3)} className="hero-enter mt-5 max-w-xl text-base md:text-lg leading-relaxed text-text-muted">
 						{t.hero.pitch}
 					</p>
 
@@ -136,11 +130,11 @@ const Hero = () => {
 
 					<dl
 						style={enterDelay(5)}
-						className="hero-enter mt-12 grid w-full max-w-lg grid-cols-3 gap-4 border-t border-border-subtle pt-8"
+						className="hero-enter mt-12 flex w-full max-w-lg justify-center gap-x-16 border-t border-border-subtle pt-8"
 					>
 						{stats.map(({ value, suffix, label }) => (
-							<div key={label} className="flex flex-col gap-1">
-								<dt className="order-2 justify-end text-xs md:text-sm text-text-muted leading-snug">{label}</dt>
+							<div key={label} className="flex flex-col items-center gap-1 text-center">
+								<dt className="order-2 text-xs md:text-sm text-text-muted leading-snug">{label}</dt>
 								<dd className="order-1 font-heading text-3xl md:text-4xl font-bold text-text-primary">
 									<CountUp to={value} suffix={suffix} />
 								</dd>

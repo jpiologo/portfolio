@@ -8,27 +8,27 @@ const About = () => {
   const t = useI18n();
 
   return (
-    <section id="about" className="pt-32 md:pt-40 pb-20 overflow-x-clip">
-      <div className="max-w-6xl mx-auto px-4">
+    <section id="about" className="page-section overflow-x-clip">
+      <div className="page-container">
         <div className="grid md:grid-cols-2 gap-12 items-center text-start">
           <Reveal>
-            <h2 className="section-heading mb-6">
+            <h2 className="section-heading mb-4">
               {t.about.heading}
             </h2>
             <div className="space-y-4">
-              <p className="section-intro">{t.about.intro(yearsOfExperience())}</p>
               <p className="section-intro">{t.about.story}</p>
+              <p className="section-intro">{t.about.intro(yearsOfExperience())}</p>
             </div>
           </Reveal>
 
-          <Reveal delay={150} className="w-full max-w-sm mx-auto md:ml-auto md:mr-0">
+          <Reveal delay={150} className="w-full max-w-sm mx-auto md:ml-auto md:mr-0 pr-4">
             <figure>
               <div className="relative">
                 {/* Offset accent frame behind the photo */}
-                <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-2xl border-2 border-accent-secondary/40 pointer-events-none" />
+                <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-card border-2 border-accent-secondary/40 pointer-events-none" />
                 <div className="absolute -inset-6 bg-accent-primary/20 rounded-full blur-3xl pointer-events-none" />
 
-                <div className="group relative aspect-[4/5] overflow-hidden rounded-2xl border border-border-subtle shadow-2xl">
+                <div className="group relative aspect-[4/5] overflow-hidden rounded-card border border-border-subtle shadow-2xl">
                   <img
                     src={profileImage}
                     alt={t.about.photoAlt}

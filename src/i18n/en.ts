@@ -1,6 +1,31 @@
 import type { GenericTechId } from "../lib/techCatalog";
 import type { Language } from "./language";
-import { toWords } from "number-to-words";
+
+const NUMBER_WORDS = [
+	"zero",
+	"one",
+	"two",
+	"three",
+	"four",
+	"five",
+	"six",
+	"seven",
+	"eight",
+	"nine",
+	"ten",
+	"eleven",
+	"twelve",
+	"thirteen",
+	"fourteen",
+	"fifteen",
+	"sixteen",
+	"seventeen",
+	"eighteen",
+	"nineteen",
+	"twenty",
+];
+
+const toWords = (value: number) => NUMBER_WORDS[value] ?? String(value);
 
 export const en = {
 	language: "en" as Language,
@@ -11,6 +36,8 @@ export const en = {
 		siteTitle: "João Piologo - Software Engineer",
 		homeLabel: "João Piologo – home",
 		minRead: (minutes: number) => `${minutes} min read`,
+		close: "Close",
+		skipToContent: "Skip to content",
 		backToTop: "Back to top",
 		copyCode: "Copy code",
 		copy: "Copy",
@@ -52,39 +79,36 @@ export const en = {
 		titlePlain: "Software ",
 		titleHighlight: "Engineer;",
 		subtitle: "I build software that",
-		outcomes: ["automates", "integrates", "scales", "results", "resolves", "delivers", "transforms"],
+		outcomes: ["automates", "integrates", "scales", "delivers", "transforms"],
 		viewWork: "View My Work",
 		getInTouch: "Get in Touch",
-		badge: "TOTVS Fluig & process automation specialist",
 		greeting: "Hi, I'm João Piologo",
 		pitch:
 			"Fluig workflows, microservices, ERP integrations for thousands of requests and whatever else your company might need.",
 		stats: {
 			years: "Years of experience",
 			processes: "Deployed processes",
-			faster: "Faster",
 		},
 		chips: {
-			// Billing (83k) + freight routing (2.3k) requests since 2025-12-19, counted in Fluig production
-			requests: { value: "85k+", label: "requests processed in production" },
-			tests: { value: "99 ✓", label: "automated tests on every deploy" },
-			integrations: { value: "ERP + APIs", label: "integrated end to end" },
+			requests: { value: (thousands: number) => `${thousands}k+`, label: "requests processed in production" },
+			tests: { label: "automated tests on every deploy" },
+			integrations: { label: "integrated end to end" },
 		},
 	},
 
 	about: {
 		heading: "About Me",
 		intro: (years: number) =>
-			`With over ${toWords(years)} years of hands-on experience in full-stack development and graduated in Software Engineering, my expertise spans across web development, backend development and CI/CD pipelines. I'm also a specialist in the TOTVS Fluig platform.`,
+			`Now, with over ${toWords(years)} years of hands-on experience in full-stack development and a degree in Software Engineering, I work as a B2B Consultant and Senior Engineer, drawing on a polyglot stack for web development, backend and CI/CD pipelines. I'm also a specialist in the TOTVS Fluig platform.`,
 		story:
-			"My journey in tech started as an apprentice, writing Excel VBA to automate manual processes — and I was hooked on problem-solving. That early passion led me to a degree in Software Engineering and a career architecting complex, scalable corporate solutions. Today, I act as a B2B Consultant and Senior Engineer, drawing on a robust, polyglot stack to build software that delivers real business value.",
+			"My journey in tech started as an apprentice, writing Excel VBA to automate manual processes, and I have loved solving problems ever since. That early passion led me to a degree in Software Engineering and a career architecting complex, scalable corporate solutions.",
 		photoAlt: "João Piologo at Universo TOTVS 2026",
 		photoCaption: "Universo TOTVS 2026, São Paulo - Brazil",
 	},
 
 	whatIDo: {
 		heading: "What I Do",
-		intro: "These are the areas I work in — from the first sketch of the architecture to keeping it healthy in production.",
+		intro: "These are the areas I work in, from the first sketch of the architecture to keeping it healthy in production.",
 		areas: {
 			engineering: {
 				title: "Software Engineering",
@@ -108,6 +132,16 @@ export const en = {
 			},
 		},
 		stackLabel: "Stack I work with",
+		stackFilterLabel: "Filter by area",
+		stackAll: "All",
+		stackGroups: {
+			languages: "Languages",
+			frontend: "Frontend",
+			backend: "Backend",
+			data: "Data",
+			cloud: "Cloud & Tools",
+			totvs: "TOTVS",
+		},
 	},
 
 	blog: {
@@ -124,12 +158,24 @@ export const en = {
 		documentTitle: "Blog | João Piologo",
 		backHome: "Back to home",
 		intro: "Every post I've written about software engineering and technology.",
-		searchPlaceholder: "Search posts by title or content...",
+		searchPlaceholder: "Search posts by title or content…",
 		searchLabel: "Search posts",
 		clearSearch: "Clear search",
 		results: (count: number, query: string) => `${count} ${count === 1 ? "result" : "results"} for "${query}"`,
 		noResultsTitle: "No posts found",
 		noResultsText: "Try different keywords or clear the search to see every post.",
+	},
+
+	seo: {
+		homeDescription:
+			"João Piologo is a full stack software engineer. Projects, experience and blog posts about Fluig, CI/CD with Jenkins and web development.",
+	},
+
+	notFound: {
+		documentTitle: "Page not found | João Piologo",
+		title: "Page not found",
+		text: "This page doesn't exist or was moved.",
+		backHome: "Back to home",
 	},
 
 	blogPost: {
@@ -138,6 +184,7 @@ export const en = {
 		notFoundText: "This post doesn't exist or was removed.",
 		backToBlog: "Back to blog",
 		allPosts: "All posts",
+		nextPost: "Next post",
 	},
 
 	// Generic technologies; brand names (TypeScript, Jenkins...) live in src/lib/techCatalog.ts
@@ -158,11 +205,14 @@ export const en = {
 		heading: "Featured Projects",
 		introBefore: "Here you can find ",
 		introBold: "just some",
-		introAfter: " of the solutions that I've built end-to-end — from architecture decisions to deployed products.",
+		introAfter: " of the solutions that I've built end to end, from architecture decisions to deployed products.",
 		quote: "Everything you can imagine is real.",
 		quoteAuthor: "Pablo Picasso",
 		carouselLabel: "Featured projects",
 		inDevelopment: "In Development",
+		studyProject: "Study project",
+		allProjects: "All projects",
+		nextProject: "Next project",
 		viewCaseStudy: "View Case Study",
 		challenge: "The Challenge",
 		solution: "The Solution",
@@ -175,7 +225,7 @@ export const en = {
 				title: "End-to-End Sales Automation",
 				subtitle: "Event-Driven Microservices with LLM Document Validation",
 				description:
-					"End-to-end automation of the sales process, from document validation to invoice issuance. .NET Core microservices, RabbitMQ queues and an internal LLM replaced manual checks — cutting each sale from 10–12 hours to about 1 hour.",
+					"End-to-end automation of the sales process, from document validation to invoice issuance. .NET Core microservices, RabbitMQ queues and an internal LLM replaced manual checks and cut each sale from 10–12 hours to about 1 hour.",
 				details: {
 					challenge:
 						"Every sale required the customer's documents, stored in different formats (ID card, CPF, proofs, etc.), to be checked by hand before the invoice could be issued, followed by stock, warehouse, branch and transit checks. Each sale took 10 to 12 hours, depended on people being available, and had to stay reliable as volume grew.",
@@ -219,10 +269,10 @@ export const en = {
 				title: "CleanUp",
 				subtitle: "Full-Stack Architecture",
 				description:
-					"End-to-end service marketplace connecting homeowners with cleaning professionals — featuring real-time booking, role-based dashboards, and automated scheduling.",
+					"End-to-end service marketplace connecting homeowners with cleaning professionals, with real-time booking, role-based dashboards, and automated scheduling.",
 				details: {
 					challenge:
-						"Design and ship a production-grade service marketplace with separate user and admin workflows, real-time booking slots, and secure authentication — from database schema to deployed frontend.",
+						"Design a service marketplace with separate user and admin workflows, real-time booking slots, and secure authentication, from database schema to frontend.",
 					solution:
 						"Built a decoupled architecture with Next.js handling SSR and client interactions, and Nest.js providing a modular, decorator-based REST API. Prisma ORM mapped complex booking relationships to PostgreSQL, while JWT guards enforce role-based access across the platform.",
 					features: [
@@ -235,12 +285,12 @@ export const en = {
 			},
 			caseCobra: {
 				title: "CaseCobra",
-				subtitle: "E-Commerce SaaS",
+				subtitle: "E-Commerce",
 				description:
-					"Custom iPhone case designer with live preview, Stripe checkout, and automated order confirmation — deployed as a fully operational SaaS on Vercel.",
+					"Custom iPhone case designer with live preview, Stripe checkout, and automated order confirmation. Deployed on Vercel.",
 				details: {
 					challenge:
-						"Build a consumer-facing SaaS product that lets users upload images, preview custom phone cases in real-time, and complete purchases through a secure payment flow — all within a visually polished experience.",
+						"Build a store that lets users upload images, preview custom phone cases in real-time, and complete purchases through a secure payment flow.",
 					solution:
 						"Implemented an interactive case configurator with live 3D-style preview using Next.js. Integrated Stripe for PCI-compliant payments, Uploadthing for asset management, Kinde for authentication, and Resend for automated order confirmations. Deployed on Vercel with edge-optimized SSR.",
 					features: [
@@ -255,10 +305,10 @@ export const en = {
 				title: "Private Chat",
 				subtitle: "Realtime Self-Destructing Rooms",
 				description:
-					"Anonymous, two-person chat rooms that live for 10 minutes and can be destroyed on demand — messages are delivered in real time and wiped from the server when the room ends.",
+					"Anonymous, two-person chat rooms that live for 10 minutes and can be destroyed on demand. Messages are delivered in real time and wiped from the server when the room ends.",
 				details: {
 					challenge:
-						"Build a private chat with no sign-up where only two people can join a room, messages arrive instantly, and nothing is left behind once the room expires or is destroyed — all running on serverless infrastructure without a long-lived WebSocket server.",
+						"Build a private chat with no sign-up where only two people can join a room, messages arrive instantly, and nothing is left behind once the room expires or is destroyed, all running on serverless infrastructure without a long-lived WebSocket server.",
 					solution:
 						"Built on Next.js with an Elysia API mounted in a catch-all route and consumed through Eden's end-to-end typed client. Room metadata and messages live in Upstash Redis with a shared TTL, while Upstash Realtime pushes new messages and destroy events to both participants. A Next.js proxy issues an httpOnly token per participant and caps each room at two, and Zod validates every request and event.",
 					features: [
@@ -296,7 +346,7 @@ export const en = {
 					"The client faced low confidence in the accuracy of their inventory data, which represented millions of reais in stock value. The inventory process was entirely manual, carried out using pen and paper. After the supply department completed the count, hundreds of handwritten pages were sent to accounting, where the data was manually entered into the ERP system.",
 				details: {
 					challenge:
-						"The main challenge was replacing a highly manual, paper-based inventory process with a digital workflow that employees could easily adopt, while ensuring seamless and reliable integration with the company’s TOTVS Protheus ERP. The solution also had to reduce errors, improve trust in inventory data, and eliminate the operational bottlenecks caused by manual handoffs between departments.",
+						"The main challenge was replacing a highly manual, paper-based inventory process with a digital workflow that employees could easily adopt, with reliable integration with the company’s TOTVS Protheus ERP. The solution also had to reduce errors, improve trust in inventory data, and eliminate the operational bottlenecks caused by manual handoffs between departments.",
 					solution:
 						"I developed a mobile process within the TOTVS Fluig platform, fully integrated with the company’s TOTVS Protheus ERP, allowing the supply department to perform inventory counts in a more reliable and fully integrated way. This eliminated the manual work previously required across departments.",
 					features: [
@@ -313,10 +363,10 @@ export const en = {
 				title: "Purchasing Flow",
 				subtitle: "An End-to-End Procurement Workflow Integrated with TOTVS Protheus",
 				description:
-					"The project covered the company’s entire purchasing flow, including purchase requests, purchase orders, receiving checks, inbound invoice registration, and inventory classification. Each stage required structured approvals, defined deadlines, role-based responsibilities, and seamless communication between departments. The process also demanded full integration with TOTVS Protheus, along with robust error handling, integration logs, and fallback mechanisms to ensure operational continuity.",
+					"The project covered the company’s entire purchasing flow, including purchase requests, purchase orders, receiving checks, inbound invoice registration, and inventory classification. Each stage required structured approvals, defined deadlines, role-based responsibilities, and clear communication between departments. The process also demanded full integration with TOTVS Protheus, along with error handling, integration logs, and fallback mechanisms to ensure operational continuity.",
 				details: {
 					challenge:
-						"The main challenge was designing and implementing a reliable end-to-end procurement workflow capable of supporting multiple business-critical stages, hierarchical approvals, strict deadlines, and role-based responsibilities. At the same time, the solution needed to ensure seamless integration with TOTVS Protheus, provide visibility into integration events through logs, and remain resilient through fallback strategies in case of communication or processing failures.",
+						"The main challenge was designing and implementing a reliable end-to-end procurement workflow capable of supporting multiple business-critical stages, hierarchical approvals, strict deadlines, and role-based responsibilities. At the same time, the solution needed to integrate fully with TOTVS Protheus, provide visibility into integration events through logs, and remain resilient through fallback strategies in case of communication or processing failures.",
 					solution:
 						"I designed and implemented a complete purchasing workflow within the TOTVS Fluig platform, fully integrated with TOTVS Protheus. The solution covered the full procurement lifecycle, from purchase requests to inventory classification, with customized forms for each stage, hierarchical approval flows, automated notifications, email alerts, user role assignment, integration logging, and fallback mechanisms to handle ERP integration errors safely and efficiently.",
 					features: [
@@ -414,7 +464,7 @@ export const en = {
 				title: "Task Management System",
 				subtitle: "Productivity Tool",
 				description:
-					"Pomodoro-based task manager with persistent local storage — helping users structure focused work sessions and track progress without account friction.",
+					"Pomodoro-based task manager with persistent local storage. It helps users structure focused work sessions and track progress without account friction.",
 				details: {
 					challenge:
 						"Create a frictionless productivity tool that combines task management with the Pomodoro technique, storing all data client-side without requiring user accounts.",
@@ -432,7 +482,7 @@ export const en = {
 				title: "Weather Search App",
 				subtitle: "API Integration",
 				description:
-					"Real-time weather dashboard consuming the OpenWeatherMap API — demonstrating clean API integration patterns and responsive data visualization.",
+					"Real-time weather dashboard consuming the OpenWeatherMap API, showing clean API integration patterns and responsive data visualization.",
 				details: {
 					challenge:
 						"Build a clean, responsive weather app that fetches real-time data from an external API and presents complex meteorological information in an intuitive, scannable layout.",
@@ -450,10 +500,10 @@ export const en = {
 				title: "Vocal Vault",
 				subtitle: "Voice Interface",
 				description:
-					"Browser-based game controlled entirely by voice — exploring the Web Speech API to create accessible, hands-free user interactions.",
+					"Browser-based game controlled entirely by voice, exploring the Web Speech API to create accessible, hands-free user interactions.",
 				details: {
 					challenge:
-						"Explore the capabilities of browser-native speech recognition to create a fully voice-controlled interactive experience — pushing beyond traditional click-based interfaces.",
+						"Explore the capabilities of browser-native speech recognition to create a fully voice-controlled interactive experience, beyond traditional click-based interfaces.",
 					solution:
 						"Leveraged the webkitSpeechRecognition API to capture and parse voice input in real-time. Built a number-guessing game with clear voice feedback loops, demonstrating how speech interfaces can create engaging, accessible experiences without any manual input.",
 					features: [
@@ -473,7 +523,7 @@ export const en = {
 		intro:
 			"Don't just take my word for it. Here is what people who have worked with me have to say about my impact, skills, and collaboration.",
 		leaveComment: "Leave a comment!",
-		loading: "Loading amazing comments...",
+		loading: "Loading amazing comments…",
 		errorTitle: "Oops! Something went wrong",
 		errorText: "Unable to load testimonials at this time. Please try again later.",
 		tryAgain: "Try Again",
@@ -484,7 +534,6 @@ export const en = {
 
 	commentForm: {
 		title: "Leave a testimonial",
-		close: "Close",
 		successTitle: "Thank you!",
 		successText: "Your comment has been submitted successfully and will appear publicly after review.",
 		closeWindow: "Close Window",
@@ -496,6 +545,7 @@ export const en = {
 		commentPlaceholder: "Share your experience working with me. How did we tackle challenges and projects together?",
 		cancel: "Cancel",
 		submit: "Submit",
+		submitting: "Submitting…",
 		reviewNotice: "Comments are securely submitted and manually reviewed prior to display.",
 		requiredError: "Name and comment are required fields.",
 		genericError: "An unexpected error occurred while submitting. Please try again.",
@@ -508,7 +558,7 @@ export const en = {
 		nameLabel: "Name",
 		namePlaceholder: "Your Name",
 		messageLabel: "Message",
-		messagePlaceholder: "Your message...",
+		messagePlaceholder: "Your message…",
 		send: "Send",
 		mailSubject: (name: string) => `Portfolio contact - ${name}`,
 	},

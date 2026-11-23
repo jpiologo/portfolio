@@ -19,3 +19,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
 ];
 
 export const isExternalLink = (href: string) => href.startsWith("http");
+
+/** Opens links to other sites in a new tab; mailto and the like stay in this one. */
+export const externalLinkProps = (href: string) =>
+	isExternalLink(href) ? { target: "_blank", rel: "noopener noreferrer" } : {};

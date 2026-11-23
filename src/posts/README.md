@@ -119,7 +119,7 @@ Dicas:
 
 ## Tradução para português
 
-Visitantes no Brasil veem o site em português. Para o post também aparecer traduzido, crie um `index.pt.md` ao lado do `index.md`:
+O site em português fica em `/pt`, para onde vão os visitantes com navegador em português. Para o post também aparecer traduzido, crie um `index.pt.md` ao lado do `index.md`:
 
 ```
 src/posts/meu-primeiro-tutorial/
@@ -139,10 +139,10 @@ Aqui começa o texto do post em português...
 ```
 
 - `date`, `cover` e `draft` vêm **sempre** do `index.md`. Não repita esses campos no `index.pt.md`.
-- Sem `index.pt.md`, o visitante no Brasil vê a versão em inglês.
+- Sem `index.pt.md`, `/pt/blog/<slug>` mostra a versão em inglês e o Google indexa só a página em inglês.
 - Mantenha os blocos de código iguais aos do `index.md`; traduza só o texto.
-- A URL é a mesma para os dois idiomas (`/blog/<slug>`).
-- As páginas geradas para o Google (passo 7) usam a versão em inglês.
+- O inglês fica em `/blog/<slug>` e o português em `/pt/blog/<slug>`. O build gera as duas páginas.
+- Escreva os links internos sempre como em inglês (`/blog/outro-post`): o site mantém o idioma do leitor.
 
 ## 5. Veja o post localmente
 
@@ -176,11 +176,11 @@ O deploy (Vercel/Netlify) gera o site com o post novo. Se o deploy publica só a
 
 ## 7. SEO (Google e redes sociais)
 
-O build (`vite-plugin-seo.ts`) gera sozinho, para cada post, uma página HTML com o texto já renderizado, `<title>`, `meta description`, URL canônica, Open Graph e dados estruturados (`BlogPosting`), além de `sitemap.xml` e `robots.txt`. Não há nada para configurar por post, mas o conteúdo faz diferença:
+O build (`vite-plugin-seo.ts`) gera sozinho, para cada post e idioma, uma página HTML com o texto já renderizado, `<title>`, `meta description`, URL canônica, `hreflang`, Open Graph e dados estruturados (`BlogPosting`), além de `sitemap.xml` e `robots.txt`. Não há nada para configurar por post, mas o conteúdo faz diferença:
 
 - **`title`:** até ~60 caracteres, com o termo que alguém digitaria no Google (ex.: "Fluig", "Jenkins").
 - **`description`:** entre ~120 e 160 caracteres. É o texto que o Google costuma mostrar abaixo do título.
-- **`cover`:** use `png`, `jpg` ou `webp` para a capa aparecer na prévia do link no LinkedIn/WhatsApp. Capas `svg` funcionam no site, mas não viram prévia.
+- **Prévia do link (LinkedIn/WhatsApp):** vem de `public/og/blog/<slug>.jpg` (1200×630). Rode `npm run og` para gerá-la a partir da capa; sem ela, a prévia usa a imagem da home.
 - **Links internos:** cite posts anteriores com `[texto](/blog/outro-post)`. Isso ajuda o Google a descobrir e relacionar as páginas.
 - **Slug:** depois de publicado, não renomeie a pasta. A URL muda e o Google perde a página indexada.
 
@@ -189,7 +189,8 @@ O build (`vite-plugin-seo.ts`) gera sozinho, para cada post, uma página HTML co
 - [ ] Pasta `src/posts/<slug>/` criada (minúsculas e hífens)
 - [ ] Arquivo `index.md` com `title`, `date` (`AAAA-MM-DD`) e `description`
 - [ ] Imagens dentro da pasta do post, referenciadas com `./`
-- [ ] Capa em 16:9 (`png`/`jpg`/`webp` para ter prévia nas redes) e imagens leves
+- [ ] Capa em 16:9 e imagens leves
+- [ ] Prévia das redes gerada com `npm run og`
 - [ ] `description` com ~120 a 160 caracteres
 - [ ] Post conferido no `npm run dev`
 - [ ] `draft: true` removido antes de publicar

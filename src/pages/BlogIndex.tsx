@@ -1,8 +1,9 @@
 import { useEffect } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { ArrowLeft, Search, X } from "lucide-react";
+import LocalLink from "../components/LocalLink";
 import PostCard from "../components/PostCard";
-import { searchPosts } from "../lib/posts";
+import { searchPosts } from "../lib/postContents";
 import { useI18n } from "../i18n/context";
 
 const BlogIndex = () => {
@@ -21,20 +22,20 @@ const BlogIndex = () => {
 
 	return (
 		<section className="pt-32 pb-24 bg-background-base min-h-screen">
-			<div className="max-w-6xl mx-auto px-4">
-				<Link
+			<div className="page-container">
+				<LocalLink
 					to="/"
-					className="inline-flex items-center gap-2 text-text-muted hover:text-accent-secondary transition-colors mb-10"
+					className="tap-target inline-flex items-center gap-2 text-text-muted hover:text-accent-secondary transition-colors mb-10"
 				>
 					<ArrowLeft className="w-4 h-4" />
 					{t.blogIndex.backHome}
-				</Link>
+				</LocalLink>
 
 				<div className="max-w-2xl mb-10">
 					<h1 className="text-4xl md:text-5xl font-bold mb-6 text-text-primary tracking-tight">
 						{t.blog.heading}
 					</h1>
-					<p className="text-xl text-text-muted leading-relaxed font-light">
+					<p className="text-xl text-text-muted leading-relaxed">
 						{t.blogIndex.intro}
 					</p>
 				</div>
@@ -44,17 +45,19 @@ const BlogIndex = () => {
 					<Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted pointer-events-none" />
 					<input
 						type="search"
+						name="q"
+						autoComplete="off"
 						value={query}
 						onChange={(e) => updateQuery(e.target.value)}
 						placeholder={t.blogIndex.searchPlaceholder}
 						aria-label={t.blogIndex.searchLabel}
-						className="w-full pl-14 pr-12 py-3.5 bg-background-elevated border border-border-subtle rounded-full text-text-primary placeholder:text-text-muted/70 shadow-sm outline-none focus:border-accent-secondary focus:ring-4 focus:ring-accent-secondary/15 transition-all [&::-webkit-search-cancel-button]:hidden"
+						className="field pl-14 pr-12 py-3.5 bg-background-elevated shadow-sm [&::-webkit-search-cancel-button]:hidden"
 					/>
 					{query && (
 						<button
 							type="button"
 							onClick={() => updateQuery("")}
-							className="absolute right-4 top-1/2 -translate-y-1/2 p-1 rounded-full text-text-muted hover:text-text-primary hover:bg-background-surface transition-colors"
+							className="tap-target absolute right-4 top-1/2 -translate-y-1/2 p-1 rounded-control text-text-muted hover:text-text-primary hover:bg-background-surface transition-colors"
 							aria-label={t.blogIndex.clearSearch}
 						>
 							<X className="w-4 h-4" />
@@ -62,17 +65,16 @@ const BlogIndex = () => {
 					)}
 				</div>
 
-				{query && (
-					<p className="text-sm text-text-muted mb-6">
-						{t.blogIndex.results(visiblePosts.length, query)}
-					</p>
-				)}
+				{/* Always present, so screen readers announce each new count */}
+				<p role="status" className={query ? "text-sm text-text-muted mb-6" : "sr-only"}>
+					{query && t.blogIndex.results(visiblePosts.length, query)}
+				</p>
 
 				{visiblePosts.length === 0 ? (
-					<div className="flex flex-col items-center justify-center py-20 px-4 bg-background-elevated rounded-[2rem] border border-border-subtle text-center">
+					<div className="flex flex-col items-center justify-center py-20 px-4 bg-background-elevated rounded-card border border-border-subtle text-center">
 						<Search className="w-10 h-10 text-accent-secondary mb-6" />
 						<h2 className="text-2xl font-bold text-text-primary mb-3">{t.blogIndex.noResultsTitle}</h2>
-						<p className="text-text-muted max-w-md text-lg font-light mb-8">
+						<p className="text-text-muted max-w-md text-lg mb-8">
 							{t.blogIndex.noResultsText}
 						</p>
 						<button type="button" onClick={() => updateQuery("")} className="btn-secondary">
@@ -82,7 +84,7 @@ const BlogIndex = () => {
 				) : (
 					<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 						{visiblePosts.map((post) => (
-							<PostCard key={post.slug} post={post} />
+							<PostCard key={post.slug} post={post} headingLevel="h2" />
 						))}
 					</div>
 				)}

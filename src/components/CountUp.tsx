@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useMediaQuery } from "../lib/useMediaQuery";
+import { useReducedMotion } from "../lib/useMediaQuery";
 
 const DURATION_MS = 1600;
 
@@ -7,7 +7,7 @@ const easeOutCubic = (t: number) => 1 - (1 - t) ** 3;
 
 /** Counts from 0 up to `to` once, on mount. Screen readers get the final value straight away. */
 const CountUp = ({ to, suffix = "" }: { to: number; suffix?: string }) => {
-	const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+	const reducedMotion = useReducedMotion();
 	const [value, setValue] = useState(0);
 
 	useEffect(() => {

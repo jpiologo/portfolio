@@ -51,13 +51,13 @@ const CodeBlock = ({ children, ...props }: ComponentPropsWithoutRef<"pre">) => {
 			<button
 				type="button"
 				onClick={handleCopy}
-				className="absolute top-2.5 right-2.5 inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border border-white/10 bg-white/5 text-xs font-medium text-gray-300 backdrop-blur-sm hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary transition-colors"
+				className="tap-target absolute top-2.5 right-2.5 inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-control border border-white/10 bg-white/5 text-xs font-medium text-gray-300 backdrop-blur-sm hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary transition-colors"
 				aria-label={copied ? t.common.codeCopied : t.common.copyCode}
 				title={copied ? t.common.copied : t.common.copyCode}
 			>
 				{copied ? (
 					<>
-						<Check className="w-3.5 h-3.5 text-feedback-success" />
+						<Check className="w-3.5 h-3.5 text-green-400" />
 						{t.common.copied}
 					</>
 				) : (

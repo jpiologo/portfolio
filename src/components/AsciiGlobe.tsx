@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { renderGlobeFrame, type GlobeSize } from "../lib/asciiGlobe";
 import { buildLandMask, type LandMask } from "../lib/worldLand";
 import { useInView } from "../lib/useInView";
+import { prefersReducedMotion } from "../lib/useMediaQuery";
 
 const GLOBE_SIZE: GlobeSize = { cols: 64, rows: 37 };
 /** Seconds for one full turn. */
@@ -30,8 +31,7 @@ const AsciiGlobe = ({ className = "" }: { className?: string }) => {
 			pre.textContent = renderGlobeFrame(mask, rotationRef.current, GLOBE_SIZE);
 		};
 
-		const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-		if (reducedMotion || !isInView) {
+		if (prefersReducedMotion() || !isInView) {
 			if (!pre.textContent) draw();
 			return;
 		}

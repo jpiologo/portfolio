@@ -4,8 +4,8 @@
  * To switch fonts, change ACTIVE_FONT_PRESET below to another preset name.
  * To try something new, add a preset with the same shape and point to it.
  *
- * vite-plugin-fonts.ts reads this file, loads the active preset's Google Fonts
- * and exposes every role as a CSS variable (--font-hero, --font-heading, ...).
+ * vite-plugin-fonts.ts reads this file, bundles the active preset's self-hosted fonts
+ * (or loads its Google Fonts) and exposes every role as a CSS variable (--font-hero, --font-heading, ...).
  * Tailwind (font-sans, font-display, font-heading, font-title, font-mono,
  * font-label) and src/index.css only ever use those variables.
  * Vite restarts the dev server by itself when this file changes.
@@ -17,6 +17,10 @@ export interface FontPreset {
 	 * (spaces are fine), e.g. "Geist:wght@400..800".
 	 */
 	googleFonts: string[];
+	/** CSS files of self-hosted families (npm packages from fontsource.org), instead of googleFonts. */
+	stylesheets: string[];
+	/** Part of the file name of the main self-hosted font, preloaded with the page. */
+	preload?: string;
 	/** The big "Full Stack Developer;" title and the hero subtitle */
 	hero: string;
 	/** Page and section headings (h1, h2), e.g. "Featured Projects" */
@@ -31,6 +35,9 @@ export interface FontPreset {
 	label: string;
 }
 
+/** Handwritten accent of the hero (Tailwind: font-signature), independent of the preset. */
+export const SIGNATURE_STYLESHEET = "@fontsource/momo-signature/400.css";
+
 // Fallbacks used while a web font loads (or if it fails to)
 const SANS = "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif";
 const SERIF = "Georgia, 'Times New Roman', serif";
@@ -38,13 +45,15 @@ const MONO = "ui-monospace, SFMono-Regular, Consolas, monospace";
 
 export const FONT_PRESETS = {
 	modern: {
-		googleFonts: ["Geist:wght@300..800", "Geist Mono:wght@400..600"],
-		hero: `'Geist', ${SANS}`,
-		heading: `'Geist', ${SANS}`,
-		title: `'Geist', ${SANS}`,
-		body: `'Geist', ${SANS}`,
-		mono: `'Geist Mono', ${MONO}`,
-		label: `'Geist Mono', ${MONO}`,
+		googleFonts: [],
+		stylesheets: ["@fontsource-variable/geist/wght.css", "@fontsource-variable/geist-mono/wght.css"],
+		preload: "geist-latin-wght-normal",
+		hero: `'Geist Variable', ${SANS}`,
+		heading: `'Geist Variable', ${SANS}`,
+		title: `'Geist Variable', ${SANS}`,
+		body: `'Geist Variable', ${SANS}`,
+		mono: `'Geist Mono Variable', ${MONO}`,
+		label: `'Geist Mono Variable', ${MONO}`,
 	},
 	editorial: {
 		googleFonts: [
@@ -52,6 +61,7 @@ export const FONT_PRESETS = {
 			"Manrope:wght@300..800",
 			"JetBrains Mono:wght@400..600",
 		],
+		stylesheets: [],
 		hero: `'Cormorant Garamond', ${SERIF}`,
 		heading: `'Cormorant Garamond', ${SERIF}`,
 		title: `'Manrope', ${SANS}`,
@@ -65,6 +75,7 @@ export const FONT_PRESETS = {
 			"Figtree:wght@300..800",
 			"IBM Plex Mono:wght@400;500",
 		],
+		stylesheets: [],
 		hero: `'Fraunces', ${SERIF}`,
 		heading: `'Fraunces', ${SERIF}`,
 		title: `'Figtree', ${SANS}`,
@@ -78,6 +89,7 @@ export const FONT_PRESETS = {
 			"Instrument Sans:wght@400..700",
 			"JetBrains Mono:wght@400..600",
 		],
+		stylesheets: [],
 		hero: `'Bricolage Grotesque', ${SANS}`,
 		heading: `'Bricolage Grotesque', ${SANS}`,
 		title: `'Bricolage Grotesque', ${SANS}`,

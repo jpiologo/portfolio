@@ -18,8 +18,13 @@ export default {
         title: ['var(--font-title, system-ui, sans-serif)'],
         label: ['var(--font-label, system-ui, sans-serif)'],
         mono: ['var(--font-mono, ui-monospace, monospace)'],
-        // Handwritten accent (hero highlight); loaded in index.html, independent of the font preset
+        // Handwritten accent (hero highlight), independent of the font preset (fonts.config.ts)
         signature: ["'Momo Signature'", 'cursive'],
+      },
+      // The only two corner sizes besides circles (values in src/index.css)
+      borderRadius: {
+        control: 'var(--radius-control)',
+        card: 'var(--radius-card)',
       },
       keyframes: {
         // Two faces of a cube turning upwards (RotatingWord): the next word rolls in from below
@@ -34,12 +39,6 @@ export default {
         'caret-blink': {
           '0%, 49%': { opacity: '1' },
           '50%, 100%': { opacity: '0' },
-        },
-        // Lazy drift used by the hero icons; duration and delay are set per icon
-        float: {
-          '0%, 100%': { transform: 'translate(0, 0) rotate(0deg)' },
-          '33%': { transform: 'translate(4px, -7px) rotate(5deg)' },
-          '66%': { transform: 'translate(-4px, -3px) rotate(-4deg)' },
         },
         // Gentle bob for cards with text, which must stay level (HeroVisual)
         bob: {
@@ -56,24 +55,16 @@ export default {
           '0%': { transform: 'rotate(0deg)' },
           '100%': { transform: 'rotate(360deg)' },
         },
-        // Wheel of the hero scroll hint rolling down
-        'scroll-wheel': {
-          '0%': { transform: 'translateY(0)', opacity: '1' },
-          '70%': { transform: 'translateY(10px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '0' },
-        },
       },
       animation: {
         'caret-blink': 'caret-blink 1.06s step-end infinite',
         'cube-in': 'cube-in 0.6s cubic-bezier(0.3, 0.7, 0.3, 1) both',
         'cube-out': 'cube-out 0.6s cubic-bezier(0.3, 0.7, 0.3, 1) forwards',
-        float: 'float 6s ease-in-out infinite',
         bob: 'bob 6s ease-in-out infinite',
         orbit: 'orbit 60s linear infinite',
         'orbit-reverse': 'orbit 60s linear infinite reverse',
         marquee: 'marquee 40s linear infinite',
         'marquee-reverse': 'marquee 40s linear infinite reverse',
-        'scroll-wheel': 'scroll-wheel 1.6s ease-in-out infinite',
       },
       colors: {
         background: {
@@ -85,7 +76,6 @@ export default {
           primary: themeColor('accent-primary'),
           secondary: themeColor('accent-secondary'),
           hover: themeColor('accent-hover'),
-          glow: 'rgba(14, 77, 138, 0.15)',
         },
         text: {
           primary: themeColor('text-primary'),
@@ -93,16 +83,14 @@ export default {
         },
         border: {
           subtle: themeColor('border'),
-          focus: themeColor('accent-secondary'),
-          hover: themeColor('accent-secondary'),
         },
         // Text placed on top of accent-primary backgrounds
         'on-accent': '#FFFFFF',
         feedback: {
-          error: '#EF4444',
-          'error-bg': 'rgba(239, 68, 68, 0.1)',
-          success: '#22C55E',
-          'success-bg': 'rgba(34, 197, 94, 0.1)',
+          error: themeColor('feedback-error'),
+          'error-bg': 'rgb(var(--c-feedback-error) / 0.1)',
+          success: themeColor('feedback-success'),
+          'success-bg': 'rgb(var(--c-feedback-success) / 0.1)',
         },
       },
     },

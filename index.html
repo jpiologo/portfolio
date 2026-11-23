@@ -1,9 +1,6 @@
 <!doctype html>
-<!--
-  lang must match the language actually shown, or Chrome offers to "translate" text that is already
-  in the reader's language and garbles it. pt-BR is the default; React keeps it in sync afterwards.
--->
-<html lang="pt-BR">
+<!-- The build sets lang, title and metadata for each page (vite-plugin-seo.ts); React keeps lang in sync afterwards. -->
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <!-- "JP." logo: the SVG adapts to the browser's light/dark theme, the .ico is the fallback -->
@@ -11,16 +8,28 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Replaced by the SEO tags from vite-plugin-seo.ts -->
+    <script>
+      // Portuguese lives under /pt. Visitors whose browser prefers it go there, unless they picked English
+      // in the header (prefix and storage keys from src/i18n/routes.ts)
+      (function () {
+        if (/^\/pt(\/|$)/.test(location.pathname)) return;
+        var language;
+        try {
+          if (localStorage.getItem('languageChosenByVisitor') === 'true') language = localStorage.getItem('language');
+        } catch (e) {}
+        if (!language) {
+          language = (navigator.languages || [navigator.language])
+            .map(function (code) { return code.slice(0, 2).toLowerCase(); })
+            .find(function (code) { return code === 'pt' || code === 'en'; });
+        }
+        if (language !== 'pt') return;
+        location.replace('/pt' + (location.pathname === '/' ? '' : location.pathname) + location.search + location.hash);
+      })();
+    </script>
+    <!-- Replaced by the tags of each page on build -->
     <title>João Piologo - Software Engineer</title>
-    <!-- Site fonts are not set here: vite-plugin-fonts.ts injects them from fonts.config.ts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Signature font for the "code" word in the hero (Tailwind: font-signature) -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Momo+Signature&display=swap"
-    />
+    <!-- Filled in with the page background by src/lib/theme.ts -->
+    <meta name="theme-color" content="" />
     <script>
       // Apply saved (or system) theme before first paint to avoid a flash
       (function () {
@@ -31,14 +40,12 @@
         }
         if (theme === 'dark') document.documentElement.classList.add('dark');
       })();
-
-      // Language detected on a previous visit (key and values from src/i18n/LanguageProvider.tsx)
-      (function () {
-        var language;
-        try { language = localStorage.getItem('language'); } catch (e) {}
-        if (language === 'en') document.documentElement.lang = 'en';
-      })();
     </script>
+    <noscript>
+      <style>
+        .reveal { opacity: 1 !important; transform: none !important; }
+      </style>
+    </noscript>
   </head>
   <body>
     <div id="root"></div>

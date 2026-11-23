@@ -1,18 +1,24 @@
-import { Link } from "react-router-dom";
 import { ArrowRight, Clock, FileText } from "lucide-react";
 import type { Post } from "../lib/types";
 import { formatPostDate } from "../lib/posts";
 import { parallaxHandlers } from "../lib/parallax";
 import { useI18n } from "../i18n/context";
+import LocalLink from "./LocalLink";
 
-const PostCard = ({ post }: { post: Post }) => {
+type PostCardProps = {
+	post: Post;
+	/** One below the heading the cards are listed under. */
+	headingLevel?: "h2" | "h3";
+};
+
+const PostCard = ({ post, headingLevel: Heading = "h3" }: PostCardProps) => {
 	const t = useI18n();
 
 	return (
-		<Link
+		<LocalLink
 			to={`/blog/${post.slug}`}
 			{...parallaxHandlers}
-			className="parallax-card group flex flex-col h-full bg-background-elevated rounded-2xl border border-border-subtle overflow-hidden shadow-sm hover:shadow-xl hover:border-accent-secondary/60"
+			className="parallax-card group flex flex-col h-full bg-background-elevated rounded-card border border-border-subtle overflow-hidden shadow-sm hover:shadow-xl hover:border-accent-secondary/60"
 		>
 			{/* Cover */}
 			<div className="aspect-[16/9] overflow-hidden bg-background-surface">
@@ -32,10 +38,10 @@ const PostCard = ({ post }: { post: Post }) => {
 	
 			{/* Body */}
 			<div className="flex flex-col flex-grow p-6">
-				<h3 className="text-xl font-bold text-text-primary leading-snug mb-3 group-hover:text-accent-secondary transition-colors">
+				<Heading className="font-title text-xl font-bold text-text-primary leading-snug mb-3 group-hover:text-accent-secondary transition-colors">
 					{post.title}
-				</h3>
-				<p className="text-text-muted font-light leading-relaxed mb-6 line-clamp-3">
+				</Heading>
+				<p className="text-text-muted leading-relaxed mb-6 line-clamp-3">
 					{post.description}
 				</p>
 	
@@ -50,7 +56,7 @@ const PostCard = ({ post }: { post: Post }) => {
 					<ArrowRight className="w-4 h-4 text-accent-secondary group-hover:translate-x-1 transition-transform" />
 				</div>
 			</div>
-		</Link>
+		</LocalLink>
 	);
 };
 

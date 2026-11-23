@@ -8,43 +8,27 @@
     font-family: theme('fontFamily.heading');
   }
 
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+
   h3, h4, h5, h6 {
     font-family: theme('fontFamily.title');
   }
+
+  /* Faintest the muted color can go on every surface and still reach 4.5:1 */
+  input::placeholder,
+  textarea::placeholder {
+    @apply text-text-muted/85;
+  }
 }
 
-/* ================================================================== */
-/*  GLOBAL TYPE SYSTEM                                                  */
-/*  Single source of truth for typography across the entire portfolio. */
-/*                                                                      */
-/*  Scale:                                                              */
-/*    --type-display  : 2.75rem / 700  — section headings (h2)         */
-/*    --type-title    : 1.5rem  / 700  — card/modal titles (h3)        */
-/*    --type-subtitle : 1rem    / 500  — lead / subtitle copy           */
-/*    --type-body     : 0.9rem  / 400  — general body copy              */
-/*    --type-label    : 0.72rem / 600  — tags, chip labels, eyebrows    */
-/*    --type-caption  : 0.68rem / 500  — meta, small hints              */
-/*                                                                      */
-/*  Fonts: chosen in fonts.config.ts, exposed as --font-hero,           */
-/*  --font-heading, --font-title, --font-body, --font-mono and          */
-/*  --font-label (Tailwind: font-display, font-heading, ...).           */
-/*                                                                      */
-/*  Colors:                                                           */
-/*    --color-ink       : #0f172a  — primary heading text               */
-/*    --color-ink-sub   : #475569  — subtitle / secondary text          */
-/*    --color-ink-muted : #94a3b8  — body copy, descriptions            */
-/*    --color-accent    : #2563eb  — links, active states, accent marks */
-/*    --color-surface   : #f8fafc  — shared light section background    */
-/* ================================================================== */
+/*
+ * Fonts are chosen in fonts.config.ts and exposed as --font-hero, --font-heading, --font-title,
+ * --font-body, --font-mono and --font-label (Tailwind: font-display, font-heading, ...).
+ */
 
 :root {
-  --type-display   : 700 2.75rem / 1.1 theme('fontFamily.heading');
-  --type-title     : 700 1.5rem  / 1.2 theme('fontFamily.title');
-  --type-subtitle  : 300 1.1rem  / 1.65 theme('fontFamily.sans');
-  --type-body      : 400 0.9rem  / 1.6 theme('fontFamily.sans');
-  --type-label     : 600 0.72rem / 1 theme('fontFamily.label');
-  --type-caption   : 500 0.68rem / 1 theme('fontFamily.sans');
-
   /*
    * Theme palette as RGB channels (consumed by Tailwind and the vars below).
    *
@@ -62,26 +46,27 @@
   --c-accent-primary   : 26 93 171;    /* #1A5DAB  buttons (white text)   */
   --c-accent-secondary : 37 99 235;    /* #2563EB  links, highlights      */
   --c-accent-hover     : 21 75 140;    /* #154B8C                          */
+  --c-feedback-error   : 185 28 28;    /* #B91C1C                          */
+  --c-feedback-success : 21 128 61;    /* #15803D                          */
   --c-shadow           : 15 23 42;
+
+  /* Square corners: controls, chips and tiles / cards, panels and media. Dots and avatars stay round */
+  --radius-control : 0px;
+  --radius-card    : 0px;
 
   /* Background triangle mesh (TriangleMesh.tsx) */
   --c-mesh-line        : 100 116 139;
-  --mesh-line-alpha    : 0.16;
+  --mesh-line-alpha    : 0.09;
   --c-mesh-glow        : 37 99 235;
 
   --color-ink      : rgb(var(--c-text-primary));
   --color-ink-sub   : rgb(var(--c-text-muted));
-  --color-ink-muted : rgb(var(--c-text-muted));
-  --color-accent    : rgb(var(--c-accent-secondary));
-  --color-surface   : rgb(var(--c-bg-surface));
 
   --color-bg-base     : rgb(var(--c-bg-base));
   --color-bg-surface  : rgb(var(--c-bg-surface));
   --color-bg-elevated : rgb(var(--c-bg-elevated));
   --color-border      : rgb(var(--c-border));
-  --color-accent-primary   : rgb(var(--c-accent-primary));
   --color-accent-secondary : rgb(var(--c-accent-secondary));
-  --color-accent-hover     : rgb(var(--c-accent-hover));
 
   color-scheme: light;
 }
@@ -94,8 +79,10 @@
   --c-text-primary     : 232 234 240;  /* #E8EAF0 */
   --c-text-muted       : 156 163 175;  /* #9CA3AF */
   --c-accent-primary   : 14 77 138;    /* #0E4D8A */
-  --c-accent-secondary : 30 136 229;   /* #1E88E5 */
-  --c-accent-hover     : 21 101 192;   /* #1565C0 */
+  --c-accent-secondary : 66 160 242;   /* #42A0F2  5.3:1 on elevated */
+  --c-accent-hover     : 21 101 192;   /* #1565C0  button background only */
+  --c-feedback-error   : 248 113 113;  /* #F87171 */
+  --c-feedback-success : 34 197 94;    /* #22C55E */
   --c-shadow           : 0 0 0;
 
   --c-mesh-line        : 148 163 184;
@@ -119,10 +106,11 @@ body {
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3 rounded-control
       text-base font-semibold leading-6 whitespace-nowrap
-      border transition-all duration-200
-      focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent-secondary/30
+      border transition duration-200
+      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary
+      focus-visible:ring-offset-2 focus-visible:ring-offset-background-base
       disabled:opacity-60 disabled:cursor-not-allowed disabled:pointer-events-none;
   }
 
@@ -139,6 +127,33 @@ body {
   .btn-ghost {
     @apply btn bg-transparent border-transparent text-text-muted hover:text-text-primary;
   }
+
+  /* Off screen until focused by keyboard */
+  .skip-link {
+    @apply btn-primary fixed left-4 z-[60];
+    top: -6rem;
+  }
+
+  .skip-link:focus {
+    top: 1rem;
+  }
+
+  /* Grows the touch area to at least 44px without changing how the element looks */
+  @media (pointer: coarse) {
+    .tap-target {
+      position: relative;
+    }
+
+    .tap-target::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: max(100%, 44px);
+      height: max(100%, 44px);
+      transform: translate(-50%, -50%);
+    }
+  }
 }
 
 @keyframes fadeIn {
@@ -152,12 +167,122 @@ body {
   }
 }
 
-.animate-fadeIn {
-  animation: fadeIn 1s ease-out;
+html {
+  --header-height: 4.5rem; /* the fixed header once scrolled */
+
+  scroll-padding-top: var(--header-height);
 }
 
-html {
-  scroll-behavior: smooth;
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Sections bring their own top padding, so their anchors need only part of that clearance */
+main > section[id] {
+  scroll-margin-top: -2.5rem;
+}
+
+/* ================================================================== */
+/*  Modals (src/components/Modal.tsx)                                  */
+/*  .modal        : full-screen native dialog around a single panel    */
+/*  .modal-drawer : panel docked to the right edge                     */
+/*  The panel enters and leaves through --modal-from.                  */
+/* ================================================================== */
+
+html:has(dialog:modal) {
+  overflow: hidden;
+}
+
+/* Fills in for the scrollbar that just went away, so the page behind does not shift */
+html:has(dialog:modal) :is(body, header.fixed) {
+  padding-right: var(--scrollbar-width, 0px);
+}
+
+.modal {
+  --modal-from: translateY(20px);
+
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 16px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  transition:
+    display 0.3s allow-discrete,
+    overlay 0.3s allow-discrete;
+}
+
+.modal[open] {
+  display: flex;
+}
+
+/* Still on screen while it leaves, but no longer in the way */
+.modal:not([open]) {
+  pointer-events: none;
+}
+
+.modal::backdrop {
+  background: rgb(0 0 0 / 0.6);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transition:
+    opacity 0.3s ease,
+    display 0.3s allow-discrete,
+    overlay 0.3s allow-discrete;
+}
+
+.modal[open]::backdrop {
+  opacity: 1;
+}
+
+.modal > * {
+  opacity: 0;
+  transform: var(--modal-from);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.modal[open] > * {
+  opacity: 1;
+  transform: none;
+}
+
+.modal-drawer {
+  --modal-from: translateX(100%);
+
+  padding: 0;
+  align-items: stretch;
+  justify-content: flex-end;
+}
+
+@starting-style {
+  .modal[open]::backdrop {
+    opacity: 0;
+  }
+
+  .modal[open] > * {
+    opacity: 0;
+    transform: var(--modal-from);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal,
+  .modal::backdrop,
+  .modal > * {
+    transition: none;
+  }
 }
 
 /* ================================================================== */
@@ -165,17 +290,29 @@ html {
 /* ================================================================== */
 
 @layer components {
+  /* One content width for the whole page, header and footer included */
+  .page-container {
+    @apply max-w-6xl mx-auto px-4;
+  }
+
+  .page-section {
+    @apply py-20 md:py-24;
+  }
+
   .section-heading {
     @apply text-4xl md:text-5xl font-bold text-text-primary tracking-tight;
   }
 
   .section-intro {
-    @apply text-xl text-text-muted leading-relaxed font-light;
+    @apply text-xl text-text-muted leading-relaxed;
   }
 
-  /* Small uppercase label above a heading */
-  .eyebrow {
-    @apply inline-flex items-center gap-2 font-label text-xs font-semibold uppercase tracking-[0.2em] text-accent-secondary;
+  /* Text input or textarea; background and padding come from the form it sits in */
+  .field {
+    @apply w-full border border-border-subtle rounded-control text-text-primary outline-none
+      transition-[border-color,box-shadow]
+      focus:border-accent-secondary focus:ring-2 focus:ring-accent-secondary
+      aria-[invalid=true]:border-feedback-error;
   }
 }
 
@@ -417,14 +554,13 @@ html {
 /* ================================================================== */
 
 .proj-card {
-  background: var(--color-bg-surface);
-  border-radius: 16px;
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-card);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   cursor: pointer;
   border: 1px solid var(--color-border);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 1px 3px rgb(var(--c-shadow) / 0.2);
 }
 
@@ -452,10 +588,22 @@ html {
   display: flex;
   align-items: flex-end;
   padding: 16px;
+  /* Above the stretched .proj-card-cta, but letting clicks through to it except on the links */
+  z-index: 2;
+  pointer-events: none;
 }
 
-.proj-card:hover .proj-card-image-overlay {
+.proj-card:hover .proj-card-image-overlay,
+.proj-card-image-overlay:focus-within {
   opacity: 1;
+}
+
+/* No hover to reveal the links, so they stay visible without darkening the cover */
+@media (hover: none) {
+  .proj-card-image-overlay {
+    opacity: 1;
+    background: none;
+  }
 }
 
 .proj-card-image-actions {
@@ -468,14 +616,17 @@ html {
 .proj-card-icon-btn {
   width: 36px;
   height: 36px;
-  border-radius: 10px;
+  border-radius: var(--radius-control);
   background: rgb(var(--c-bg-elevated) / 0.9);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--color-ink);
-  transition: all 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
   backdrop-filter: blur(4px);
+  pointer-events: auto;
 }
 
 .proj-card-icon-btn:hover {
@@ -483,13 +634,15 @@ html {
   transform: scale(1.08);
 }
 
-.proj-card-status {
-  display: flex;
+/* Status label of a project (ProjectBadges.tsx) */
+.proj-badge {
+  display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
-  border-radius: 8px;
-  background: rgb(var(--c-bg-elevated) / 0.9);
+  padding: 4px 10px;
+  border-radius: var(--radius-control);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-surface);
   color: var(--color-ink-sub);
   font-size: 0.75rem;
   font-weight: 500;
@@ -505,7 +658,7 @@ html {
 .proj-card-subtitle {
   display: inline-block;
   font-family: theme('fontFamily.label');
-  font-size: 0.65rem;
+  font-size: 0.72rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -526,7 +679,7 @@ html {
   color: var(--color-ink-sub);
   line-height: 1.55;
   margin-bottom: 16px;
-  /* Full text lives in the modal; clamping keeps carousel pages close in height */
+  /* Full text lives on the project page; clamping keeps carousel pages close in height */
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
@@ -545,171 +698,26 @@ html {
   transition: color 0.2s ease;
 }
 
-.proj-card:hover .proj-card-cta {
-  color: var(--color-accent-hover);
-}
-
-/* ================================================================== */
-/*  Project Modal                                                      */
-/* ================================================================== */
-
-.proj-modal-overlay {
-  position: fixed;
+/* Makes the whole card the button's hit area; .parallax-card is the positioned ancestor */
+.proj-card-cta::after {
+  content: "";
+  position: absolute;
   inset: 0;
-  background: rgb(var(--c-shadow) / 0.6);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  z-index: 50;
-  animation: fadeIn 0.25s ease-out;
+  z-index: 1;
+  border-radius: var(--radius-card);
 }
 
-.proj-modal {
-  background: var(--color-bg-elevated);
-  border-radius: 20px;
-  max-width: 720px;
-  width: 100%;
-  max-height: 88vh;
-  overflow-y: auto;
-  box-shadow: 0 24px 80px rgb(var(--c-shadow) / 0.5);
-  border: 1px solid var(--color-border);
+.proj-card-cta:focus-visible {
+  outline: none;
 }
 
-.proj-modal-header {
-  position: sticky;
-  top: 0;
-  background: rgb(var(--c-bg-elevated) / 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 20px 24px;
-  border-bottom: 1px solid var(--color-border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 2;
+.proj-card-cta:focus-visible::after {
+  outline: 2px solid var(--color-accent-secondary);
+  outline-offset: -2px;
 }
 
-.proj-modal-subtitle {
-  display: block;
-  font-family: theme('fontFamily.label');
-  font-size: 0.65rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-accent-secondary);
-  margin-bottom: 2px;
-}
-
-.proj-modal-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--color-ink);
-  line-height: 1.2;
-}
-
-.proj-modal-close {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-ink-sub);
-  transition: all 0.2s ease;
-  flex-shrink: 0;
-}
-
-.proj-modal-close:hover {
-  background: var(--color-bg-surface);
-  color: var(--color-ink);
-}
-
-.proj-modal-content {
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.proj-modal-image {
-  aspect-ratio: 40 / 22;
-  max-height: 320px;
-  overflow: hidden;
-  border-radius: 12px;
-  border: 1px solid var(--color-border);
-}
-
-.proj-modal-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-.proj-modal-section {
-  padding: 16px;
-  background: var(--color-bg-surface);
-  border-radius: 12px;
-  border: 1px solid var(--color-border);
-}
-
-.proj-modal-section-heading {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 10px;
-}
-
-.proj-modal-section-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  background: rgb(var(--c-accent-primary) / 0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.proj-modal-section-title {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--color-ink);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.proj-modal-section-text {
-  font-size: 0.82rem;
-  color: var(--color-ink-sub);
-  line-height: 1.55;
-  margin: 0;
-}
-
-/* Deliverables read as a spec sheet: plain lines split by hairlines, no bullets */
-.proj-modal-deliverables li {
-  font-size: 0.82rem;
-  color: var(--color-ink-sub);
-  line-height: 1.45;
-  padding: 8px 0;
-  border-top: 1px solid var(--color-border);
-}
-
-.proj-modal-deliverables li:first-child {
-  border-top: 0;
-  padding-top: 0;
-}
-
-.proj-modal-actions {
-  display: flex;
-  gap: 10px;
-  padding-top: 4px;
-}
-
-.proj-modal-actions > * {
-  flex: 1;
+.proj-card:hover .proj-card-cta {
+  color: color-mix(in srgb, var(--color-accent-secondary) 60%, var(--color-ink));
 }
 
 /* ================================================================== */
@@ -724,31 +732,7 @@ html {
   .proj-card-title {
     font-size: 1.15rem;
   }
-
-  .proj-modal-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .proj-modal-content {
-    padding: 18px;
-    gap: 16px;
-  }
-
-  .proj-modal-header {
-    padding: 16px 18px;
-  }
-
-  .proj-modal-title {
-    font-size: 1.25rem;
-  }
 }
-
-@media (max-width: 480px) {
-  .proj-modal-actions {
-    flex-direction: column;
-  }
-}
-
 
 /* ================================================================== */
 /*  Blog Post Content                                                  */
@@ -771,7 +755,7 @@ html {
 }
 
 .post-content img {
-  border-radius: 16px;
+  border-radius: var(--radius-card);
   border: 1px solid var(--color-border);
 }
 
@@ -779,9 +763,10 @@ html {
 .post-content :not(pre) > code {
   background: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
-  border-radius: 6px;
+  border-radius: var(--radius-control);
   padding: 0.15em 0.4em;
   font-weight: 500;
+  overflow-wrap: anywhere; /* long paths would widen the page on phones */
 }
 
 .post-content :not(pre) > code::before,
@@ -793,7 +778,7 @@ html {
 .post-content pre {
   padding: 0;
   border: 1px solid var(--color-border);
-  border-radius: 12px;
+  border-radius: var(--radius-card);
   background: #0d1117;
 }
 

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
@@ -7,16 +7,21 @@ import { ArrowLeft, Clock } from "lucide-react";
 import "highlight.js/styles/github-dark.css";
 import BackToTop from "../components/BackToTop";
 import CodeBlock from "../components/CodeBlock";
-import { formatPostDate, getPost, resolvePostAsset } from "../lib/posts";
+import LocalLink from "../components/LocalLink";
+import NextPage from "../components/NextPage";
+import { getPostContent } from "../lib/postContents";
+import { formatPostDate, getNextPost, getPost, resolvePostAsset } from "../lib/posts";
+import { pageTitle } from "../lib/profile";
 import { useI18n } from "../i18n/context";
 
 const BlogPost = () => {
 	const { slug = "" } = useParams();
 	const t = useI18n();
 	const post = getPost(slug, t.language);
+	const next = getNextPost(slug, t.language);
 
 	useEffect(() => {
-		document.title = post ? `${post.title} | João Piologo` : t.blogPost.notFoundDocumentTitle;
+		document.title = post ? pageTitle(post.title) : t.blogPost.notFoundDocumentTitle;
 	}, [post, t]);
 
 	if (!post) {
@@ -25,13 +30,13 @@ const BlogPost = () => {
 				<div className="max-w-3xl mx-auto px-4 text-center">
 					<h1 className="text-4xl font-bold text-text-primary mb-4">{t.blogPost.notFoundTitle}</h1>
 					<p className="text-text-muted text-lg mb-10">{t.blogPost.notFoundText}</p>
-					<Link
+					<LocalLink
 						to="/blog"
 						className="btn-primary"
 					>
 						<ArrowLeft className="w-4 h-4" />
 						{t.blogPost.backToBlog}
-					</Link>
+					</LocalLink>
 				</div>
 			</section>
 		);
@@ -40,13 +45,13 @@ const BlogPost = () => {
 	return (
 		<article className="pt-32 pb-24 bg-background-base min-h-screen">
 			<div className="max-w-3xl mx-auto px-4">
-				<Link
+				<LocalLink
 					to="/blog"
-					className="inline-flex items-center gap-2 text-text-muted hover:text-accent-secondary transition-colors mb-10"
+					className="tap-target inline-flex items-center gap-2 text-text-muted hover:text-accent-secondary transition-colors mb-10"
 				>
 					<ArrowLeft className="w-4 h-4" />
 					{t.blogPost.allPosts}
-				</Link>
+				</LocalLink>
 
 				{/* Post header */}
 				<header className="mb-10">
@@ -54,7 +59,7 @@ const BlogPost = () => {
 						{post.title}
 					</h1>
 					{post.description && (
-						<p className="text-xl text-text-muted font-light leading-relaxed mb-6">{post.description}</p>
+						<p className="text-xl text-text-muted leading-relaxed mb-6">{post.description}</p>
 					)}
 					<div className="flex items-center gap-4 text-sm text-text-muted">
 						{post.date && <time dateTime={post.date}>{formatPostDate(post.date, t.locale)}</time>}
@@ -67,9 +72,10 @@ const BlogPost = () => {
 
 				{post.cover && (
 					<img
+						data-og-image
 						src={post.cover}
 						alt={post.title}
-						className="w-full rounded-2xl border border-border-subtle mb-12"
+						className="w-full rounded-card border border-border-subtle mb-12"
 					/>
 				)}
 
@@ -88,14 +94,18 @@ const BlogPost = () => {
 									<a href={href} target="_blank" rel="noreferrer">
 										{children}
 									</a>
+								) : href?.startsWith("/") ? (
+									<LocalLink to={href}>{children}</LocalLink>
 								) : (
 									<a href={href}>{children}</a>
 								),
 						}}
 					>
-						{post.content}
+						{getPostContent(post.slug, t.language)}
 					</ReactMarkdown>
 				</div>
+
+				{next && <NextPage to={`/blog/${next.slug}`} title={next.title} label={t.blogPost.nextPost} />}
 			</div>
 			<BackToTop />
 		</article>

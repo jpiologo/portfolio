@@ -3,6 +3,7 @@ import type { LucideIcon } from "lucide-react";
 import { Activity, PlugZap, ShieldCheck } from "lucide-react";
 import { useI18n } from "../i18n/context";
 import type { Messages } from "../i18n/en";
+import { AUTOMATED_TESTS, REQUESTS_IN_PRODUCTION_THOUSANDS } from "../lib/profile";
 import { TECH, type TechId } from "../lib/techCatalog";
 
 type ChipId = keyof Messages["hero"]["chips"];
@@ -14,7 +15,7 @@ const INNER_ORBIT: TechId[] = ["jenkins", "typescript", "mongodb"];
 const LOG_LINES: { text: string; tone: "muted" | "success" | "accent" }[] = [
 	{ text: "$ git push origin main", tone: "muted" },
 	{ text: "› jenkins  pipeline #418", tone: "muted" },
-	{ text: "✓ tests    99 passed · 0.33s", tone: "success" },
+	{ text: `✓ tests    ${AUTOMATED_TESTS} passed · 0.33s`, tone: "success" },
 	{ text: "✓ build    forms · datasets · widgets", tone: "success" },
 	{ text: "✓ deploy   fluig-prod", tone: "success" },
 	{ text: "● live in production", tone: "accent" },
@@ -50,7 +51,7 @@ const Orbit = ({ ids, className, reverse = false }: { ids: TechId[]; className: 
 				<span key={id} style={orbitPosition(index, ids.length)} className="absolute -translate-x-1/2 -translate-y-1/2">
 					{/* Spins the other way, so the icon stays upright while the ring turns */}
 					<span
-						className={`flex h-11 w-11 items-center justify-center rounded-xl border border-border-subtle bg-background-elevated text-text-muted shadow-md ${
+						className={`flex h-11 w-11 items-center justify-center rounded-control border border-border-subtle bg-background-elevated text-text-muted shadow-md ${
 							reverse ? "motion-safe:animate-orbit" : "motion-safe:animate-orbit-reverse"
 						}`}
 					>
@@ -65,6 +66,11 @@ const Orbit = ({ ids, className, reverse = false }: { ids: TechId[]; className: 
 /** Decorative hero illustration: a deploy terminal with the stack orbiting around it and a few real results. */
 const HeroVisual = ({ className = "" }: { className?: string }) => {
 	const t = useI18n();
+	const chipValues: Record<ChipId, string> = {
+		requests: t.hero.chips.requests.value(REQUESTS_IN_PRODUCTION_THOUSANDS),
+		tests: `${AUTOMATED_TESTS} ✓`,
+		integrations: "ERP + APIs",
+	};
 
 	return (
 		<div aria-hidden="true" className={`relative mx-auto aspect-square w-full max-w-[500px] ${className}`}>
@@ -72,7 +78,7 @@ const HeroVisual = ({ className = "" }: { className?: string }) => {
 			<Orbit ids={OUTER_ORBIT} className="inset-0" />
 			<Orbit ids={INNER_ORBIT} className="inset-[17%]" reverse />
 
-			<div className="absolute left-1/2 top-1/2 z-10 w-[84%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl border border-border-subtle bg-background-elevated/95 shadow-2xl backdrop-blur">
+			<div className="absolute left-1/2 top-1/2 z-10 w-[84%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-card border border-border-subtle bg-background-elevated/95 shadow-2xl backdrop-blur">
 				<div className="flex items-center gap-2 border-b border-border-subtle px-4 py-3">
 					<span className="h-2.5 w-2.5 rounded-full bg-[#FF5F57]" />
 					<span className="h-2.5 w-2.5 rounded-full bg-[#FEBC2E]" />
@@ -99,13 +105,13 @@ const HeroVisual = ({ className = "" }: { className?: string }) => {
 				<div key={id} className={`absolute z-20 ${position}`}>
 					<div
 						style={{ animationDelay: floatDelay }}
-						className="flex items-center gap-3 rounded-xl border border-border-subtle bg-background-elevated/95 px-3.5 py-2.5 shadow-xl backdrop-blur motion-safe:animate-bob"
+						className="flex items-center gap-3 rounded-card border border-border-subtle bg-background-elevated/95 px-3.5 py-2.5 shadow-xl backdrop-blur motion-safe:animate-bob"
 					>
-						<span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent-secondary/10 text-accent-secondary">
+						<span className="flex h-9 w-9 items-center justify-center rounded-control bg-accent-secondary/10 text-accent-secondary">
 							<Icon className="h-[18px] w-[18px]" />
 						</span>
 						<span className="flex flex-col">
-							<span className="text-sm font-bold leading-tight text-text-primary">{t.hero.chips[id].value}</span>
+							<span className="text-sm font-bold leading-tight text-text-primary">{chipValues[id]}</span>
 							<span className="text-[11px] leading-tight text-text-muted">{t.hero.chips[id].label}</span>
 						</span>
 					</div>

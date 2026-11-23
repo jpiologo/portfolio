@@ -22,7 +22,8 @@ export interface Post {
   cover?: string;
   draft: boolean;
   readingMinutes: number;
-  content: string;
+  /** False when a language without its own version falls back to the English text. */
+  isTranslated: boolean;
 }
 
 /** Illustrated covers, drawn in src/components/ProjectArt.tsx. */
@@ -37,6 +38,8 @@ export type ProjectCover =
   | { kind: "screenshot"; src: string; logo: string; logoIsWhite?: boolean };
 
 export interface Project {
+  /** Last part of its URL: /projects/<slug>. */
+  slug: string;
   title: string;
   subtitle: string;
   description: string;
@@ -44,6 +47,8 @@ export interface Project {
   demoLink?: string;
   githubLink?: string;
   inDevelopment?: boolean;
+  /** Built to learn, not for a client or as a product. */
+  isStudy?: boolean;
   techStack: TechId[];
   details: {
     challenge: string;
