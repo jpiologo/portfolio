@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111318"/>
+      <stop offset="1" stop-color="#0E4D8A"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1380" cy="140" r="280" fill="#1E88E5" opacity="0.12"/>
+
+  <!-- Title -->
+  <text x="120" y="380" font-family="Fira Code, Courier New, monospace" font-size="64" font-weight="700" fill="#E8EAF0">Fluig datasets</text>
+  <text x="120" y="460" font-family="system-ui, sans-serif" font-size="40" fill="#9CA3AF">Query them from outside</text>
+  <text x="120" y="512" font-family="system-ui, sans-serif" font-size="40" fill="#9CA3AF">with the REST API</text>
+  <text x="120" y="600" font-family="Fira Code, Courier New, monospace" font-size="30" fill="#1E88E5">POST /ecm/dataset/datasets</text>
+
+  <!-- External app, OAuth, dataset -->
+  <g font-family="Fira Code, Courier New, monospace" font-size="32" font-weight="700" fill="#E8EAF0" text-anchor="middle">
+    <rect x="1000" y="190" width="440" height="120" rx="18" fill="#1C1F26" stroke="#2C3040" stroke-width="3"/>
+    <text x="1220" y="261">external app</text>
+
+    <rect x="1000" y="390" width="440" height="120" rx="18" fill="#1C1F26" stroke="#FBBF24" stroke-width="4"/>
+    <text x="1220" y="461" fill="#FBBF24">OAuth 1.0a</text>
+
+    <rect x="1000" y="590" width="440" height="120" rx="18" fill="#1C1F26" stroke="#22C55E" stroke-width="4"/>
+    <text x="1220" y="661" fill="#22C55E">content.values[]</text>
+  </g>
+  <g stroke="#1E88E5" stroke-width="5" fill="none" stroke-linecap="round">
+    <path d="M1220 322 V376 M1210 366 L1220 378 L1230 366"/>
+    <path d="M1220 522 V576 M1210 566 L1220 578 L1230 566"/>
+  </g>
+</svg>
