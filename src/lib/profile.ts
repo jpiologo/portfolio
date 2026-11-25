@@ -4,7 +4,7 @@ export const JOB_TITLE = "Software Engineer";
 export const pageTitle = (title: string) => `${title} | ${FULL_NAME}`;
 
 export const CONTACT_EMAIL = "joaotpiologo@hotmail.com";
-export const CAREER_START_YEAR = 2021;
+export const CAREER_START_YEAR = 2022;
 export const yearsOfExperience = () => Math.max(0, new Date().getFullYear() - CAREER_START_YEAR);
 /** Processes I have delivered to production; shown in the hero. */
 export const PROCESSES_IN_PRODUCTION = 50;

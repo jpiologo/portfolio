@@ -131,7 +131,7 @@ export const en = {
 				description: "Integrating LLMs that validate documents and make decisions in real business flows, not in demos.",
 			},
 		},
-		stackLabel: "Stack I work with",
+		stackLabel: "My Stack",
 		stackFilterLabel: "Filter by area",
 		stackAll: "All",
 		stackGroups: {

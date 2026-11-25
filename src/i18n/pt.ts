@@ -129,7 +129,7 @@ export const pt: Messages = {
 				description: "Integrando LLMs que validam documentos e tomando decisões em fluxos reais de negócio, não em demos.",
 			},
 		},
-		stackLabel: "Stack com que trabalho",
+		stackLabel: "Minha Stack",
 		stackFilterLabel: "Filtrar por área",
 		stackAll: "Todas",
 		stackGroups: {
